@@ -9,22 +9,22 @@ interface DiceHistoryItem {
 
 interface DiceState {
   history: DiceHistoryItem[]
-  roll: (expr: string) => Promise<DiceResult>
-}
-
-interface DiceResult {
-  result: number
-  rolls: number[]
-  expr: string
+  roll: (expr: string) => Promise<void>
 }
 
 export const useDiceStore = create<DiceState>((set) => ({
   history: [],
   roll: async (expr: string) => {
-    const result = await window.electronAPI.dice.roll(expr)
-    set((state) => ({
-      history: [{ ...result, timestamp: Date.now() }, ...state.history].slice(0, 50),
-    }))
-    return result
+    try {
+      const res = await window.electronAPI.dice.roll(expr)
+      set((state) => ({
+        history: [
+          { expr: res.expr, result: res.result, rolls: res.rolls, timestamp: Date.now() },
+          ...state.history,
+        ].slice(0, 50),
+      }))
+    } catch {
+      // silently fail
+    }
   },
 }))

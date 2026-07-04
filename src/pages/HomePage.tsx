@@ -1,7 +1,8 @@
 import { useUserStore } from '@/stores/userStore'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { UserCircle } from 'lucide-react'
+import { UserCircle, Users, Package, ScrollText } from 'lucide-react'
 
 export function HomePage() {
   const { username, loaded, setUsername } = useUserStore()
@@ -9,14 +10,6 @@ export function HomePage() {
   const [saving, setSaving] = useState(false)
 
   if (!loaded) return <div className="flex items-center justify-center h-full"><p className="text-muted-foreground">Cargando...</p></div>
-
-  const handleSave = async () => {
-    if (!input.trim()) return
-    setSaving(true)
-    await setUsername(input.trim())
-    setSaving(false)
-    setInput('')
-  }
 
   if (!username) {
     return (
@@ -29,11 +22,11 @@ export function HomePage() {
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSave()}
+              onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); setUsername(input.trim()); setInput('') } }}
               placeholder="Tu nombre..."
               className="flex-1 px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring"
             />
-            <Button onClick={handleSave} disabled={saving || !input.trim()}>
+            <Button onClick={async () => { await setUsername(input.trim()); setInput('') }} disabled={saving || !input.trim()}>
               {saving ? 'Guardando...' : 'Guardar'}
             </Button>
           </div>
@@ -49,19 +42,22 @@ export function HomePage() {
         <p className="text-muted-foreground">Panel de control del Gestor de Axyam</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <QuickCard title="Personajes" description="Gestiona tus personajes y sus estadísticas" href="/personajes" />
-        <QuickCard title="Equipamiento" description="Explora el catálogo de objetos disponibles" href="/equipamiento" />
-        <QuickCard title="Recetas" description="Consulta materiales necesarios para crafting" href="/materiales" />
+        <Link to="/personajes" className="block p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors">
+          <Users className="size-8 mb-2 text-muted-foreground" />
+          <h3 className="font-semibold mb-1">Personajes</h3>
+          <p className="text-sm text-muted-foreground">Gestiona tus personajes y sus estadísticas</p>
+        </Link>
+        <Link to="/equipamiento" className="block p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors">
+          <Package className="size-8 mb-2 text-muted-foreground" />
+          <h3 className="font-semibold mb-1">Equipamiento</h3>
+          <p className="text-sm text-muted-foreground">Explora el catálogo de objetos disponibles</p>
+        </Link>
+        <Link to="/materiales" className="block p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors">
+          <ScrollText className="size-8 mb-2 text-muted-foreground" />
+          <h3 className="font-semibold mb-1">Recetas</h3>
+          <p className="text-sm text-muted-foreground">Consulta materiales necesarios para crafting</p>
+        </Link>
       </div>
     </div>
-  )
-}
-
-function QuickCard({ title, description, href }: { title: string; description: string; href: string }) {
-  return (
-    <a href={href} className="block p-4 rounded-xl border bg-card hover:bg-accent/50 transition-colors">
-      <h3 className="font-semibold mb-1">{title}</h3>
-      <p className="text-sm text-muted-foreground">{description}</p>
-    </a>
   )
 }

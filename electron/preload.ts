@@ -8,7 +8,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   races: {
     getAll: () => ipcRenderer.invoke('races:getAll'),
-    create: (race: any) => ipcRenderer.invoke('races:create', race),
+    getById: (id: number) => ipcRenderer.invoke('races:getById', id),
+    getEvolutions: (parentId: number) => ipcRenderer.invoke('races:getEvolutions', parentId),
+  },
+  zones: {
+    getAll: () => ipcRenderer.invoke('zones:getAll'),
   },
   items: {
     getAll: () => ipcRenderer.invoke('items:getAll'),
@@ -29,5 +33,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   dice: {
     roll: (expr: string) => ipcRenderer.invoke('dice:roll', expr),
+    rollStat: (expr: string, bonuses: any[], conditions: Record<string, string>) => ipcRenderer.invoke('dice:rollStat', expr, bonuses, conditions),
   },
 })

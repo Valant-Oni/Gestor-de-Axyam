@@ -3,11 +3,11 @@ import { useDiceStore } from '@/stores/diceStore'
 import { Button } from '@/components/ui/button'
 import { Dices, History } from 'lucide-react'
 
-const quickRolls = ['1d4', '1d6', '1d8', '1d10', '1d12', '1d13', '1d20', '1d100']
+const quickRolls = ['1d4', '1d6', '1d8', '1d10', '1d12', '1d13', '1d14', '1d15', '1d17', '1d20', '1d100', '1d3+2', '1d10+2']
 
 export function DicePage() {
   const [expr, setExpr] = useState('1d20')
-  const [result, setResult] = useState<{ result: number; rolls: number[]; expr: string } | null>(null)
+  const [result, setResult] = useState<{ result: number; breakdown: string; expr: string } | null>(null)
   const [rolling, setRolling] = useState(false)
   const { history, roll } = useDiceStore()
 
@@ -16,8 +16,9 @@ export function DicePage() {
     if (!input.trim()) return
     setRolling(true)
     try {
-      const res = await roll(input.trim())
+      const res = await window.electronAPI.dice.roll(input.trim())
       setResult(res)
+      roll(input.trim())
     } catch (err) {
       console.error(err)
     }
@@ -34,7 +35,7 @@ export function DicePage() {
       <div className="border rounded-xl p-6 bg-card space-y-4">
         <div className="flex gap-2">
           <input value={expr} onChange={(e) => setExpr(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleRoll()}
-            placeholder="Ej: 1d20, 2d6, 1d13"
+            placeholder="Ej: 1d20, 2d6, 1d3+2"
             className="flex-1 px-3 py-2 rounded-lg border bg-background text-sm font-mono focus:outline-none focus:ring-2 focus:ring-ring" />
           <Button onClick={() => handleRoll()} disabled={rolling}>
             <Dices className={`size-4 ${rolling ? 'animate-spin' : ''}`} />
@@ -54,9 +55,7 @@ export function DicePage() {
         {result && (
           <div className="text-center py-4">
             <p className="text-4xl font-bold">{result.result}</p>
-            <p className="text-sm text-muted-foreground">
-              {result.expr}: [{result.rolls.join(', ')}]
-            </p>
+            <p className="text-sm text-muted-foreground font-mono">{result.breakdown}</p>
           </div>
         )}
       </div>

@@ -1,6 +1,24 @@
+export interface RaceBonus {
+  id: number
+  race_id: number
+  condition_type: string
+  condition_value: string
+  stat_name: string
+  bonus_expression: string
+}
+
+export interface RaceRestriction {
+  id: number
+  race_id: number
+  restricted_stat: string
+  max_value: number
+  message: string
+}
+
 export interface Race {
   id: number
   name: string
+  parent_race_id: number | null
   vida: string
   ataque: string
   ataque_magico: string
@@ -10,6 +28,14 @@ export interface Race {
   agilidad: string
   robo: string
   sigilo: string
+  created_at: string
+  bonuses: RaceBonus[]
+  restrictions: RaceRestriction[]
+}
+
+export interface Zone {
+  id: number
+  name: string
 }
 
 export interface Item {
@@ -69,6 +95,7 @@ export interface DiceResult {
   result: number
   rolls: number[]
   expr: string
+  breakdown: string
 }
 
 declare global {
@@ -81,7 +108,11 @@ declare global {
       }
       races: {
         getAll: () => Promise<Race[]>
-        create: (race: Omit<Race, 'id'>) => Promise<any>
+        getById: (id: number) => Promise<Race | undefined>
+        getEvolutions: (parentId: number) => Promise<Race[]>
+      }
+      zones: {
+        getAll: () => Promise<Zone[]>
       }
       items: {
         getAll: () => Promise<Item[]>
@@ -102,6 +133,7 @@ declare global {
       }
       dice: {
         roll: (expr: string) => Promise<DiceResult>
+        rollStat: (expr: string, bonuses: any[], conditions: Record<string, string>) => Promise<DiceResult>
       }
     }
   }

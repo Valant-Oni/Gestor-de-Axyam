@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Character, Race } from '@/types'
+import { Character, Race, Zone } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit2, Trash2, User } from 'lucide-react'
 
 export function CharactersPage() {
   const [characters, setCharacters] = useState<Character[]>([])
   const [races, setRaces] = useState<Race[]>([])
+  const [zones, setZones] = useState<Zone[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<Character | null>(null)
@@ -13,12 +14,14 @@ export function CharactersPage() {
 
   const load = async () => {
     try {
-      const [chars, raceData] = await Promise.all([
+      const [chars, raceData, zoneData] = await Promise.all([
         window.electronAPI.characters.getAll(),
         window.electronAPI.races.getAll(),
+        window.electronAPI.zones.getAll(),
       ])
       setCharacters(chars as Character[])
       setRaces(raceData as Race[])
+      setZones(zoneData as Zone[])
     } catch (e) {
       console.error(e)
     }
@@ -30,10 +33,14 @@ export function CharactersPage() {
   const handleSave = async () => {
     if (!form.name.trim()) return
     const data = { name: form.name.trim(), race_id: form.race_id ? parseInt(form.race_id) : undefined, gender: form.gender || undefined }
-    if (editing) {
-      await window.electronAPI.characters.update(editing.id, data)
-    } else {
-      await window.electronAPI.characters.create(data)
+    try {
+      if (editing) {
+        await window.electronAPI.characters.update(editing.id, data)
+      } else {
+        await window.electronAPI.characters.create(data)
+      }
+    } catch (e) {
+      console.error(e)
     }
     setShowForm(false)
     setEditing(null)
@@ -48,9 +55,11 @@ export function CharactersPage() {
   }
 
   const handleDelete = async (id: number) => {
-    await window.electronAPI.characters.delete(id)
+    try { await window.electronAPI.characters.delete(id) } catch (e) { console.error(e) }
     load()
   }
+
+  const baseRaces = races.filter((r) => !r.parent_race_id)
 
   if (loading) return <div className="flex items-center justify-center h-full"><p className="text-muted-foreground">Cargando...</p></div>
 
@@ -74,14 +83,21 @@ export function CharactersPage() {
               className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
             <select value={form.race_id} onChange={(e) => setForm({ ...form, race_id: e.target.value })}
               className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
-              <option value="">Sin raza</option>
-              {races.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
+              <option value="">Selecciona raza...</option>
+              {baseRaces.map((r) => (
+                <optgroup key={r.id} label={r.name}>
+                  <option value={r.id}>{r.name}</option>
+                  {races.filter((ev) => ev.parent_race_id === r.id).map((ev) => (
+                    <option key={ev.id} value={ev.id}>  {ev.name} (evolución)</option>
+                  ))}
+                </optgroup>
+              ))}
             </select>
             <input placeholder="Género (opcional)" value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}
               className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
           </div>
           <div className="flex gap-2">
-            <Button onClick={handleSave} disabled={!form.name.trim()}>{editing ? 'Guardar' : 'Crear'}</Button>
+            <Button onClick={handleSave} disabled={!form.name.trim() || !form.race_id}>{editing ? 'Guardar' : 'Crear'}</Button>
             <Button variant="ghost" onClick={() => { setShowForm(false); setEditing(null) }}>Cancelar</Button>
           </div>
         </div>
@@ -95,42 +111,53 @@ export function CharactersPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {characters.map((c) => (
-            <div key={c.id} className="border rounded-xl p-4 space-y-2 bg-card">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="font-semibold">{c.name}</h3>
-                  <p className="text-sm text-muted-foreground">{c.race_name || 'Sin raza'}{c.gender ? ` - ${c.gender}` : ''}</p>
+          {characters.map((c) => {
+            const race = races.find((r) => r.id === c.race_id)
+            return (
+              <div key={c.id} className="border rounded-xl p-4 space-y-2 bg-card">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="font-semibold">{c.name}</h3>
+                    <p className="text-sm text-muted-foreground">{race?.name || 'Sin raza'}{c.gender ? ` - ${c.gender}` : ''}</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <button onClick={() => handleEdit(c)} className="p-1 hover:bg-accent rounded"><Edit2 className="size-4" /></button>
+                    <button onClick={() => handleDelete(c.id)} className="p-1 hover:bg-accent rounded"><Trash2 className="size-4 text-destructive" /></button>
+                  </div>
                 </div>
-                <div className="flex gap-1">
-                  <button onClick={() => handleEdit(c)} className="p-1 hover:bg-accent rounded"><Edit2 className="size-4" /></button>
-                  <button onClick={() => handleDelete(c.id)} className="p-1 hover:bg-accent rounded"><Trash2 className="size-4 text-destructive" /></button>
-                </div>
+                {race && (
+                  <div className="grid grid-cols-3 gap-1 text-xs">
+                    <Stat label="Vida" expr={race.vida} />
+                    <Stat label="Ataque" expr={race.ataque} />
+                    <Stat label="Atq Mágico" expr={race.ataque_magico} />
+                    <Stat label="Defensa" expr={race.defensa} />
+                    <Stat label="Mana" expr={race.mana} />
+                    <Stat label="Estamina" expr={race.estamina} />
+                    <Stat label="Agilidad" expr={race.agilidad} />
+                    <Stat label="Robo" expr={race.robo} />
+                    <Stat label="Sigilo" expr={race.sigilo} />
+                  </div>
+                )}
+                {race && race.restrictions.length > 0 && (
+                  <div className="text-xs text-destructive/80 space-y-0.5">
+                    {race.restrictions.map((r, i) => <p key={i}>{r.message}</p>)}
+                  </div>
+                )}
               </div>
-              <div className="grid grid-cols-3 gap-1 text-xs">
-                <Stat label="Vida" value={c.base_vida} />
-                <Stat label="Ataque" value={c.base_ataque} />
-                <Stat label="Ataq. Mágico" value={c.base_ataque_magico} />
-                <Stat label="Defensa" value={c.base_defensa} />
-                <Stat label="Mana" value={c.base_mana} />
-                <Stat label="Estamina" value={c.base_estamina} />
-                <Stat label="Agilidad" value={c.base_agilidad} />
-                <Stat label="Robo" value={c.base_robo} />
-                <Stat label="Sigilo" value={c.base_sigilo} />
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>
   )
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
+function Stat({ label, expr }: { label: string; expr: string }) {
+  const val = expr === '0' ? '-' : expr
   return (
     <div className="bg-muted/50 rounded-lg p-1.5 text-center">
       <p className="text-muted-foreground">{label}</p>
-      <p className="font-medium">{value}</p>
+      <p className="font-medium">{val}</p>
     </div>
   )
 }
