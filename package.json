@@ -17,7 +17,7 @@
     "appId": "com.axyam.gestor",
     "productName": "Gestor de Axyam",
     "directories": {
-      "output": "dist/installer"
+      "output": "release/installer"
     },
     "files": [
       "dist/**/*",

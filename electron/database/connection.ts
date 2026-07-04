@@ -14,8 +14,11 @@ export function getDatabase(): Database.Database {
 const SCHEMA_VERSION = 2
 
 function runMigrations(db: Database.Database): void {
-  const currentVersion = db.prepare('SELECT name FROM data_migration WHERE name = ?').get(`schema_v${SCHEMA_VERSION}`) as any
-  if (currentVersion) return
+  const hasMigrationTable = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='data_migration'").get()
+  if (hasMigrationTable) {
+    const currentVersion = db.prepare('SELECT name FROM data_migration WHERE name = ?').get(`schema_v${SCHEMA_VERSION}`) as any
+    if (currentVersion) return
+  }
 
   // Drop old tables if schema changed
   db.exec(`
