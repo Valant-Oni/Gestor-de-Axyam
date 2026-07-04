@@ -11,14 +11,45 @@ export function getDatabase(): Database.Database {
   return db
 }
 
+const SCHEMA_VERSION = 2
+
 function runMigrations(db: Database.Database): void {
+  const currentVersion = db.prepare('SELECT name FROM data_migration WHERE name = ?').get(`schema_v${SCHEMA_VERSION}`) as any
+  if (currentVersion) return
+
+  // Drop old tables if schema changed
   db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
+    DROP TABLE IF EXISTS character_materials;
+    DROP TABLE IF EXISTS character_equipment;
+    DROP TABLE IF EXISTS recipe_ingredients;
+    DROP TABLE IF EXISTS recipes;
+    DROP TABLE IF EXISTS items;
+    DROP TABLE IF EXISTS race_restrictions;
+    DROP TABLE IF EXISTS race_bonuses;
+    DROP TABLE IF EXISTS races;
+    DROP TABLE IF EXISTS zones;
+    DROP TABLE IF EXISTS characters;
+    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS data_migration;
+  `)
+
+  db.exec(`
+    CREATE TABLE data_migration (
+      name TEXT PRIMARY KEY,
+      time_completed INTEGER
+    );
+
+    CREATE TABLE users (
       id INTEGER PRIMARY KEY,
       username TEXT NOT NULL
     );
 
-    CREATE TABLE IF NOT EXISTS races (
+    CREATE TABLE zones (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL UNIQUE
+    );
+
+    CREATE TABLE races (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL UNIQUE,
       parent_race_id INTEGER REFERENCES races(id),
@@ -34,7 +65,7 @@ function runMigrations(db: Database.Database): void {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS race_bonuses (
+    CREATE TABLE race_bonuses (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       race_id INTEGER NOT NULL REFERENCES races(id),
       condition_type TEXT NOT NULL,
@@ -43,7 +74,7 @@ function runMigrations(db: Database.Database): void {
       bonus_expression TEXT NOT NULL
     );
 
-    CREATE TABLE IF NOT EXISTS race_restrictions (
+    CREATE TABLE race_restrictions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       race_id INTEGER NOT NULL REFERENCES races(id),
       restricted_stat TEXT NOT NULL,
@@ -51,12 +82,7 @@ function runMigrations(db: Database.Database): void {
       message TEXT
     );
 
-    CREATE TABLE IF NOT EXISTS zones (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL UNIQUE
-    );
-
-    CREATE TABLE IF NOT EXISTS items (
+    CREATE TABLE items (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       type TEXT,
       name TEXT NOT NULL UNIQUE,
@@ -73,7 +99,20 @@ function runMigrations(db: Database.Database): void {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS recipes (
+    CREATE TABLE tags (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL UNIQUE,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE item_tags (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      item_id INTEGER NOT NULL REFERENCES items(id),
+      tag_id INTEGER NOT NULL REFERENCES tags(id),
+      UNIQUE(item_id, tag_id)
+    );
+
+    CREATE TABLE recipes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       product_item_id INTEGER NOT NULL REFERENCES items(id),
       method TEXT DEFAULT 'crafting',
@@ -81,14 +120,14 @@ function runMigrations(db: Database.Database): void {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS recipe_ingredients (
+    CREATE TABLE recipe_ingredients (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       recipe_id INTEGER NOT NULL REFERENCES recipes(id),
       item_id INTEGER NOT NULL REFERENCES items(id),
       quantity INTEGER NOT NULL DEFAULT 1
     );
 
-    CREATE TABLE IF NOT EXISTS characters (
+    CREATE TABLE characters (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       race_id INTEGER REFERENCES races(id),
@@ -105,27 +144,34 @@ function runMigrations(db: Database.Database): void {
       base_sigilo INTEGER DEFAULT 0,
       description TEXT,
       notes TEXT,
+      active_zone TEXT,
+      active_blood TEXT,
+      wings_open INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS character_equipment (
+    CREATE TABLE character_items (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      character_id INTEGER NOT NULL REFERENCES characters(id),
+      character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
       item_id INTEGER NOT NULL REFERENCES items(id),
-      equipped BOOLEAN DEFAULT 1
+      equipped INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE(character_id, item_id)
     );
 
-    CREATE TABLE IF NOT EXISTS character_materials (
+    CREATE TABLE character_materials (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      character_id INTEGER NOT NULL REFERENCES characters(id),
+      character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
       item_id INTEGER NOT NULL REFERENCES items(id),
       quantity_needed INTEGER DEFAULT 0,
       quantity_owned INTEGER DEFAULT 0
     );
+
+    INSERT INTO data_migration (name, time_completed) VALUES ('schema_v2', strftime('%s','now') * 1000);
   `)
 }
 
-function seedRaces(db: Database.Database): void {
+function seedZonesAndRaces(db: Database.Database): void {
   const existing = db.prepare('SELECT COUNT(*) as count FROM races').get() as { count: number }
   if (existing.count > 0) return
 
@@ -134,10 +180,9 @@ function seedRaces(db: Database.Database): void {
   const insertRestriction = db.prepare('INSERT INTO race_restrictions (race_id, restricted_stat, max_value, message) VALUES (?, ?, ?, ?)')
   const insertZone = db.prepare('INSERT OR IGNORE INTO zones (name) VALUES (?)')
 
-  const zones = ['Bosque', 'Montañas', 'Paraíso', 'Agua', 'Noche', 'Mazmorra']
-  for (const z of zones) insertZone.run(z)
+  for (const z of ['Bosque', 'Montañas', 'Paraíso', 'Agua', 'Noche', 'Mazmorra']) insertZone.run(z)
 
-  const races: Record<string, { vida: string; ataque: string; ataque_magico: string; defensa: string; mana: string; estamina: string; agilidad: string; robo: string; sigilo: string; parent?: string; bonuses?: { type: string; value: string; stat: string; expr: string }[]; restrictions?: { stat: string; max: number; msg: string }[] }> = {
+  const raceData: Record<string, any> = {
     Humanos: { vida: '43', ataque: '1d13', ataque_magico: '1d13', defensa: '1d5', mana: '6', estamina: '4', agilidad: '1d10', robo: '1d10', sigilo: '1d10' },
     Elfos: { vida: '36', ataque: '1d15', ataque_magico: '1d15', defensa: '1d4', mana: '8', estamina: '4', agilidad: '1d10', robo: '1d10', sigilo: '1d10',
       bonuses: [{ type: 'zone', value: 'Bosque', stat: 'ataque', expr: '1d17' }, { type: 'zone', value: 'Bosque', stat: 'ataque_magico', expr: '1d17' }, { type: 'zone', value: 'Bosque', stat: 'sigilo', expr: '1d12' }]
@@ -174,10 +219,7 @@ function seedRaces(db: Database.Database): void {
     },
     Draconido: { vida: '50', ataque: '1d11', ataque_magico: '0', defensa: '1d5', mana: '7', estamina: '5', agilidad: '1d11', robo: '1d10', sigilo: '1d10' },
     BestiaEspectral: { vida: '42', ataque: '0', ataque_magico: '1d10', defensa: '1d5', mana: '12', estamina: '0', agilidad: '1d10', robo: '1d10', sigilo: '1d10',
-      restrictions: [
-        { stat: 'estamina', max: 0, msg: 'Las bestias espectrales no pueden tener estamina' },
-        { stat: 'mana_over_12', max: 999, msg: 'Cada 8 de mana sobre 12, ganan 4 de vida' }
-      ]
+      restrictions: [{ stat: 'estamina', max: 0, msg: 'Las bestias espectrales no pueden tener estamina' }]
     },
     AngelCaido: { vida: '41', ataque: '1d13', ataque_magico: '1d13', defensa: '1d5', mana: '4', estamina: '4', agilidad: '1d11', robo: '1d10', sigilo: '1d10' },
     Varu: { vida: '40', ataque: '1d13', ataque_magico: '1d13', defensa: '1d5', mana: '6', estamina: '5', agilidad: '1d12', robo: '1d10', sigilo: '1d10',
@@ -185,7 +227,7 @@ function seedRaces(db: Database.Database): void {
     },
   }
 
-  const evolutions: Record<string, { vida: string; ataque: string; ataque_magico: string; defensa: string; mana: string; estamina: string; agilidad: string; robo: string; sigilo: string; restrictions?: { stat: string; max: number; msg: string }[] }> = {
+  const evolutions: Record<string, any> = {
     Orco: { vida: '52', ataque: '1d14', ataque_magico: '0', defensa: '1d7', mana: '0', estamina: '6', agilidad: '1d10', robo: '1d10', sigilo: '1d10',
       restrictions: [{ stat: 'mana', max: 0, msg: 'Los orcos no pueden tener mana' }]
     },
@@ -199,39 +241,22 @@ function seedRaces(db: Database.Database): void {
 
   const tx = db.transaction(() => {
     const raceIds: Record<string, number> = {}
-    for (const [name, data] of Object.entries(races)) {
+    for (const [name, data] of Object.entries(raceData)) {
       const result = insertRace.run(name, data.vida, data.ataque, data.ataque_magico, data.defensa, data.mana, data.estamina, data.agilidad, data.robo, data.sigilo)
       raceIds[name] = result.lastInsertRowid as number
     }
-
     for (const [name, data] of Object.entries(evolutions)) {
-      const parentId = raceIds['Goblins']
       const result = db.prepare('INSERT INTO races (name, parent_race_id, vida, ataque, ataque_magico, defensa, mana, estamina, agilidad, robo, sigilo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)').run(
-        name, parentId, data.vida, data.ataque, data.ataque_magico, data.defensa, data.mana, data.estamina, data.agilidad, data.robo, data.sigilo
+        name, raceIds['Goblins'], data.vida, data.ataque, data.ataque_magico, data.defensa, data.mana, data.estamina, data.agilidad, data.robo, data.sigilo
       )
       raceIds[name] = result.lastInsertRowid as number
     }
-
-    for (const [name, data] of Object.entries(races)) {
-      const id = raceIds[name]
-      if (data.bonuses) {
-        for (const b of data.bonuses) {
-          insertBonus.run(id, b.type, b.value, b.stat, b.expr)
-        }
-      }
-      if (data.restrictions) {
-        for (const r of data.restrictions) {
-          insertRestriction.run(id, r.stat, r.max, r.msg)
-        }
-      }
+    for (const [name, data] of Object.entries(raceData)) {
+      if (data.bonuses) for (const b of data.bonuses) insertBonus.run(raceIds[name], b.type, b.value, b.stat, b.expr)
+      if (data.restrictions) for (const r of data.restrictions) insertRestriction.run(raceIds[name], r.stat, r.max, r.msg)
     }
     for (const [name, data] of Object.entries(evolutions)) {
-      const id = raceIds[name]
-      if (data.restrictions) {
-        for (const r of data.restrictions) {
-          insertRestriction.run(id, r.stat, r.max, r.msg)
-        }
-      }
+      if (data.restrictions) for (const r of data.restrictions) insertRestriction.run(raceIds[name], r.stat, r.max, r.msg)
     }
   })
   tx()
@@ -253,13 +278,10 @@ function seedItemsAndRecipes(db: Database.Database): void {
     return
   }
 
-  const itemsCsv = fs.readFileSync(itemsPath, 'utf-8')
-  const recipesCsv = fs.readFileSync(recipesPath, 'utf-8')
+  const itemsData = Papa.parse(fs.readFileSync(itemsPath, 'utf-8'), { header: true, skipEmptyLines: true }).data
+  const recipesData = Papa.parse(fs.readFileSync(recipesPath, 'utf-8'), { header: true, skipEmptyLines: true }).data
 
-  const itemsData = Papa.parse(itemsCsv, { header: true, skipEmptyLines: true }).data
-  const recipesData = Papa.parse(recipesCsv, { header: true, skipEmptyLines: true }).data
-
-  const insertItem = db.prepare(`INSERT OR IGNORE INTO items (type, name, description, use_text, image, emoji, template, tags, attributes, required_race, required_class, required_gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+  const insertItem = db.prepare('INSERT OR IGNORE INTO items (type, name, description, use_text, image, emoji, template, tags, attributes, required_race, required_class, required_gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
   const insertRecipe = db.prepare('INSERT OR IGNORE INTO recipes (product_item_id, method, time) VALUES (?, ?, ?)')
   const insertIngredient = db.prepare('INSERT INTO recipe_ingredients (recipe_id, item_id, quantity) VALUES (?, ?, ?)')
   const getItemId = db.prepare('SELECT id FROM items WHERE name = ?')
@@ -268,27 +290,20 @@ function seedItemsAndRecipes(db: Database.Database): void {
     for (const row of itemsData) {
       insertItem.run(row.type || null, row.name, row.description || null, row.use || null, row.image || null, row.emoji || null, row.template || null, row.tags || null, row.attributes || null, row.required_race || null, row.required_class || null, row.required_gender || null)
     }
-
     for (const row of recipesData) {
       if (!row.product) continue
-      const productMatch = row.product.match(/^(.+?)x(\d+)$/)
-      if (!productMatch) continue
-      const productName = productMatch[1].trim()
-      const product = getItemId.get(productName) as { id: number } | undefined
+      const m = row.product.match(/^(.+?)x(\d+)$/)
+      if (!m) continue
+      const product = getItemId.get(m[1].trim()) as { id: number } | undefined
       if (!product) continue
-
       const result = insertRecipe.run(product.id, row.method || 'crafting', row.time || null)
       const recipeId = result.lastInsertRowid as number
-
       if (row.ingredients) {
-        const parts = row.ingredients.split(',')
-        for (const part of parts) {
-          const match = part.trim().match(/^(.+?)x(\d+)$/)
-          if (match) {
-            const ingName = match[1].trim()
-            const qty = parseInt(match[2])
-            const item = getItemId.get(ingName) as { id: number } | undefined
-            if (item) insertIngredient.run(recipeId, item.id, qty)
+        for (const part of row.ingredients.split(',')) {
+          const im = part.trim().match(/^(.+?)x(\d+)$/)
+          if (im) {
+            const item = getItemId.get(im[1].trim()) as { id: number } | undefined
+            if (item) insertIngredient.run(recipeId, item.id, parseInt(im[2]))
           }
         }
       }
@@ -304,6 +319,6 @@ export function initDatabase(): void {
   db.pragma('journal_mode = WAL')
   db.pragma('foreign_keys = ON')
   runMigrations(db)
-  seedRaces(db)
+  seedZonesAndRaces(db)
   seedItemsAndRecipes(db)
 }

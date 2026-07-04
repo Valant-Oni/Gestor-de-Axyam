@@ -7,6 +7,7 @@ import { registerItemHandlers } from './ipc/items'
 import { registerRecipeHandlers } from './ipc/recipes'
 import { registerCharacterHandlers } from './ipc/characters'
 import { registerDiceHandlers } from './ipc/dice'
+import { registerTagHandlers } from './ipc/tags'
 
 process.env.DIST_ELECTRON = path.join(__dirname)
 process.env.DIST = path.join(process.env.DIST_ELECTRON, '../dist')
@@ -49,6 +50,7 @@ app.whenReady().then(() => {
   registerRecipeHandlers()
   registerCharacterHandlers()
   registerDiceHandlers()
+  registerTagHandlers()
   createWindow()
 
   app.on('activate', () => {

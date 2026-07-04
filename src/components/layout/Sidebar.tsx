@@ -1,16 +1,20 @@
 import { NavLink } from 'react-router-dom'
-import { Sword, Users, Package, ScrollText, Dices, UserCircle } from 'lucide-react'
+import { Sword, Users, Package, ScrollText, Dices, UserCircle, Sun, Moon, Tags } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useThemeStore } from '@/stores/themeStore'
 
 const navItems = [
   { to: '/', icon: UserCircle, label: 'Inicio' },
   { to: '/personajes', icon: Users, label: 'Personajes' },
-  { to: '/equipamiento', icon: Package, label: 'Equipamiento' },
-  { to: '/materiales', icon: ScrollText, label: 'Recetas' },
+  { to: '/objetos', icon: Package, label: 'Objetos' },
+  { to: '/equipamiento', icon: ScrollText, label: 'Equipamiento' },
+  { to: '/tags', icon: Tags, label: 'Tags' },
   { to: '/dados', icon: Dices, label: 'Dados' },
 ]
 
 export function Sidebar() {
+  const { theme, toggle } = useThemeStore()
+
   return (
     <aside className="w-56 border-r bg-sidebar flex flex-col shrink-0">
       <div className="flex items-center gap-2 px-4 py-4 border-b">
@@ -37,6 +41,15 @@ export function Sidebar() {
           </NavLink>
         ))}
       </nav>
+      <div className="p-2 border-t">
+        <button
+          onClick={toggle}
+          className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
+        >
+          {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+          {theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+        </button>
+      </div>
     </aside>
   )
 }

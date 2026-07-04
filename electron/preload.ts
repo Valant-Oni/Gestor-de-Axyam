@@ -14,6 +14,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
   zones: {
     getAll: () => ipcRenderer.invoke('zones:getAll'),
   },
+  tags: {
+    getAll: () => ipcRenderer.invoke('tags:getAll'),
+    create: (name: string) => ipcRenderer.invoke('tags:create', name),
+    delete: (id: number) => ipcRenderer.invoke('tags:delete', id),
+    setItemTags: (itemId: number, tagIds: number[]) => ipcRenderer.invoke('tags:setItemTags', itemId, tagIds),
+    getItemTags: (itemId: number) => ipcRenderer.invoke('tags:getItemTags', itemId),
+  },
   items: {
     getAll: () => ipcRenderer.invoke('items:getAll'),
     getById: (id: number) => ipcRenderer.invoke('items:getById', id),
@@ -30,6 +37,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     create: (char: any) => ipcRenderer.invoke('characters:create', char),
     update: (id: number, char: any) => ipcRenderer.invoke('characters:update', id, char),
     delete: (id: number) => ipcRenderer.invoke('characters:delete', id),
+    getItems: (id: number) => ipcRenderer.invoke('characters:getItems', id),
+    markItem: (charId: number, itemId: number) => ipcRenderer.invoke('characters:markItem', charId, itemId),
+    unmarkItem: (charId: number, itemId: number) => ipcRenderer.invoke('characters:unmarkItem', charId, itemId),
+    setEquipped: (charId: number, itemId: number, equipped: boolean) => ipcRenderer.invoke('characters:setEquipped', charId, itemId, equipped),
   },
   dice: {
     roll: (expr: string) => ipcRenderer.invoke('dice:roll', expr),

@@ -38,6 +38,11 @@ export interface Zone {
   name: string
 }
 
+export interface Tag {
+  id: number
+  name: string
+}
+
 export interface Item {
   id: number
   type: string
@@ -53,6 +58,8 @@ export interface Item {
   required_class: string | null
   required_gender: string | null
   created_at: string
+  item_tags?: string[]
+  marked?: boolean
 }
 
 export interface Recipe {
@@ -87,6 +94,9 @@ export interface Character {
   base_sigilo: number
   description: string | null
   notes: string | null
+  active_zone: string | null
+  active_blood: string | null
+  wings_open: number
   created_at: string
   race_name?: string
 }
@@ -114,6 +124,13 @@ declare global {
       zones: {
         getAll: () => Promise<Zone[]>
       }
+      tags: {
+        getAll: () => Promise<Tag[]>
+        create: (name: string) => Promise<Tag>
+        delete: (id: number) => Promise<void>
+        setItemTags: (itemId: number, tagIds: number[]) => Promise<void>
+        getItemTags: (itemId: number) => Promise<number[]>
+      }
       items: {
         getAll: () => Promise<Item[]>
         getById: (id: number) => Promise<Item | undefined>
@@ -130,6 +147,10 @@ declare global {
         create: (char: any) => Promise<any>
         update: (id: number, char: any) => Promise<any>
         delete: (id: number) => Promise<{ success: boolean }>
+        getItems: (id: number) => Promise<any[]>
+        markItem: (charId: number, itemId: number) => Promise<void>
+        unmarkItem: (charId: number, itemId: number) => Promise<void>
+        setEquipped: (charId: number, itemId: number, equipped: boolean) => Promise<void>
       }
       dice: {
         roll: (expr: string) => Promise<DiceResult>

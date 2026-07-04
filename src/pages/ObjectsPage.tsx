@@ -1,0 +1,155 @@
+import { useEffect, useState } from 'react'
+import { Item, Tag, Character } from '@/types'
+import { Package, Search, Check, X, Tags as TagsIcon } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
+export function ObjectsPage() {
+  const [items, setItems] = useState<Item[]>([])
+  const [tags, setTags] = useState<Tag[]>([])
+  const [characters, setCharacters] = useState<Character[]>([])
+  const [selectedChar, setSelectedChar] = useState<number | null>(null)
+  const [markedItems, setMarkedItems] = useState<Set<number>>(new Set())
+  const [itemTags, setItemTags] = useState<Record<number, number[]>>({})
+  const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
+  const [typeFilter, setTypeFilter] = useState('')
+  const [editingItem, setEditingItem] = useState<number | null>(null)
+
+  const load = async () => {
+    try {
+      const [itemsData, tagsData, charsData] = await Promise.all([
+        window.electronAPI.items.getAll(),
+        window.electronAPI.tags.getAll(),
+        window.electronAPI.characters.getAll(),
+      ])
+      setItems(itemsData as Item[])
+      setTags(tagsData as Tag[])
+      setCharacters(charsData as Character[])
+    } catch (e) { console.error(e) }
+    setLoading(false)
+  }
+
+  useEffect(() => { load() }, [])
+
+  useEffect(() => {
+    if (!selectedChar) { setMarkedItems(new Set()); return }
+    window.electronAPI.characters.getItems(selectedChar).then((data: any[]) => {
+      const marked = new Set<number>()
+      for (const item of data) marked.add(item.id)
+      setMarkedItems(marked)
+    })
+  }, [selectedChar])
+
+  const loadItemTags = async (itemId: number) => {
+    try {
+      const ids = await window.electronAPI.tags.getItemTags(itemId)
+      setItemTags((prev) => ({ ...prev, [itemId]: ids }))
+    } catch { }
+  }
+
+  const toggleMark = async (itemId: number) => {
+    if (!selectedChar) return
+    try {
+      if (markedItems.has(itemId)) {
+        await window.electronAPI.characters.unmarkItem(selectedChar, itemId)
+        setMarkedItems((prev) => { const next = new Set(prev); next.delete(itemId); return next })
+      } else {
+        await window.electronAPI.characters.markItem(selectedChar, itemId)
+        setMarkedItems((prev) => new Set(prev).add(itemId))
+      }
+    } catch (e) { console.error(e) }
+  }
+
+  const toggleItemTag = async (itemId: number, tagId: number) => {
+    const current = itemTags[itemId] || []
+    const next = current.includes(tagId) ? current.filter((t) => t !== tagId) : [...current, tagId]
+    try {
+      await window.electronAPI.tags.setItemTags(itemId, next)
+      setItemTags((prev) => ({ ...prev, [itemId]: next }))
+    } catch (e) { console.error(e) }
+  }
+
+  const types = [...new Set(items.map((i) => i.type).filter(Boolean))]
+  const filtered = items.filter((i) => {
+    if (search && !i.name.toLowerCase().includes(search.toLowerCase())) return false
+    if (typeFilter && i.type !== typeFilter) return false
+    return true
+  })
+
+  if (loading) return <div className="flex items-center justify-center h-full"><p className="text-muted-foreground">Cargando...</p></div>
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Objetos</h1>
+          <p className="text-muted-foreground text-sm">Catálogo completo de objetos. Selecciona un personaje para marcar objetos.</p>
+        </div>
+        <select value={selectedChar || ''} onChange={(e) => setSelectedChar(e.target.value ? parseInt(e.target.value) : null)}
+          className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+          <option value="">Sin personaje</option>
+          {characters.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+        </select>
+      </div>
+
+      <div className="flex gap-2">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+          <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar objetos..."
+            className="w-full pl-9 pr-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
+        </div>
+        <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}
+          className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+          <option value="">Todos los tipos</option>
+          {types.map((t) => <option key={t} value={t}>{t}</option>)}
+        </select>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {filtered.map((item) => (
+          <div key={item.id} className={`border rounded-xl p-4 bg-card space-y-2 transition-colors ${markedItems.has(item.id) ? 'ring-2 ring-primary' : ''}`}>
+            <div className="flex items-start justify-between">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">{item.emoji || '📦'}</span>
+                <div>
+                  <p className="font-medium text-sm">{item.name}</p>
+                  {item.type && <p className="text-xs text-muted-foreground">{item.type}</p>}
+                </div>
+              </div>
+              {selectedChar && (
+                <button onClick={() => toggleMark(item.id)}
+                  className={`p-1.5 rounded-full transition-colors ${markedItems.has(item.id) ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'}`}>
+                  {markedItems.has(item.id) ? <Check className="size-3.5" /> : <Package className="size-3.5" />}
+                </button>
+              )}
+            </div>
+            {item.description && <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>}
+            {item.attributes && <p className="text-xs text-muted-foreground">Atributos: {item.attributes}</p>}
+
+            {tags.length > 0 && (
+              <div className="pt-1">
+                <button onClick={() => { setEditingItem(editingItem === item.id ? null : item.id); if (editingItem !== item.id) loadItemTags(item.id) }}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                  <TagsIcon className="size-3" /> Tags ({itemTags[item.id]?.length || 0})
+                </button>
+                {editingItem === item.id && (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {tags.map((tag) => {
+                      const active = (itemTags[item.id] || []).includes(tag.id)
+                      return (
+                        <button key={tag.id} onClick={() => toggleItemTag(item.id, tag.id)}
+                          className={`px-2 py-0.5 rounded text-xs border transition-colors ${active ? 'bg-primary text-primary-foreground border-primary' : 'bg-background hover:bg-accent'}`}>
+                          {tag.name}
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
