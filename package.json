@@ -3,10 +3,38 @@
   "version": "1.0.0",
   "description": "Gestor de personajes, equipamiento y materiales para servidor de rol Axyam",
   "main": "dist-electron/main.js",
+  "author": "Valant-Oni",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "electron-rebuild",
+    "dist": "npm run build && electron-builder",
+    "dist:portable": "npm run build && electron-builder --config.win.target=portable"
+  },
+  "build": {
+    "appId": "com.axyam.gestor",
+    "productName": "Gestor de Axyam",
+    "directories": {
+      "output": "dist/installer"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false
+    }
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -26,6 +54,7 @@
     "zustand": "^5.0.0"
   },
   "devDependencies": {
+    "@electron/rebuild": "^3.6.0",
     "@types/better-sqlite3": "^7.6.0",
     "@types/papaparse": "^5.5.0",
     "@types/react": "^19.0.0",
