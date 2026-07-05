@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Item, Tag, Character } from '@/types'
-import { Package, Search, Check, X, Tags as TagsIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Item, Tag, Character, Recipe, RecipeIngredient } from '@/types'
+import { Package, Search, Check, Tags as TagsIcon, ChevronDown, ChevronRight, Hammer } from 'lucide-react'
 
 export function ObjectsPage() {
   const [items, setItems] = useState<Item[]>([])
@@ -14,22 +13,42 @@ export function ObjectsPage() {
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('')
   const [editingItem, setEditingItem] = useState<number | null>(null)
+  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [expandedRecipe, setExpandedRecipe] = useState<Set<number>>(new Set())
+  const [recipeIngredients, setRecipeIngredients] = useState<Record<number, RecipeIngredient[]>>({})
 
   const load = async () => {
     try {
-      const [itemsData, tagsData, charsData] = await Promise.all([
+      const [itemsData, tagsData, charsData, recipesData] = await Promise.all([
         window.electronAPI.items.getAll(),
         window.electronAPI.tags.getAll(),
         window.electronAPI.characters.getAll(),
+        window.electronAPI.recipes.getAll(),
       ])
       setItems(itemsData as Item[])
       setTags(tagsData as Tag[])
       setCharacters(charsData as Character[])
+      setRecipes(recipesData as Recipe[])
     } catch (e) { console.error(e) }
     setLoading(false)
   }
 
   useEffect(() => { load() }, [])
+
+  const recipesByProduct: Record<string, Recipe> = {}
+  for (const r of recipes) recipesByProduct[r.product_name.toLowerCase()] = r
+
+  const toggleRecipe = async (recipeId: number) => {
+    if (expandedRecipe.has(recipeId)) {
+      setExpandedRecipe((prev) => { const next = new Set(prev); next.delete(recipeId); return next })
+    } else {
+      if (!recipeIngredients[recipeId]) {
+        const data = await window.electronAPI.recipes.getIngredients(recipeId)
+        setRecipeIngredients((prev) => ({ ...prev, [recipeId]: data as RecipeIngredient[] }))
+      }
+      setExpandedRecipe((prev) => { const next = new Set(prev); next.add(recipeId); return next })
+    }
+  }
 
   useEffect(() => {
     if (!selectedChar) { setMarkedItems(new Set()); return }
@@ -143,6 +162,44 @@ export function ObjectsPage() {
                         </button>
                       )
                     })}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {recipesByProduct[item.name.toLowerCase()] && (
+              <div className="pt-1">
+                <button onClick={() => toggleRecipe(recipesByProduct[item.name.toLowerCase()].id)}
+                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                  <Hammer className="size-3" /> Receta de crafting
+                </button>
+                {expandedRecipe.has(recipesByProduct[item.name.toLowerCase()].id) && (
+                  <div className="mt-1.5 p-2 rounded-lg bg-muted/30 border text-xs space-y-1">
+                    {(() => {
+                      const r = recipesByProduct[item.name.toLowerCase()]
+                      return (
+                        <>
+                          <div className="flex gap-2 text-muted-foreground">
+                            {r.method && <span>Método: {r.method}</span>}
+                            {r.time && <span>Tiempo: {r.time}</span>}
+                          </div>
+                          {recipeIngredients[r.id] && recipeIngredients[r.id].length > 0 && (
+                            <div>
+                              <p className="text-muted-foreground mb-0.5">Ingredientes:</p>
+                              <div className="space-y-0.5">
+                                {recipeIngredients[r.id].map((ing, i) => (
+                                  <div key={i} className="flex items-center gap-1">
+                                    <span>{ing.emoji || '•'}</span>
+                                    <span>{ing.name}</span>
+                                    <span className="text-muted-foreground">x{ing.quantity}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      )
+                    })()}
                   </div>
                 )}
               </div>

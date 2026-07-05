@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Sword, Users, Package, ScrollText, Dices, UserCircle, Sun, Moon, Tags } from 'lucide-react'
+import { Sword, Users, Package, ScrollText, Dices, UserCircle, Sun, Moon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useThemeStore } from '@/stores/themeStore'
 
@@ -8,7 +8,6 @@ const navItems = [
   { to: '/personajes', icon: Users, label: 'Personajes' },
   { to: '/objetos', icon: Package, label: 'Objetos' },
   { to: '/equipamiento', icon: ScrollText, label: 'Equipamiento' },
-  { to: '/tags', icon: Tags, label: 'Tags' },
   { to: '/dados', icon: Dices, label: 'Dados' },
 ]
 

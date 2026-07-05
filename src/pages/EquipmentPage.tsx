@@ -16,17 +16,17 @@ interface MarkedItem {
 }
 
 interface StatSum {
-  vida: number
-  ataque: number
-  ataque_magico: number
-  defensa: number
-  armadura: number
-  mana: number
-  estamina: number
-  agilidad: number
-  robo: number
-  sigilo: number
-  nulimagia: number
+  vida: string
+  ataque: string
+  ataque_magico: string
+  defensa: string
+  armadura: string
+  mana: string
+  estamina: string
+  agilidad: string
+  robo: string
+  sigilo: string
+  nulimagia: string
 }
 
 interface Penalties {
@@ -41,32 +41,78 @@ function parseAttributes(attrs: string | null): Partial<StatSum> {
   if (!attrs) return result
   const parts = attrs.split(',').map((p) => p.trim().toLowerCase())
   for (const part of parts) {
-    const m = part.match(/^(.+?)\s*\+\s*(\d+)$/)
+    const m = part.match(/^(.+?)\s*\+\s*(.+)$/)
     if (m) {
       const key = m[1].trim().replace(/[^a-záéíóúñ]/g, '')
-      const val = parseInt(m[2])
-      if (key.includes('vida')) result.vida = (result.vida || 0) + val
-      else if (key.includes('ataque') && key.includes('mag')) result.ataque_magico = (result.ataque_magico || 0) + val
-      else if (key.includes('ataque')) result.ataque = (result.ataque || 0) + val
-      else if (key.includes('defensa')) result.defensa = (result.defensa || 0) + val
-      else if (key.includes('armadur')) result.armadura = (result.armadura || 0) + val
-      else if (key.includes('mana')) result.mana = (result.mana || 0) + val
-      else if (key.includes('estamin')) result.estamina = (result.estamina || 0) + val
-      else if (key.includes('agilid')) result.agilidad = (result.agilidad || 0) + val
-      else if (key.includes('robo')) result.robo = (result.robo || 0) + val
-      else if (key.includes('sigilo')) result.sigilo = (result.sigilo || 0) + val
-      else if (key.includes('nulimag')) result.nulimagia = (result.nulimagia || 0) + val
+      let expr = m[2].trim()
+      if (expr.startsWith('+')) expr = expr.slice(1)
+      if (key.includes('vida')) result.vida = combineExpr(result.vida, expr)
+      else if (key.includes('ataque') && key.includes('mag')) result.ataque_magico = combineExpr(result.ataque_magico, expr)
+      else if (key.includes('ataque')) result.ataque = combineExpr(result.ataque, expr)
+      else if (key.includes('defensa')) result.defensa = combineExpr(result.defensa, expr)
+      else if (key.includes('armadur')) result.armadura = combineExpr(result.armadura, expr)
+      else if (key.includes('mana')) result.mana = combineExpr(result.mana, expr)
+      else if (key.includes('estamin')) result.estamina = combineExpr(result.estamina, expr)
+      else if (key.includes('agilid')) result.agilidad = combineExpr(result.agilidad, expr)
+      else if (key.includes('robo')) result.robo = combineExpr(result.robo, expr)
+      else if (key.includes('sigilo')) result.sigilo = combineExpr(result.sigilo, expr)
+      else if (key.includes('nulimag')) result.nulimagia = combineExpr(result.nulimagia, expr)
+    }
+    const m2 = part.match(/^(.+?)\s*-\s*(\d+)$/)
+    if (m2) {
+      const key = m2[1].trim().replace(/[^a-záéíóúñ]/g, '')
+      const val = parseInt(m2[2])
+      const expr = `-${val}`
+      if (key.includes('vida')) result.vida = combineExpr(result.vida, expr)
+      else if (key.includes('ataque') && key.includes('mag')) result.ataque_magico = combineExpr(result.ataque_magico, expr)
+      else if (key.includes('ataque')) result.ataque = combineExpr(result.ataque, expr)
+      else if (key.includes('defensa')) result.defensa = combineExpr(result.defensa, expr)
+      else if (key.includes('armadur')) result.armadura = combineExpr(result.armadura, expr)
+      else if (key.includes('mana')) result.mana = combineExpr(result.mana, expr)
+      else if (key.includes('estamin')) result.estamina = combineExpr(result.estamina, expr)
+      else if (key.includes('agilid')) result.agilidad = combineExpr(result.agilidad, expr)
+      else if (key.includes('robo')) result.robo = combineExpr(result.robo, expr)
+      else if (key.includes('sigilo')) result.sigilo = combineExpr(result.sigilo, expr)
+      else if (key.includes('nulimag')) result.nulimagia = combineExpr(result.nulimagia, expr)
     }
   }
   return result
 }
 
-function calcPenalties(armadura: number): Penalties {
+function combineExpr(a: string | undefined, b: string): string {
+  if (!a) return b
+  const aFlat = flatValue(a)
+  const bFlat = flatValue(b)
+  if (aFlat !== null && bFlat !== null) {
+    return String(aFlat + bFlat)
+  }
+  return `${a} + ${b}`
+}
+
+function flatValue(expr: string): number | null {
+  const n = parseInt(expr)
+  if (!isNaN(n)) return n
+  return null
+}
+
+function numericValue(expr: string): number {
+  const n = parseInt(expr)
+  if (!isNaN(n)) return n
+  if (expr.includes('d')) {
+    const parts = expr.split(/[d+]/).filter(Boolean)
+    const nums = parts.map(Number).filter((n) => !isNaN(n))
+    return nums.reduce((a, b) => a + b, 0)
+  }
+  return 0
+}
+
+function calcPenalties(armadura: string): Penalties {
+  const arm = numericValue(armadura)
   return {
-    sigilo: Math.floor(armadura / 25),
-    robo: Math.floor(armadura / 30),
-    agilidad_huir: Math.floor(armadura / 15),
-    agilidad_perseguir: Math.floor(armadura / 25),
+    sigilo: Math.floor(arm / 25),
+    robo: Math.floor(arm / 30),
+    agilidad_huir: Math.floor(arm / 15),
+    agilidad_perseguir: Math.floor(arm / 25),
   }
 }
 
@@ -138,11 +184,11 @@ export function EquipmentPage() {
   }
 
   // Sum stats from equipped items
-  const totalStats: StatSum = { vida: 0, ataque: 0, ataque_magico: 0, defensa: 0, armadura: 0, mana: 0, estamina: 0, agilidad: 0, robo: 0, sigilo: 0, nulimagia: 0 }
+  const totalStats: StatSum = { vida: '', ataque: '', ataque_magico: '', defensa: '', armadura: '', mana: '', estamina: '', agilidad: '', robo: '', sigilo: '', nulimagia: '' }
   for (const item of equippedItems) {
     const parsed = parseAttributes(item.attributes)
     for (const [key, val] of Object.entries(parsed)) {
-      if (val && key in totalStats) (totalStats as any)[key] += val
+      if (val && key in totalStats) (totalStats as any)[key] = combineExpr((totalStats as any)[key], val as string)
     }
   }
   const penalties = calcPenalties(totalStats.armadura)
@@ -193,7 +239,7 @@ export function EquipmentPage() {
               <SummaryStat label="Nulimagia" value={totalStats.nulimagia} />
             </div>
 
-            {totalStats.armadura > 0 && (
+            {totalStats.armadura && numericValue(totalStats.armadura) > 0 && (
               <div className="pt-2 border-t space-y-0.5">
                 <p className="text-xs font-medium text-destructive">Penalizaciones por armadura ({totalStats.armadura} total):</p>
                 {penalties.sigilo > 0 && <p className="text-xs text-destructive/80">-{penalties.sigilo} sigilo (cada 25)</p>}
@@ -246,12 +292,14 @@ export function EquipmentPage() {
   )
 }
 
-function SummaryStat({ label, value }: { label: string; value: number }) {
-  if (value === 0) return null
+function SummaryStat({ label, value }: { label: string; value: string }) {
+  if (!value) return null
+  const n = parseInt(value)
+  const display = !isNaN(n) ? (n >= 0 ? `+${n}` : `${n}`) : value
   return (
     <div className="bg-muted/50 rounded-lg p-2 text-center">
       <p className="text-[10px] text-muted-foreground">{label}</p>
-      <p className="text-sm font-semibold">+{value}</p>
+      <p className="text-sm font-semibold">{display}</p>
     </div>
   )
 }
