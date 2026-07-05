@@ -21,6 +21,8 @@ function runMigrations(db: Database.Database): void {
     if (currentVersion) return
   }
 
+  db.pragma('foreign_keys = OFF')
+
   // Drop old tables if schema changed
   db.exec(`
     DROP TABLE IF EXISTS character_materials;
@@ -176,6 +178,8 @@ function runMigrations(db: Database.Database): void {
 
     INSERT INTO data_migration (name, time_completed) VALUES ('schema_v${SCHEMA_VERSION}', strftime('%s','now') * 1000);
   `)
+
+  db.pragma('foreign_keys = ON')
 }
 
 function seedZonesAndRaces(db: Database.Database): void {
