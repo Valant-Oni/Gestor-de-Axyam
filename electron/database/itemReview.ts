@@ -582,19 +582,31 @@ export function applyItemReview(db: Database.Database): void {
   const hasReview = db.prepare("SELECT name FROM data_migration WHERE name = 'item_review_v1'").get()
   if (hasReview) return
 
+  const getId = db.prepare('SELECT id FROM items WHERE name = ?')
+  const delCharItems = db.prepare('DELETE FROM character_items WHERE item_id = ?')
+  const delItemTags = db.prepare('DELETE FROM item_tags WHERE item_id = ?')
+  const delRecipeIng = db.prepare('DELETE FROM recipe_ingredients WHERE recipe_id IN (SELECT id FROM recipes WHERE product_item_id = ?)')
+  const delRecipes = db.prepare('DELETE FROM recipes WHERE product_item_id = ?')
+  const delItem = db.prepare('DELETE FROM items WHERE id = ?')
+  const updateItem = db.prepare('UPDATE items SET attributes = ? WHERE name = ?')
+
   const tx = db.transaction(() => {
-    const deleteStmt = db.prepare('DELETE FROM items WHERE name = ?')
-    const updateStmt = db.prepare('UPDATE items SET attributes = ? WHERE name = ?')
     let deleted = 0
     let updated = 0
 
     for (const item of itemsToDelete) {
-      const result = deleteStmt.run(item.name)
+      const row = getId.get(item.name) as { id: number } | undefined
+      if (!row) continue
+      delCharItems.run(row.id)
+      delItemTags.run(row.id)
+      delRecipeIng.run(row.id)
+      delRecipes.run(row.id)
+      const result = delItem.run(row.id)
       if (result.changes > 0) deleted++
     }
 
     for (const item of itemsToUpdate) {
-      const result = updateStmt.run(item.attributes, item.name)
+      const result = updateItem.run(item.attributes, item.name)
       if (result.changes > 0) updated++
     }
 

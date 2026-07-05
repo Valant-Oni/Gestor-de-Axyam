@@ -12,7 +12,7 @@ export function getDatabase(): Database.Database {
   return db
 }
 
-const SCHEMA_VERSION = 2
+const SCHEMA_VERSION = 3
 
 function runMigrations(db: Database.Database): void {
   const hasMigrationTable = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='data_migration'").get()
@@ -111,14 +111,14 @@ function runMigrations(db: Database.Database): void {
 
     CREATE TABLE item_tags (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      item_id INTEGER NOT NULL REFERENCES items(id),
+      item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
       tag_id INTEGER NOT NULL REFERENCES tags(id),
       UNIQUE(item_id, tag_id)
     );
 
     CREATE TABLE recipes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      product_item_id INTEGER NOT NULL REFERENCES items(id),
+      product_item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
       method TEXT DEFAULT 'crafting',
       time TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -126,8 +126,8 @@ function runMigrations(db: Database.Database): void {
 
     CREATE TABLE recipe_ingredients (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      recipe_id INTEGER NOT NULL REFERENCES recipes(id),
-      item_id INTEGER NOT NULL REFERENCES items(id),
+      recipe_id INTEGER NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
+      item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
       quantity INTEGER NOT NULL DEFAULT 1
     );
 
@@ -157,7 +157,7 @@ function runMigrations(db: Database.Database): void {
     CREATE TABLE character_items (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
-      item_id INTEGER NOT NULL REFERENCES items(id),
+      item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
       equipped INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       UNIQUE(character_id, item_id)
