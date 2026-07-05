@@ -24,9 +24,12 @@ function runMigrations(db: Database.Database): void {
   // Drop old tables if schema changed
   db.exec(`
     DROP TABLE IF EXISTS character_materials;
+    DROP TABLE IF EXISTS character_items;
     DROP TABLE IF EXISTS character_equipment;
     DROP TABLE IF EXISTS recipe_ingredients;
     DROP TABLE IF EXISTS recipes;
+    DROP TABLE IF EXISTS item_tags;
+    DROP TABLE IF EXISTS tags;
     DROP TABLE IF EXISTS items;
     DROP TABLE IF EXISTS race_restrictions;
     DROP TABLE IF EXISTS race_bonuses;
@@ -171,7 +174,7 @@ function runMigrations(db: Database.Database): void {
       quantity_owned INTEGER DEFAULT 0
     );
 
-    INSERT INTO data_migration (name, time_completed) VALUES ('schema_v2', strftime('%s','now') * 1000);
+    INSERT INTO data_migration (name, time_completed) VALUES ('schema_v${SCHEMA_VERSION}', strftime('%s','now') * 1000);
   `)
 }
 
