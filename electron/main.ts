@@ -36,44 +36,37 @@ function showErrorDialog(title: string, message: string): void {
     },
   })
 
-  win.loadURL(`data:text/html;charset=utf-8,<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: system-ui, -apple-system, sans-serif; padding: 24px; background: #1e1e2e; color: #cdd6f4; }
-  h2 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: #f38ba8; }
-  textarea { width: 100%; height: 240px; background: #181825; color: #cdd6f4; border: 1px solid #45475a; border-radius: 6px; padding: 10px; font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; font-size: 13px; resize: vertical; outline: none; }
-  textarea:focus { border-color: #89b4fa; }
-  .buttons { margin-top: 14px; display: flex; gap: 8px; }
-  button { padding: 8px 18px; font-size: 13px; border: none; border-radius: 6px; cursor: pointer; font-family: inherit; transition: .15s; }
-  .btn-copy { background: #89b4fa; color: #1e1e2e; font-weight: 500; }
-  .btn-copy:hover { background: #74c7ec; }
-  .btn-close { background: #45475a; color: #cdd6f4; }
-  .btn-close:hover { background: #585b70; }
-  .copied { background: #a6e3a1 !important; color: #1e1e2e; }
-</style>
-</head>
-<body>
-<h2>${safeTitle}</h2>
-<textarea readonly id="errorText" spellcheck="false">${safeMessage}</textarea>
-<div class="buttons">
-  <button class="btn-copy" id="copyBtn">Copiar al portapapeles</button>
-  <button class="btn-close" onclick="window.close()">Cerrar</button>
-</div>
-<script>
-  document.getElementById('copyBtn').addEventListener('click', () => {
-    navigator.clipboard.writeText(document.getElementById('errorText').value).then(() => {
-      const btn = document.getElementById('copyBtn')
-      btn.textContent = 'Copiado!'
-      btn.classList.add('copied')
-      setTimeout(() => { btn.textContent = 'Copiar al portapapeles'; btn.classList.remove('copied') }, 2000)
-    })
-  })
-</script>
-</body>
-</html>`)
+  const html = '<!DOCTYPE html>' +
+'<html><head><meta charset="utf-8">' +
+'<style>' +
+'*{margin:0;padding:0;box-sizing:border-box}' +
+'body{font-family:system-ui,-apple-system,sans-serif;padding:24px;background:#1e1e2e;color:#cdd6f4}' +
+'h2{font-size:16px;font-weight:600;margin-bottom:12px;color:#f38ba8}' +
+'textarea{width:100%;height:240px;background:#181825;color:#cdd6f4;border:1px solid #45475a;border-radius:6px;padding:10px;font-family:"Cascadia Code","Fira Code",Consolas,monospace;font-size:13px;resize:vertical;outline:none}' +
+'textarea:focus{border-color:#89b4fa}' +
+'.buttons{margin-top:14px;display:flex;gap:8px}' +
+'button{padding:8px 18px;font-size:13px;border:none;border-radius:6px;cursor:pointer;font-family:inherit}' +
+'.btn-copy{background:#89b4fa;color:#1e1e2e;font-weight:500}' +
+'.btn-copy:hover{background:#74c7ec}' +
+'.btn-close{background:#45475a;color:#cdd6f4}' +
+'.btn-close:hover{background:#585b70}' +
+'.copied{background:#a6e3a1!important;color:#1e1e2e}' +
+'</style></head><body>' +
+'<h2>' + safeTitle + '</h2>' +
+'<textarea readonly id="errorText" spellcheck="false">' + safeMessage + '</textarea>' +
+'<div class="buttons">' +
+'<button class="btn-copy" id="copyBtn">Copiar al portapapeles</button>' +
+'<button class="btn-close" onclick="window.close()">Cerrar</button>' +
+'</div>' +
+'<script>' +
+'document.getElementById("copyBtn").addEventListener("click",function(){' +
+'navigator.clipboard.writeText(document.getElementById("errorText").value).then(function(){' +
+'var b=document.getElementById("copyBtn");b.textContent="Copiado!";b.classList.add("copied");' +
+'setTimeout(function(){b.textContent="Copiar al portapapeles";b.classList.remove("copied")},2000)' +
+'})})' +
+'</script></body></html>'
+
+  win.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(html))
 }
 
 process.on('uncaughtException', (err) => {
