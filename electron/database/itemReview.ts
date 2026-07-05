@@ -35,6 +35,8 @@ const itemsToDelete: ItemDelete[] = [
   { name: 'rana' },
   { name: 'z latigo divino' },
   { name: 'z latigo oscuro' },
+  { name: 'puntos de amistad' },
+  { name: 'banhammer' },
 ]
 
 const itemsToUpdate: ItemUpdate[] = [
@@ -566,7 +568,7 @@ const itemsToUpdate: ItemUpdate[] = [
   { name: 'escudo diamante', attributes: 'defensa+2d4+1d3' },
   { name: 'escudo archimagico', attributes: 'defensa+1d11, mana+2' },
   { name: 'escudo demoniaco', attributes: 'defensa+1d5+1d6' },
-  { name: 'escudo maligno', attributes: 'defensa+1d10' },
+  { name: 'escudo maligno', attributes: 'defensa+1d10, ataque+2' },
   { name: 'escudo del devorador', attributes: 'defensa+1d6+1d5' },
   { name: 'escudo del valhalla', attributes: 'defensa+1d6+1d5' },
   { name: 'Cadenas de Lealtad', attributes: 'ataque+3d6' },

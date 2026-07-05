@@ -17,22 +17,47 @@ export function parseAndRoll(expr: string): DiceResult {
     return { result: val, rolls: [val], expr, breakdown: `${val}` }
   }
 
-  // Expression like "1d3+2", "1d10+2", "2d6+3"
-  const fullMatch = expr.match(/^(\d*)d(\d+)(?:\s*\+\s*(\d+))?$/)
-  if (fullMatch) {
-    const count = fullMatch[1] ? parseInt(fullMatch[1]) : 1
-    const sides = parseInt(fullMatch[2])
-    const bonus = fullMatch[3] ? parseInt(fullMatch[3]) : 0
-    const rolls: number[] = []
+  // Parse compound dice expressions like "2d5+1d4", "1d7+1d5", "1d10+2"
+  // Extract all dice groups, then a trailing flat bonus
+  let remaining = expr
+  const rolls: number[] = []
+  let breakdownParts: string[] = []
+  let bonus = 0
+
+  const diceRegex = /(\d*)d(\d+)/g
+  let match: RegExpExecArray | null
+
+  while ((match = diceRegex.exec(remaining)) !== null) {
+    const count = match[1] ? parseInt(match[1]) : 1
+    const sides = parseInt(match[2])
+    const groupRolls: number[] = []
 
     for (let i = 0; i < count; i++) {
-      rolls.push(Math.floor(Math.random() * sides) + 1)
+      groupRolls.push(Math.floor(Math.random() * sides) + 1)
     }
 
+    rolls.push(...groupRolls)
+    breakdownParts.push(`[${groupRolls.join(', ')}]`)
+
+    // Remove this dice group from remaining to find bonus
+    remaining = remaining.replace(match[0], '').replace(/^\+/, '')
+  }
+
+  // Check for trailing flat bonus after all dice groups
+  remaining = remaining.replace(/\s/g, '')
+  if (remaining.startsWith('+')) {
+    const bonusPart = remaining.substring(1)
+    const bonusMatch = bonusPart.match(/^(\d+)$/)
+    if (bonusMatch) {
+      bonus = parseInt(bonusMatch[1])
+    }
+  }
+
+  if (rolls.length > 0) {
     const rollTotal = rolls.reduce((a, b) => a + b, 0)
     const result = rollTotal + bonus
 
-    let breakdown = `[${rolls.join(', ')}]`
+    let breakdown = breakdownParts.join(' + ')
     if (bonus > 0) breakdown += ` + ${bonus}`
     breakdown += ` = ${result}`
 

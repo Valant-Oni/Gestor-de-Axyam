@@ -294,8 +294,8 @@ export function EquipmentPage() {
 
 function SummaryStat({ label, value }: { label: string; value: string }) {
   if (!value) return null
-  const n = parseInt(value)
-  const display = !isNaN(n) ? (n >= 0 ? `+${n}` : `${n}`) : value
+  const isFlat = /^\d+$/.test(value)
+  const display = isFlat ? (parseInt(value) >= 0 ? `+${parseInt(value)}` : `${parseInt(value)}`) : value
   return (
     <div className="bg-muted/50 rounded-lg p-2 text-center">
       <p className="text-[10px] text-muted-foreground">{label}</p>

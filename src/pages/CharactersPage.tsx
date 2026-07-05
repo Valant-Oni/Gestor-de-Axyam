@@ -3,10 +3,29 @@ import { Character, Race, Zone } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit2, Trash2, User } from 'lucide-react'
 
+function parseItemAttributes(attrsStr: string | null): Record<string, string> {
+  const result: Record<string, string> = {}
+  if (!attrsStr) return result
+  for (const part of attrsStr.split(',')) {
+    const m = part.trim().toLowerCase().match(/^(.+?)\s*\+\s*(.+)$/)
+    if (m) result[m[1]] = m[2]
+  }
+  return result
+}
+
+function combineExpr(a: string | undefined, b: string): string {
+  if (!a) return b
+  if (/^\d+$/.test(a) && /^\d+$/.test(b)) return `${parseInt(a) + parseInt(b)}`
+  return `${a} + ${b}`
+}
+
+const STAT_KEYS = ['vida', 'ataque', 'ataque_magico', 'defensa', 'mana', 'estamina', 'agilidad', 'robo', 'sigilo'] as const
+
 export function CharactersPage() {
   const [characters, setCharacters] = useState<Character[]>([])
   const [races, setRaces] = useState<Race[]>([])
   const [zones, setZones] = useState<Zone[]>([])
+  const [charItems, setCharItems] = useState<Record<number, any[]>>({})
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<Character | null>(null)
@@ -22,6 +41,14 @@ export function CharactersPage() {
       setCharacters(chars as Character[])
       setRaces(raceData as Race[])
       setZones(zoneData as Zone[])
+
+      // Load items for each character
+      const itemsMap: Record<number, any[]> = {}
+      for (const c of chars as Character[]) {
+        const items = await window.electronAPI.characters.getItems(c.id)
+        itemsMap[c.id] = items as any[]
+      }
+      setCharItems(itemsMap)
     } catch (e) {
       console.error(e)
     }
@@ -125,19 +152,35 @@ export function CharactersPage() {
                     <button onClick={() => handleDelete(c.id)} className="p-1 hover:bg-accent rounded"><Trash2 className="size-4 text-destructive" /></button>
                   </div>
                 </div>
-                {race && (
-                  <div className="grid grid-cols-3 gap-1 text-xs">
-                    <Stat label="Vida" expr={race.vida} />
-                    <Stat label="Ataque" expr={race.ataque} />
-                    <Stat label="Atq Mágico" expr={race.ataque_magico} />
-                    <Stat label="Defensa" expr={race.defensa} />
-                    <Stat label="Mana" expr={race.mana} />
-                    <Stat label="Estamina" expr={race.estamina} />
-                    <Stat label="Agilidad" expr={race.agilidad} />
-                    <Stat label="Robo" expr={race.robo} />
-                    <Stat label="Sigilo" expr={race.sigilo} />
-                  </div>
-                )}
+                {race && (() => {
+                  const equipped = (charItems[c.id] || []).filter((i: any) => i.equipped)
+                  const equipStats: Record<string, string> = {}
+                  for (const item of equipped) {
+                    const parsed = parseItemAttributes(item.attributes)
+                    for (const [k, v] of Object.entries(parsed)) {
+                      equipStats[k] = combineExpr(equipStats[k], v)
+                    }
+                  }
+                  const keyMap: Record<string, string> = { vida: 'Vida', ataque: 'Ataque', ataque_magico: 'Atq Mágico', defensa: 'Defensa', mana: 'Mana', estamina: 'Estamina', agilidad: 'Agilidad', robo: 'Robo', sigilo: 'Sigilo' }
+                  const statMap: Record<string, string> = { vida: race.vida, ataque: race.ataque, ataque_magico: race.ataque_magico, defensa: race.defensa, mana: race.mana, estamina: race.estamina, agilidad: race.agilidad, robo: race.robo, sigilo: race.sigilo }
+                  return (
+                    <div className="grid grid-cols-3 gap-1 text-xs">
+                      {STAT_KEYS.map((k) => {
+                        const base = statMap[k]
+                        const equip = equipStats[k]
+                        const total = equip ? combineExpr(base, equip) : base
+                        return (
+                          <div key={k} className="bg-muted/50 rounded-lg p-1.5 text-center">
+                            <p className="text-muted-foreground">{keyMap[k]}</p>
+                            <p className="font-medium">{base === '0' ? '-' : base}</p>
+                            {equip && <p className="text-[10px] text-green-400">+ equip: {equip}</p>}
+                            {equip && <p className="text-[10px] text-yellow-400">total: {total}</p>}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )
+                })()}
                 {race && race.restrictions.length > 0 && (
                   <div className="text-xs text-destructive/80 space-y-0.5">
                     {race.restrictions.map((r, i) => <p key={i}>{r.message}</p>)}
@@ -152,12 +195,4 @@ export function CharactersPage() {
   )
 }
 
-function Stat({ label, expr }: { label: string; expr: string }) {
-  const val = expr === '0' ? '-' : expr
-  return (
-    <div className="bg-muted/50 rounded-lg p-1.5 text-center">
-      <p className="text-muted-foreground">{label}</p>
-      <p className="font-medium">{val}</p>
-    </div>
-  )
-}
+
