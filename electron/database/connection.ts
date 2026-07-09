@@ -325,6 +325,49 @@ function seedItemsAndRecipes(db: Database.Database): void {
   console.log(`Seeded ${itemsData.length} items and ${recipesData.length} recipes`)
 }
 
+function refreshRecipesFromCSV(db: Database.Database): void {
+  const fs = require('fs')
+  const Papa = require('papaparse')
+  const downloads = path.join(app.getPath('home'), 'Downloads')
+  const recipesPath = path.join(downloads, 'recipes.csv')
+
+  if (!fs.existsSync(recipesPath)) {
+    console.log('recipes.csv not found in Downloads, skipping recipe refresh')
+    return
+  }
+
+  const recipesData = Papa.parse(fs.readFileSync(recipesPath, 'utf-8'), { header: true, skipEmptyLines: true }).data
+  const insertRecipe = db.prepare('INSERT INTO recipes (product_item_id, method, time) VALUES (?, ?, ?)')
+  const insertIngredient = db.prepare('INSERT INTO recipe_ingredients (recipe_id, item_id, quantity) VALUES (?, ?, ?)')
+  const getItemId = db.prepare('SELECT id FROM items WHERE name = ?')
+
+  const tx = db.transaction(() => {
+    db.exec('DELETE FROM recipes')
+    let inserted = 0
+    for (const row of recipesData) {
+      if (!row.product) continue
+      const m = row.product.match(/^(.+?)x(\d+)$/)
+      if (!m) continue
+      const product = getItemId.get(m[1].trim()) as { id: number } | undefined
+      if (!product) continue
+      const result = insertRecipe.run(product.id, row.method || 'crafting', row.time || null)
+      const recipeId = result.lastInsertRowid as number
+      if (row.ingredients) {
+        for (const part of row.ingredients.split(',')) {
+          const im = part.trim().match(/^(.+?)x(\d+)$/)
+          if (im) {
+            const item = getItemId.get(im[1].trim()) as { id: number } | undefined
+            if (item) insertIngredient.run(recipeId, item.id, parseInt(im[2]))
+          }
+        }
+      }
+      inserted++
+    }
+    console.log(`Refreshed ${inserted} recipes from CSV (${recipesData.length} total rows)`)
+  })
+  tx()
+}
+
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -335,4 +378,5 @@ export function initDatabase(): void {
   seedItemsAndRecipes(db)
   applyItemReview(db)
   applyTagReview(db)
+  refreshRecipesFromCSV(db)
 }
