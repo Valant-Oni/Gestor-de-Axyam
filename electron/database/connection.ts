@@ -329,13 +329,6 @@ function recipeIngredientFix(db: Database.Database): void {
   const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'recipe_ingredient_fix_v1'").get()
   if (hasFix) return
 
-  const count = db.prepare('SELECT COUNT(*) as count FROM recipe_ingredients').get() as { count: number }
-  if (count.count > 0) {
-    // All recipes have ingredients, nothing to fix
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('recipe_ingredient_fix_v1', strftime('%s','now') * 1000)").run()
-    return
-  }
-
   const fs = require('fs')
   const Papa = require('papaparse')
   const downloads = path.join(app.getPath('home'), 'Downloads')
