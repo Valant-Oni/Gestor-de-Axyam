@@ -325,23 +325,71 @@ function seedItemsAndRecipes(db: Database.Database): void {
   console.log(`Seeded ${itemsData.length} items and ${recipesData.length} recipes`)
 }
 
-function refreshRecipesFromCSV(db: Database.Database): void {
-  const fs = require('fs')
-  const Papa = require('papaparse')
-  const downloads = path.join(app.getPath('home'), 'Downloads')
-  const recipesPath = path.join(downloads, 'recipes.csv')
+function recipeIngredientFix(db: Database.Database): void {
+  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'recipe_ingredient_fix_v1'").get()
+  if (hasFix) return
 
-  if (!fs.existsSync(recipesPath)) {
-    console.log('recipes.csv not found in Downloads, skipping recipe refresh')
+  const count = db.prepare('SELECT COUNT(*) as count FROM recipe_ingredients').get() as { count: number }
+  if (count.count > 0) {
+    // All recipes have ingredients, nothing to fix
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('recipe_ingredient_fix_v1', strftime('%s','now') * 1000)").run()
     return
   }
 
+  const fs = require('fs')
+  const Papa = require('papaparse')
+  const downloads = path.join(app.getPath('home'), 'Downloads')
+
+  const itemsPath = path.join(downloads, 'items.csv')
+  const recipesPath = path.join(downloads, 'recipes.csv')
+
+  if (!fs.existsSync(itemsPath) || !fs.existsSync(recipesPath)) {
+    console.log('CSV files not found in Downloads, cannot fix recipes')
+    return
+  }
+
+  const itemsData = Papa.parse(fs.readFileSync(itemsPath, 'utf-8'), { header: true, skipEmptyLines: true }).data
   const recipesData = Papa.parse(fs.readFileSync(recipesPath, 'utf-8'), { header: true, skipEmptyLines: true }).data
+
+  const insertItem = db.prepare('INSERT OR IGNORE INTO items (type, name, description, use_text, image, emoji, template, tags, attributes, required_race, required_class, required_gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
   const insertRecipe = db.prepare('INSERT INTO recipes (product_item_id, method, time) VALUES (?, ?, ?)')
   const insertIngredient = db.prepare('INSERT INTO recipe_ingredients (recipe_id, item_id, quantity) VALUES (?, ?, ?)')
   const getItemId = db.prepare('SELECT id FROM items WHERE name = ?')
 
   const tx = db.transaction(() => {
+    // Re-insert any missing items referenced by recipes
+    for (const row of recipesData) {
+      if (row.ingredients) {
+        for (const part of row.ingredients.split(',')) {
+          const im = part.trim().match(/^(.+?)x(\d+)$/)
+          if (im) {
+            const name = im[1].trim()
+            if (!getItemId.get(name)) {
+              const csvItem = itemsData.find((r: any) => r.name && r.name.trim() === name)
+              if (csvItem) {
+                insertItem.run(csvItem.type || null, csvItem.name, csvItem.description || null, csvItem.use || null, csvItem.image || null, csvItem.emoji || null, csvItem.template || null, csvItem.tags || null, csvItem.attributes || null, csvItem.required_race || null, csvItem.required_class || null, csvItem.required_gender || null)
+                console.log('Restored missing item:', name)
+              }
+            }
+          }
+        }
+      }
+      if (row.product) {
+        const m = row.product.match(/^(.+?)x(\d+)$/)
+        if (m) {
+          const name = m[1].trim()
+          if (!getItemId.get(name)) {
+            const csvItem = itemsData.find((r: any) => r.name && r.name.trim() === name)
+            if (csvItem) {
+              insertItem.run(csvItem.type || null, csvItem.name, csvItem.description || null, csvItem.use || null, csvItem.image || null, csvItem.emoji || null, csvItem.template || null, csvItem.tags || null, csvItem.attributes || null, csvItem.required_race || null, csvItem.required_class || null, csvItem.required_gender || null)
+              console.log('Restored missing item:', name)
+            }
+          }
+        }
+      }
+    }
+
+    // Delete all recipes and re-seed from CSV
     db.exec('DELETE FROM recipes')
     let inserted = 0
     for (const row of recipesData) {
@@ -363,7 +411,9 @@ function refreshRecipesFromCSV(db: Database.Database): void {
       }
       inserted++
     }
-    console.log(`Refreshed ${inserted} recipes from CSV (${recipesData.length} total rows)`)
+
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('recipe_ingredient_fix_v1', strftime('%s','now') * 1000)").run()
+    console.log(`Recipe fix applied: ${inserted} recipes re-seeded from CSV`)
   })
   tx()
 }
@@ -378,5 +428,5 @@ export function initDatabase(): void {
   seedItemsAndRecipes(db)
   applyItemReview(db)
   applyTagReview(db)
-  refreshRecipesFromCSV(db)
+  recipeIngredientFix(db)
 }

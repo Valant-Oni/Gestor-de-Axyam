@@ -585,6 +585,8 @@ export function applyItemReview(db: Database.Database): void {
   if (hasReview) return
 
   const getId = db.prepare('SELECT id FROM items WHERE name = ?')
+  const isIngredient = db.prepare('SELECT COUNT(*) as count FROM recipe_ingredients WHERE item_id = ?')
+  const isProduct = db.prepare('SELECT COUNT(*) as count FROM recipes WHERE product_item_id = ?')
   const delCharItems = db.prepare('DELETE FROM character_items WHERE item_id = ?')
   const delItemTags = db.prepare('DELETE FROM item_tags WHERE item_id = ?')
   const delRecipeIng = db.prepare('DELETE FROM recipe_ingredients WHERE recipe_id IN (SELECT id FROM recipes WHERE product_item_id = ?)')
@@ -595,10 +597,18 @@ export function applyItemReview(db: Database.Database): void {
   const tx = db.transaction(() => {
     let deleted = 0
     let updated = 0
+    let skipped = 0
 
     for (const item of itemsToDelete) {
       const row = getId.get(item.name) as { id: number } | undefined
       if (!row) continue
+      const ingCount = (isIngredient.get(row.id) as { count: number }).count
+      const prodCount = (isProduct.get(row.id) as { count: number }).count
+      if (ingCount > 0 || prodCount > 0) {
+        console.log(`Skipping deletion of "${item.name}" — used in ${prodCount > 0 ? 'recipes as product' : ''}${prodCount > 0 && ingCount > 0 ? ' and ' : ''}${ingCount > 0 ? 'recipes as ingredient' : ''}`)
+        skipped++
+        continue
+      }
       delCharItems.run(row.id)
       delItemTags.run(row.id)
       delRecipeIng.run(row.id)
@@ -606,6 +616,7 @@ export function applyItemReview(db: Database.Database): void {
       const result = delItem.run(row.id)
       if (result.changes > 0) deleted++
     }
+    if (skipped > 0) console.log(`Skipped ${skipped} items that are referenced in recipes`)
 
     for (const item of itemsToUpdate) {
       const result = updateItem.run(item.attributes, item.name)
