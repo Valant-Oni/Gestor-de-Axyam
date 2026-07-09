@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Item, Tag, Character, Recipe, RecipeIngredient } from '@/types'
-import { Package, Search, Check, Tags as TagsIcon, ChevronDown, ChevronRight, Hammer } from 'lucide-react'
+import { Package, Search, Check, Tags as TagsIcon, Hammer } from 'lucide-react'
 
 export function ObjectsPage() {
   const [items, setItems] = useState<Item[]>([])
@@ -12,7 +12,7 @@ export function ObjectsPage() {
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('')
-  const [editingItem, setEditingItem] = useState<number | null>(null)
+  const [tagFilter, setTagFilter] = useState('')
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [expandedRecipe, setExpandedRecipe] = useState<Set<number>>(new Set())
   const [recipeIngredients, setRecipeIngredients] = useState<Record<number, RecipeIngredient[]>>({})
@@ -29,6 +29,14 @@ export function ObjectsPage() {
       setTags(tagsData as Tag[])
       setCharacters(charsData as Character[])
       setRecipes(recipesData as Recipe[])
+
+      // Eagerly load tags for all items
+      const tagsMap: Record<number, number[]> = {}
+      for (const item of itemsData as Item[]) {
+        const ids = await window.electronAPI.tags.getItemTags(item.id)
+        tagsMap[item.id] = ids
+      }
+      setItemTags(tagsMap)
     } catch (e) { console.error(e) }
     setLoading(false)
   }
@@ -59,13 +67,6 @@ export function ObjectsPage() {
     })
   }, [selectedChar])
 
-  const loadItemTags = async (itemId: number) => {
-    try {
-      const ids = await window.electronAPI.tags.getItemTags(itemId)
-      setItemTags((prev) => ({ ...prev, [itemId]: ids }))
-    } catch { }
-  }
-
   const toggleMark = async (itemId: number) => {
     if (!selectedChar) return
     try {
@@ -79,21 +80,21 @@ export function ObjectsPage() {
     } catch (e) { console.error(e) }
   }
 
-  const toggleItemTag = async (itemId: number, tagId: number) => {
-    const current = itemTags[itemId] || []
-    const next = current.includes(tagId) ? current.filter((t) => t !== tagId) : [...current, tagId]
-    try {
-      await window.electronAPI.tags.setItemTags(itemId, next)
-      setItemTags((prev) => ({ ...prev, [itemId]: next }))
-    } catch (e) { console.error(e) }
-  }
-
   const types = [...new Set(items.map((i) => i.type).filter(Boolean))]
   const filtered = items.filter((i) => {
     if (search && !i.name.toLowerCase().includes(search.toLowerCase())) return false
     if (typeFilter && i.type !== typeFilter) return false
+    const itemTagIds = itemTags[i.id] || []
+    if (tagFilter === 'untagged') return itemTagIds.length === 0
+    if (tagFilter === 'tagged') return itemTagIds.length > 0
+    if (tagFilter) {
+      const tagId = parseInt(tagFilter)
+      if (!isNaN(tagId)) return itemTagIds.includes(tagId)
+    }
     return true
   })
+
+  const tagName = (tagId: number) => tags.find((t) => t.id === tagId)?.name || '?'
 
   if (loading) return <div className="flex items-center justify-center h-full"><p className="text-muted-foreground">Cargando...</p></div>
 
@@ -122,90 +123,88 @@ export function ObjectsPage() {
           <option value="">Todos los tipos</option>
           {types.map((t) => <option key={t} value={t}>{t}</option>)}
         </select>
+        <select value={tagFilter} onChange={(e) => setTagFilter(e.target.value)}
+          className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+          <option value="">Todos los tags</option>
+          <option value="tagged">Con tag</option>
+          <option value="untagged">Sin tag</option>
+          {tags.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+        </select>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {filtered.map((item) => (
-          <div key={item.id} className={`border rounded-xl p-4 bg-card space-y-2 transition-colors ${markedItems.has(item.id) ? 'ring-2 ring-primary' : ''}`}>
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-lg">{item.emoji || '📦'}</span>
-                <div>
-                  <p className="font-medium text-sm">{item.name}</p>
-                  {item.type && <p className="text-xs text-muted-foreground">{item.type}</p>}
+        {filtered.map((item) => {
+          const itemTagIds = itemTags[item.id] || []
+          return (
+            <div key={item.id} className={`border rounded-xl p-4 bg-card space-y-2 transition-colors ${markedItems.has(item.id) ? 'ring-2 ring-primary' : ''}`}>
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">{item.emoji || '📦'}</span>
+                  <div>
+                    <p className="font-medium text-sm">{item.name}</p>
+                    {item.type && <p className="text-xs text-muted-foreground">{item.type}</p>}
+                  </div>
                 </div>
+                {selectedChar && (
+                  <button onClick={() => toggleMark(item.id)}
+                    className={`p-1.5 rounded-full transition-colors ${markedItems.has(item.id) ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'}`}>
+                    {markedItems.has(item.id) ? <Check className="size-3.5" /> : <Package className="size-3.5" />}
+                  </button>
+                )}
               </div>
-              {selectedChar && (
-                <button onClick={() => toggleMark(item.id)}
-                  className={`p-1.5 rounded-full transition-colors ${markedItems.has(item.id) ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'}`}>
-                  {markedItems.has(item.id) ? <Check className="size-3.5" /> : <Package className="size-3.5" />}
-                </button>
+              {item.description && <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>}
+              {item.attributes && <p className="text-xs text-muted-foreground">Atributos: {item.attributes}</p>}
+
+              {itemTagIds.length > 0 && (
+                <div className="flex flex-wrap gap-1 pt-1">
+                  {itemTagIds.map((tagId) => (
+                    <span key={tagId} className="px-2 py-0.5 rounded text-xs border bg-primary/10 text-primary border-primary/20">
+                      {tagName(tagId)}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {recipesByProduct[item.name.toLowerCase()] && (
+                <div className="pt-1">
+                  <button onClick={() => toggleRecipe(recipesByProduct[item.name.toLowerCase()].id)}
+                    className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                    <Hammer className="size-3" /> Receta de crafting
+                  </button>
+                  {expandedRecipe.has(recipesByProduct[item.name.toLowerCase()].id) && (
+                    <div className="mt-1.5 p-2 rounded-lg bg-muted/30 border text-xs space-y-1">
+                      {(() => {
+                        const r = recipesByProduct[item.name.toLowerCase()]
+                        return (
+                          <>
+                            <div className="flex gap-2 text-muted-foreground">
+                              {r.method && <span>Método: {r.method}</span>}
+                              {r.time && <span>Tiempo: {r.time}</span>}
+                            </div>
+                            {recipeIngredients[r.id] && recipeIngredients[r.id].length > 0 && (
+                              <div>
+                                <p className="text-muted-foreground mb-0.5">Ingredientes:</p>
+                                <div className="space-y-0.5">
+                                  {recipeIngredients[r.id].map((ing, i) => (
+                                    <div key={i} className="flex items-center gap-1">
+                                      <span>{ing.emoji || '•'}</span>
+                                      <span>{ing.name}</span>
+                                      <span className="text-muted-foreground">x{ing.quantity}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        )
+                      })()}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
-            {item.description && <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>}
-            {item.attributes && <p className="text-xs text-muted-foreground">Atributos: {item.attributes}</p>}
-
-            {tags.length > 0 && (
-              <div className="pt-1">
-                <button onClick={() => { setEditingItem(editingItem === item.id ? null : item.id); if (editingItem !== item.id) loadItemTags(item.id) }}
-                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  <TagsIcon className="size-3" /> Tags ({itemTags[item.id]?.length || 0})
-                </button>
-                {editingItem === item.id && (
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {tags.map((tag) => {
-                      const active = (itemTags[item.id] || []).includes(tag.id)
-                      return (
-                        <button key={tag.id} onClick={() => toggleItemTag(item.id, tag.id)}
-                          className={`px-2 py-0.5 rounded text-xs border transition-colors ${active ? 'bg-primary text-primary-foreground border-primary' : 'bg-background hover:bg-accent'}`}>
-                          {tag.name}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {recipesByProduct[item.name.toLowerCase()] && (
-              <div className="pt-1">
-                <button onClick={() => toggleRecipe(recipesByProduct[item.name.toLowerCase()].id)}
-                  className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  <Hammer className="size-3" /> Receta de crafting
-                </button>
-                {expandedRecipe.has(recipesByProduct[item.name.toLowerCase()].id) && (
-                  <div className="mt-1.5 p-2 rounded-lg bg-muted/30 border text-xs space-y-1">
-                    {(() => {
-                      const r = recipesByProduct[item.name.toLowerCase()]
-                      return (
-                        <>
-                          <div className="flex gap-2 text-muted-foreground">
-                            {r.method && <span>Método: {r.method}</span>}
-                            {r.time && <span>Tiempo: {r.time}</span>}
-                          </div>
-                          {recipeIngredients[r.id] && recipeIngredients[r.id].length > 0 && (
-                            <div>
-                              <p className="text-muted-foreground mb-0.5">Ingredientes:</p>
-                              <div className="space-y-0.5">
-                                {recipeIngredients[r.id].map((ing, i) => (
-                                  <div key={i} className="flex items-center gap-1">
-                                    <span>{ing.emoji || '•'}</span>
-                                    <span>{ing.name}</span>
-                                    <span className="text-muted-foreground">x{ing.quantity}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </>
-                      )
-                    })()}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

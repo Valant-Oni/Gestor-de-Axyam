@@ -164,7 +164,6 @@ export function applyTagReview(db: Database.Database): void {
     const insertItemTag = db.prepare('INSERT OR IGNORE INTO item_tags (item_id, tag_id) VALUES (?, ?)')
     const deleteItemTags = db.prepare('DELETE FROM item_tags WHERE item_id = ?')
 
-    const taggedItemIds = new Set<number>()
     let taggedCount = 0
 
     for (const [tagName, items] of Object.entries(tagItems)) {
@@ -175,10 +174,8 @@ export function applyTagReview(db: Database.Database): void {
         const itemRow = findItem.get(itemName) as { id: number } | undefined
         if (!itemRow) continue
 
-        // Remove old tag assignments for this item before assigning new one
         deleteItemTags.run(itemRow.id)
         insertItemTag.run(itemRow.id, tagRow.id)
-        taggedItemIds.add(itemRow.id)
         taggedCount++
       }
     }
@@ -186,27 +183,9 @@ export function applyTagReview(db: Database.Database): void {
     // Apply pending item review updates
     db.prepare("UPDATE items SET attributes = 'defensa+1d10, ataque+2' WHERE LOWER(name) = LOWER('escudo maligno')").run()
 
-    // Delete all items that are NOT in any tag list (only if they're not referenced by characters)
-    // First remove character_items for untagged items
-    const allItems = db.prepare('SELECT id, name FROM items').all() as { id: number; name: string }[]
-    let deletedCount = 0
-
-    for (const item of allItems) {
-      if (!taggedItemIds.has(item.id)) {
-        // This item has no tag — delete it cascading
-        db.prepare('DELETE FROM character_items WHERE item_id = ?').run(item.id)
-        db.prepare('DELETE FROM item_tags WHERE item_id = ?').run(item.id)
-        db.prepare('DELETE FROM recipe_ingredients WHERE recipe_id IN (SELECT id FROM recipes WHERE product_item_id = ?)').run(item.id)
-        db.prepare('DELETE FROM recipes WHERE product_item_id = ?').run(item.id)
-        db.prepare('DELETE FROM character_materials WHERE item_id = ?').run(item.id)
-        const result = db.prepare('DELETE FROM items WHERE id = ?').run(item.id)
-        if (result.changes > 0) deletedCount++
-      }
-    }
-
     db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('tag_review_v1', strftime('%s','now') * 1000)").run()
 
-    console.log(`Tag review applied: ${taggedCount} item tags assigned, ${deletedCount} untagged items deleted`)
+    console.log(`Tag review applied: ${taggedCount} item tags assigned`)
   })
   tx()
 }

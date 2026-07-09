@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Character, Tag } from '@/types'
+import { Character, Tag, Race } from '@/types'
 import { ScrollText, ShieldCheck, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 interface MarkedItem {
   link_id: number
@@ -118,18 +117,22 @@ function calcPenalties(armadura: string): Penalties {
 
 export function EquipmentPage() {
   const [characters, setCharacters] = useState<Character[]>([])
+  const [races, setRaces] = useState<Race[]>([])
   const [tags, setTags] = useState<Tag[]>([])
   const [selectedChar, setSelectedChar] = useState<number | null>(null)
   const [markedItems, setMarkedItems] = useState<MarkedItem[]>([])
+  const [selectedRace, setSelectedRace] = useState<Race | null>(null)
   const [loading, setLoading] = useState(true)
 
   const load = async () => {
     try {
-      const [chars, tagData] = await Promise.all([
+      const [chars, raceData, tagData] = await Promise.all([
         window.electronAPI.characters.getAll(),
+        window.electronAPI.races.getAll(),
         window.electronAPI.tags.getAll(),
       ])
       setCharacters(chars as Character[])
+      setRaces(raceData as Race[])
       setTags(tagData as Tag[])
     } catch (e) { console.error(e) }
     setLoading(false)
@@ -138,7 +141,10 @@ export function EquipmentPage() {
   useEffect(() => { load() }, [])
 
   useEffect(() => {
-    if (!selectedChar) { setMarkedItems([]); return }
+    if (!selectedChar) { setMarkedItems([]); setSelectedRace(null); return }
+    const char = characters.find((c) => c.id === selectedChar)
+    const race = races.find((r) => r.id === char?.race_id) || null
+    setSelectedRace(race)
     const fetchItems = async () => {
       try {
         const data = await window.electronAPI.characters.getItems(selectedChar) as MarkedItem[]
@@ -148,7 +154,8 @@ export function EquipmentPage() {
           const tagNames = tagIds.map((id: number) => tags.find((t) => t.id === id)?.name || '').filter(Boolean)
           enriched.push({ ...item, item_tags: tagNames })
         }
-        setMarkedItems(enriched)
+        // Filter out items without tags
+        setMarkedItems(enriched.filter((it) => it.item_tags && it.item_tags.length > 0))
       } catch (e) { console.error(e) }
     }
     fetchItems()
@@ -193,6 +200,35 @@ export function EquipmentPage() {
   }
   const penalties = calcPenalties(totalStats.armadura)
 
+  const raceStatMap: Record<string, keyof Character> = {
+    vida: 'base_vida',
+    ataque: 'base_ataque',
+    ataque_magico: 'base_ataque_magico',
+    defensa: 'base_defensa',
+    mana: 'base_mana',
+    estamina: 'base_estamina',
+    agilidad: 'base_agilidad',
+    robo: 'base_robo',
+    sigilo: 'base_sigilo',
+  }
+  const selectedCharData = characters.find((c) => c.id === selectedChar)
+
+  function statDisplay(key: string, equipExpr: string) {
+    if (!selectedCharData) return null
+    const baseField = raceStatMap[key]
+    const baseVal = baseField ? selectedCharData[baseField] : undefined
+    const baseDisplay = baseVal !== undefined ? String(baseVal) : null
+    const totalCombined = baseVal !== undefined && equipExpr ? `${baseVal} + ${equipExpr}` : equipExpr || baseDisplay
+    return (
+      <div className="bg-muted/50 rounded-lg p-2 text-center">
+        <p className="text-[10px] text-muted-foreground">{key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' ')}</p>
+        {baseDisplay && <p className="text-[10px] text-muted-foreground/60">Base: {baseDisplay}</p>}
+        {equipExpr ? <p className="text-xs font-semibold text-primary">+ {equipExpr}</p> : <p className="text-xs text-muted-foreground/40">-</p>}
+        <p className="text-sm font-bold">= {totalCombined}</p>
+      </div>
+    )
+  }
+
   if (loading) return <div className="flex items-center justify-center h-full"><p className="text-muted-foreground">Cargando...</p></div>
 
   return (
@@ -224,19 +260,19 @@ export function EquipmentPage() {
         <>
           {/* Stats Summary */}
           <div className="border rounded-xl p-4 bg-card space-y-2">
-            <h3 className="font-semibold text-sm">Bonificaciones totales (equipado)</h3>
+            <h3 className="font-semibold text-sm">Estadísticas combinadas (raza + equipo)</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-              <SummaryStat label="Vida" value={totalStats.vida} />
-              <SummaryStat label="Ataque" value={totalStats.ataque} />
-              <SummaryStat label="Atq Mágico" value={totalStats.ataque_magico} />
-              <SummaryStat label="Defensa" value={totalStats.defensa} />
-              <SummaryStat label="Armadura" value={totalStats.armadura} />
-              <SummaryStat label="Mana" value={totalStats.mana} />
-              <SummaryStat label="Estamina" value={totalStats.estamina} />
-              <SummaryStat label="Agilidad" value={totalStats.agilidad} />
-              <SummaryStat label="Robo" value={totalStats.robo} />
-              <SummaryStat label="Sigilo" value={totalStats.sigilo} />
-              <SummaryStat label="Nulimagia" value={totalStats.nulimagia} />
+              {statDisplay('vida', totalStats.vida)}
+              {statDisplay('ataque', totalStats.ataque)}
+              {statDisplay('ataque_magico', totalStats.ataque_magico)}
+              {statDisplay('defensa', totalStats.defensa)}
+              {statDisplay('armadura', totalStats.armadura)}
+              {statDisplay('mana', totalStats.mana)}
+              {statDisplay('estamina', totalStats.estamina)}
+              {statDisplay('agilidad', totalStats.agilidad)}
+              {statDisplay('robo', totalStats.robo)}
+              {statDisplay('sigilo', totalStats.sigilo)}
+              {statDisplay('nulimagia', totalStats.nulimagia)}
             </div>
 
             {totalStats.armadura && numericValue(totalStats.armadura) > 0 && (
@@ -292,14 +328,4 @@ export function EquipmentPage() {
   )
 }
 
-function SummaryStat({ label, value }: { label: string; value: string }) {
-  if (!value) return null
-  const isFlat = /^\d+$/.test(value)
-  const display = isFlat ? (parseInt(value) >= 0 ? `+${parseInt(value)}` : `${parseInt(value)}`) : value
-  return (
-    <div className="bg-muted/50 rounded-lg p-2 text-center">
-      <p className="text-[10px] text-muted-foreground">{label}</p>
-      <p className="text-sm font-semibold">{display}</p>
-    </div>
-  )
-}
+
