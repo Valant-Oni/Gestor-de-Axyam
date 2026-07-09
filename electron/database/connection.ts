@@ -2,6 +2,7 @@ import Database from 'better-sqlite3'
 import path from 'path'
 import { app } from 'electron'
 import { applyItemReview } from './itemReview'
+import { applyTagReview } from './tagReview'
 
 let db: Database.Database | null = null
 
@@ -333,4 +334,5 @@ export function initDatabase(): void {
   seedZonesAndRaces(db)
   seedItemsAndRecipes(db)
   applyItemReview(db)
+  applyTagReview(db)
 }
