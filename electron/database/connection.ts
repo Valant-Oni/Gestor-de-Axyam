@@ -326,7 +326,7 @@ function seedItemsAndRecipes(db: Database.Database): void {
 }
 
 function recipeIngredientFix(db: Database.Database): void {
-  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'recipe_ingredient_fix_v1'").get()
+  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'recipe_ingredient_fix_v2'").get()
   if (hasFix) return
 
   const fs = require('fs')
@@ -405,7 +405,8 @@ function recipeIngredientFix(db: Database.Database): void {
       inserted++
     }
 
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('recipe_ingredient_fix_v1', strftime('%s','now') * 1000)").run()
+    db.prepare("DELETE FROM data_migration WHERE name = 'recipe_ingredient_fix_v1'").run()
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('recipe_ingredient_fix_v2', strftime('%s','now') * 1000)").run()
     console.log(`Recipe fix applied: ${inserted} recipes re-seeded from CSV`)
   })
   tx()
