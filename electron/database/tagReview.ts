@@ -8,6 +8,7 @@ const tagItems: Record<string, string[]> = {
     'Capucha del asesino', 'Casco del guerrero', 'Casco absorbente', 'casco dragon',
     'capucha elemental oscura', 'corona carmesi', 'corona de critias',
     'corona de hermos', 'corona de timaeus', 'mascara del ciclo',
+    'corona de hojas', 'kabuto', 'mascara protectora',
   ],
   torso: [
     'Traje cuero ligero', 'Coraza de hojas', 'Coraza del bosque', 'Coraza floreciente',
@@ -20,6 +21,7 @@ const tagItems: Record<string, string[]> = {
     'Tunica del arzobispo', 'Tunica mago', 'Tunica archimagica', 'Tunica runica',
     'Coraza runica', 'Coraza canalizadora', 'Coraza canalizadora desatada',
     'coraza insecto sangriento', 'traje del devorador', 'tunica del devorador',
+    'coraza espinosa', 'coraza samurai', 'coraza samurai legendario',
   ],
   brazos: [
     'Guantes cuero', 'Guanteletes de hierro', 'Guanteletes coral', 'Guanteletes obsidiana',
@@ -55,7 +57,7 @@ const tagItems: Record<string, string[]> = {
     'funda de arma', 'espadas del cosmos', 'maldicion del sombrero', 'manto de almas',
     'manto del necromancer', 'manto matriarca del bosque', 'mosca revividora',
     'putrefaccion radiante', 'tableta runica', 'Ultima Voluntad del Caballero',
-    'Ojos de sucubo', 'hoja primogenita',
+    'Ojos de sucubo', 'hoja primogenita', 'capa de sombras',
   ],
   'Arma a 1 mano': [
     'Azote de Mundos: Version Cetro', 'Cetro archimago', 'Cetro archimago oscuro',
@@ -87,6 +89,8 @@ const tagItems: Record<string, string[]> = {
     'espada corta plata', 'espada larga plata', 'espada tiburon', 'espada megalodon',
     'espada llameante', 'espada cadena de lava', 'espada corta', 'espada larga',
     'espada sangrante', 'espada nigromante', 'espada sombria', 'espada oscura', 'espada piedra',
+    'ballesta cosmica', 'ballesta de la humanidad', 'ballesta de la ira', 'ballesta volcanica',
+    'caña de pesca', 'cetro calavera',
   ],
   'arma a 2 manos': [
     'espadon gelido', 'espadon invierno eterno', 'espada doble invierno', 'espadon sagrado',
@@ -109,20 +113,20 @@ const tagItems: Record<string, string[]> = {
     'mazo reloj de arena', 'Azote de Mundos', 'Dagas del Rey', 'Excalibur',
     'Guantes de Fenrir', 'Guantes de excavacion', 'Katana de sangre', 'Voluntad del bosque',
     'arco dark hole', 'espadon del caballero dragon', 'espadon dragon', 'espadon eclipse',
-    'oscuridad alternante',
+    'oscuridad alternante', 'maza',
   ],
   'arma ligera': [
     'espada luz', 'arco corto', 'daga', 'daga de mana', 'daga imbuida', 'daga del erudito',
-    'faga esmeralda', 'dagas de la naturaleza', 'daga nocturna', 'daga oscura',
+    'daga esmeralda', 'dagas de la naturaleza', 'daga nocturna', 'daga oscura',
     'daga necrotica', 'daga del fin', 'daga de plata', 'dagas punzantes', 'dagas letales',
     'daga argentea', 'daga carmesi', 'daga sangrienta', 'daga cristalizada', 'daga ruin',
-    'daga maldita', 'guante filo oculto', 'daga del devorador',
+    'daga maldita', 'guante filo oculto', 'daga del devorador', 'cerbatana',
   ],
   'escudo a 1 mano': [
     'escudo cuero', 'escudo magico', 'escudo aumentado', 'escudo maligno', 'escudo archimagico',
     'escudo madera', 'escudo hierro', 'escudo templario', 'escudo templario profanado',
     'escudo templario iluminado', 'escudo plata', 'escudo obsidiana', 'escudo diamante',
-    'escudo demoniaco', 'escudo espinas', 'scudo podrido', 'escudo corazon de puas',
+    'escudo demoniaco', 'escudo espinas', 'escudo podrido', 'escudo corazon de puas',
     'escudo de piel', 'escudo conchas', 'escudo marino', 'escudo antimagia',
     'escudo reflectante', 'escudo tortuga', 'escudo espartano', 'escudo dragon dorado',
     'escudo dark hole', 'escudo del devorador', 'escudo del valhalla', 'escudo escamas dragon',
@@ -153,7 +157,7 @@ const tagItems: Record<string, string[]> = {
 }
 
 export function applyTagReview(db: Database.Database): void {
-  const hasReview = db.prepare("SELECT name FROM data_migration WHERE name = 'tag_review_v1'").get()
+  const hasReview = db.prepare("SELECT name FROM data_migration WHERE name = 'tag_review_v2'").get()
   if (hasReview) return
 
   const tx = db.transaction(() => {
@@ -183,7 +187,8 @@ export function applyTagReview(db: Database.Database): void {
     // Apply pending item review updates
     db.prepare("UPDATE items SET attributes = 'defensa+1d10, ataque+2' WHERE LOWER(name) = LOWER('escudo maligno')").run()
 
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('tag_review_v1', strftime('%s','now') * 1000)").run()
+    db.prepare("DELETE FROM data_migration WHERE name = 'tag_review_v1'").run()
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('tag_review_v2', strftime('%s','now') * 1000)").run()
 
     console.log(`Tag review applied: ${taggedCount} item tags assigned`)
   })

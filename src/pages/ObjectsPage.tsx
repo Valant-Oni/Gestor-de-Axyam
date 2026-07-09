@@ -11,7 +11,6 @@ export function ObjectsPage() {
   const [itemTags, setItemTags] = useState<Record<number, number[]>>({})
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [typeFilter, setTypeFilter] = useState('')
   const [tagFilter, setTagFilter] = useState('')
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [expandedRecipe, setExpandedRecipe] = useState<Set<number>>(new Set())
@@ -80,10 +79,8 @@ export function ObjectsPage() {
     } catch (e) { console.error(e) }
   }
 
-  const types = [...new Set(items.map((i) => i.type).filter(Boolean))]
   const filtered = items.filter((i) => {
     if (search && !i.name.toLowerCase().includes(search.toLowerCase())) return false
-    if (typeFilter && i.type !== typeFilter) return false
     const itemTagIds = itemTags[i.id] || []
     if (tagFilter === 'untagged') return itemTagIds.length === 0
     if (tagFilter === 'tagged') return itemTagIds.length > 0
@@ -118,11 +115,6 @@ export function ObjectsPage() {
           <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar objetos..."
             className="w-full pl-9 pr-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
         </div>
-        <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}
-          className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
-          <option value="">Todos los tipos</option>
-          {types.map((t) => <option key={t} value={t}>{t}</option>)}
-        </select>
         <select value={tagFilter} onChange={(e) => setTagFilter(e.target.value)}
           className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
           <option value="">Todos los tags</option>
