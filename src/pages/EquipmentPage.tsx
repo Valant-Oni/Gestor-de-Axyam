@@ -14,20 +14,6 @@ interface MarkedItem {
   item_tags?: string[]
 }
 
-interface StatSum {
-  vida: string
-  ataque: string
-  ataque_magico: string
-  defensa: string
-  armadura: string
-  mana: string
-  estamina: string
-  agilidad: string
-  robo: string
-  sigilo: string
-  nulimagia: string
-}
-
 interface Penalties {
   sigilo: number
   robo: number
@@ -35,8 +21,25 @@ interface Penalties {
   agilidad_perseguir: number
 }
 
-function parseAttributes(attrs: string | null): Partial<StatSum> {
-  const result: Partial<StatSum> = {}
+const BASE_STATS = ['vida', 'ataque', 'ataque_magico', 'defensa', 'mana', 'estamina', 'agilidad', 'robo', 'sigilo'] as const
+const WEAPON_TAGS = ['arma a 1 mano', 'arma a 2 manos', 'arma ligera']
+
+const CONFLICT_RULES: [string, string][] = [
+  ['arma a 2 manos', 'arma a 1 mano'],
+  ['arma a 2 manos', 'escudo a 1 mano'],
+  ['arma a 2 manos', 'escudo a 2 manos'],
+  ['escudo a 2 manos', 'arma a 1 mano'],
+  ['escudo a 2 manos', 'arma a 2 manos'],
+  ['escudo a 2 manos', 'arma ligera'],
+  ['set completo', 'cabeza'],
+  ['set completo', 'torso'],
+  ['set completo', 'brazos'],
+  ['set completo', 'piernas'],
+  ['arma a 1 mano', 'escudo a 2 manos'],
+]
+
+function parseAttributes(attrs: string | null): Record<string, string> {
+  const result: Record<string, string> = {}
   if (!attrs) return result
   const parts = attrs.split(',').map((p) => p.trim().toLowerCase())
   for (const part of parts) {
@@ -115,6 +118,37 @@ function calcPenalties(armadura: string): Penalties {
   }
 }
 
+function applyFlatToBase(baseExpr: string, flatAmount: number): string {
+  const diceMatch = baseExpr.match(/^(\d*)d(\d+)$/)
+  if (diceMatch) {
+    const count = parseInt(diceMatch[1] || '1')
+    const sides = parseInt(diceMatch[2]) + flatAmount
+    if (sides <= 0) return '0'
+    return `${count}d${sides}`
+  }
+  const numMatch = baseExpr.match(/^(\d+)$/)
+  if (numMatch) {
+    const val = parseInt(numMatch[1]) + flatAmount
+    return String(val)
+  }
+  return `${baseExpr} + ${flatAmount}`
+}
+
+function isFlatBonus(expr: string): number | null {
+  const m = expr.match(/^-?\d+$/)
+  return m ? parseInt(expr) : null
+}
+
+function hasConflict(equippedTags: string[], candidateTags: string[]): string | null {
+  const eq = new Set(equippedTags.map(t => t.toLowerCase()))
+  const cand = new Set(candidateTags.map(t => t.toLowerCase()))
+  for (const [a, b] of CONFLICT_RULES) {
+    if (eq.has(a) && cand.has(b)) return `Requiere desequipar un objeto con "${a}"`
+    if (eq.has(b) && cand.has(a)) return `Requiere desequipar un objeto con "${b}"`
+  }
+  return null
+}
+
 export function EquipmentPage() {
   const [characters, setCharacters] = useState<Character[]>([])
   const [races, setRaces] = useState<Race[]>([])
@@ -154,20 +188,28 @@ export function EquipmentPage() {
           const tagNames = tagIds.map((id: number) => tags.find((t) => t.id === id)?.name || '').filter(Boolean)
           enriched.push({ ...item, item_tags: tagNames })
         }
-        // Filter out items without tags
         setMarkedItems(enriched.filter((it) => it.item_tags && it.item_tags.length > 0))
       } catch (e) { console.error(e) }
     }
     fetchItems()
   }, [selectedChar, tags])
 
-  const toggleEquipped = async (itemId: number, currentlyEquipped: number) => {
+  const toggleEquipped = async (itemId: number, currentlyEquipped: number, itemTags: string[]) => {
     if (!selectedChar) return
-    const newVal = currentlyEquipped ? false : true
-    try {
-      await window.electronAPI.characters.setEquipped(selectedChar, itemId, newVal)
-      setMarkedItems((prev) => prev.map((it) => it.id === itemId ? { ...it, equipped: newVal ? 1 : 0 } : it))
-    } catch (e) { console.error(e) }
+    if (currentlyEquipped) {
+      try {
+        await window.electronAPI.characters.setEquipped(selectedChar, itemId, false)
+        setMarkedItems((prev) => prev.map((it) => it.id === itemId ? { ...it, equipped: 0 } : it))
+      } catch (e) { console.error(e) }
+    } else {
+      const equippedTags = markedItems.filter(it => it.equipped).flatMap(it => it.item_tags || [])
+      const conflict = hasConflict(equippedTags, itemTags)
+      if (conflict) return
+      try {
+        await window.electronAPI.characters.setEquipped(selectedChar, itemId, true)
+        setMarkedItems((prev) => prev.map((it) => it.id === itemId ? { ...it, equipped: 1 } : it))
+      } catch (e) { console.error(e) }
+    }
   }
 
   const unmarkItem = async (itemId: number) => {
@@ -178,8 +220,11 @@ export function EquipmentPage() {
     } catch (e) { console.error(e) }
   }
 
-  // Group by tag
   const equippedItems = markedItems.filter((it) => it.equipped)
+  const equippedTags = equippedItems.flatMap(it => it.item_tags || []).map(t => t.toLowerCase())
+  const hasHeavyWeapon = equippedTags.some(t => t === 'arma a 1 mano' || t === 'arma a 2 manos')
+  const hasLightWeapon = equippedTags.includes('arma ligera')
+  const excludeLightWeapon = hasHeavyWeapon && hasLightWeapon
 
   const groupedByTag: Record<string, MarkedItem[]> = {}
   for (const item of markedItems) {
@@ -190,41 +235,82 @@ export function EquipmentPage() {
     }
   }
 
-  // Sum stats from equipped items
-  const totalStats: StatSum = { vida: '', ataque: '', ataque_magico: '', defensa: '', armadura: '', mana: '', estamina: '', agilidad: '', robo: '', sigilo: '', nulimagia: '' }
-  for (const item of equippedItems) {
-    const parsed = parseAttributes(item.attributes)
-    for (const [key, val] of Object.entries(parsed)) {
-      if (val && key in totalStats) (totalStats as any)[key] = combineExpr((totalStats as any)[key], val as string)
+  // Compute base stats (race expressions modified by non-weapon flat bonuses)
+  const modifiedBase: Record<string, string> = {}
+  if (selectedRace) {
+    for (const key of BASE_STATS) {
+      modifiedBase[key] = (selectedRace as any)[key] || '0'
     }
   }
-  const penalties = calcPenalties(totalStats.armadura)
 
-  const raceStatMap: Record<string, keyof Character> = {
-    vida: 'base_vida',
-    ataque: 'base_ataque',
-    ataque_magico: 'base_ataque_magico',
-    defensa: 'base_defensa',
-    mana: 'base_mana',
-    estamina: 'base_estamina',
-    agilidad: 'base_agilidad',
-    robo: 'base_robo',
-    sigilo: 'base_sigilo',
+  // Compute equipment stats
+  const equipStats: Record<string, string> = {}
+  let armaduraExpr = ''
+
+  for (const item of equippedItems) {
+    const itemTagLower = (item.item_tags?.[0] || '').toLowerCase()
+    const isWeapon = WEAPON_TAGS.includes(itemTagLower)
+    const isLight = itemTagLower === 'arma ligera'
+
+    if (isLight && excludeLightWeapon) continue
+
+    const parsed = parseAttributes(item.attributes)
+    for (const [key, val] of Object.entries(parsed)) {
+      if (!val) continue
+
+      if (key === 'armadura') {
+        armaduraExpr = combineExpr(armaduraExpr, val)
+        continue
+      }
+
+      if (isWeapon) {
+        equipStats[key] = combineExpr(equipStats[key], val)
+      } else {
+        const flatAmt = isFlatBonus(val)
+        if (flatAmt !== null && BASE_STATS.includes(key as any)) {
+          modifiedBase[key] = applyFlatToBase(modifiedBase[key] || '0', flatAmt)
+        } else {
+          equipStats[key] = combineExpr(equipStats[key], val)
+        }
+      }
+    }
   }
-  const selectedCharData = characters.find((c) => c.id === selectedChar)
 
-  function statDisplay(key: string, equipExpr: string) {
-    if (!selectedCharData) return null
-    const baseField = raceStatMap[key]
-    const baseVal = baseField ? selectedCharData[baseField] : undefined
-    const baseDisplay = baseVal !== undefined ? String(baseVal) : null
-    const totalCombined = baseVal !== undefined && equipExpr ? `${baseVal} + ${equipExpr}` : equipExpr || baseDisplay
+  const penalties = calcPenalties(armaduraExpr)
+
+  // Compute conflicts for blocked items
+  const conflictMap = new Map<number, string>()
+  for (const item of markedItems) {
+    if (item.equipped) continue
+    const tags = item.item_tags || []
+    const reason = hasConflict(equippedTags, tags)
+    if (reason) conflictMap.set(item.id, reason)
+  }
+
+  function statDisplay(key: string, baseVal: string | undefined, equipVal: string | undefined) {
+    if (!selectedRace && key !== 'armadura') return null
+    const label = key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' ')
     return (
       <div className="bg-muted/50 rounded-lg p-2 text-center">
-        <p className="text-[10px] text-muted-foreground">{key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' ')}</p>
-        {baseDisplay && <p className="text-[10px] text-muted-foreground/60">Base: {baseDisplay}</p>}
-        {equipExpr ? <p className="text-xs font-semibold text-primary">+ {equipExpr}</p> : <p className="text-xs text-muted-foreground/40">-</p>}
-        <p className="text-sm font-bold">= {totalCombined}</p>
+        <p className="text-[10px] text-muted-foreground">{label}</p>
+        {key === 'armadura' ? (
+          <>
+            {equipVal ? <p className="text-xs font-semibold text-primary">{equipVal}</p> : <p className="text-xs text-muted-foreground/40">-</p>}
+            {equipVal && <p className="text-sm font-bold">= {numericValue(equipVal)}</p>}
+          </>
+        ) : (
+          <>
+            {baseVal && baseVal !== '0' ? (
+              <p className="text-[10px] text-muted-foreground/60">{baseVal}</p>
+            ) : baseVal === '0' ? (
+              <p className="text-[10px] text-muted-foreground/40">-</p>
+            ) : (
+              <p className="text-[10px] text-muted-foreground/40">-</p>
+            )}
+            {equipVal ? <p className="text-xs font-semibold text-primary">+ {equipVal}</p> : <p className="text-xs text-muted-foreground/40">-</p>}
+            <p className="text-sm font-bold">{equipVal ? `${baseVal || '0'} + ${equipVal}` : baseVal || '0'}</p>
+          </>
+        )}
       </div>
     )
   }
@@ -236,7 +322,7 @@ export function EquipmentPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold">Equipamiento</h1>
-          <p className="text-muted-foreground text-sm">Gestiona el equipo activo de tu personaje. Solo 1 objeto por tag.</p>
+          <p className="text-muted-foreground text-sm">Gestiona el equipo activo de tu personaje.</p>
         </div>
         <select value={selectedChar || ''} onChange={(e) => setSelectedChar(e.target.value ? parseInt(e.target.value) : null)}
           className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
@@ -258,26 +344,17 @@ export function EquipmentPage() {
         </div>
       ) : (
         <>
-          {/* Stats Summary */}
           <div className="border rounded-xl p-4 bg-card space-y-2">
             <h3 className="font-semibold text-sm">Estadísticas combinadas (raza + equipo)</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-              {statDisplay('vida', totalStats.vida)}
-              {statDisplay('ataque', totalStats.ataque)}
-              {statDisplay('ataque_magico', totalStats.ataque_magico)}
-              {statDisplay('defensa', totalStats.defensa)}
-              {statDisplay('armadura', totalStats.armadura)}
-              {statDisplay('mana', totalStats.mana)}
-              {statDisplay('estamina', totalStats.estamina)}
-              {statDisplay('agilidad', totalStats.agilidad)}
-              {statDisplay('robo', totalStats.robo)}
-              {statDisplay('sigilo', totalStats.sigilo)}
-              {statDisplay('nulimagia', totalStats.nulimagia)}
+              {(BASE_STATS as unknown as string[]).concat('armadura').map((key) =>
+                statDisplay(key, modifiedBase[key], key === 'armadura' ? armaduraExpr : equipStats[key])
+              )}
             </div>
 
-            {totalStats.armadura && numericValue(totalStats.armadura) > 0 && (
+            {armaduraExpr && numericValue(armaduraExpr) > 0 && (
               <div className="pt-2 border-t space-y-0.5">
-                <p className="text-xs font-medium text-destructive">Penalizaciones por armadura ({totalStats.armadura} total):</p>
+                <p className="text-xs font-medium text-destructive">Penalizaciones por armadura ({armaduraExpr} total):</p>
                 {penalties.sigilo > 0 && <p className="text-xs text-destructive/80">-{penalties.sigilo} sigilo (cada 25)</p>}
                 {penalties.robo > 0 && <p className="text-xs text-destructive/80">-{penalties.robo} robo (cada 30)</p>}
                 {penalties.agilidad_huir > 0 && <p className="text-xs text-destructive/80">-{penalties.agilidad_huir} agilidad al huir (cada 15)</p>}
@@ -286,7 +363,6 @@ export function EquipmentPage() {
             )}
           </div>
 
-          {/* Items grouped by tag */}
           <div className="space-y-4">
             {Object.entries(groupedByTag).map(([tagName, items]) => {
               const equippedInGroup = items.filter((it) => it.equipped)
@@ -299,17 +375,20 @@ export function EquipmentPage() {
                   <div className="divide-y">
                     {items.map((item) => {
                       const isEquipped = item.equipped === 1
-                      const blocked = equippedInGroup.length > 0 && !isEquipped
+                      const blockedByLimit = equippedInGroup.length > 0 && !isEquipped
+                      const conflictReason = isEquipped ? null : conflictMap.get(item.id)
+                      const disabled = blockedByLimit || !!conflictReason
                       return (
-                        <div key={item.id} className={`flex items-center gap-3 px-4 py-2.5 ${isEquipped ? 'bg-primary/5' : ''} ${blocked ? 'opacity-50' : ''}`}>
+                        <div key={item.id} className={`flex items-center gap-3 px-4 py-2.5 ${isEquipped ? 'bg-primary/5' : ''} ${disabled ? 'opacity-50' : ''}`}>
                           <input type="checkbox" checked={isEquipped}
-                            onChange={() => toggleEquipped(item.id, item.equipped)}
-                            disabled={blocked && !isEquipped}
+                            onChange={() => toggleEquipped(item.id, item.equipped, item.item_tags || [])}
+                            disabled={disabled && !isEquipped}
                             className="rounded border-gray-400" />
                           <span className="text-lg">{item.emoji || '📦'}</span>
                           <div className="flex-1">
                             <p className="text-sm font-medium">{item.name}</p>
                             {item.attributes && <p className="text-xs text-muted-foreground">{item.attributes}</p>}
+                            {conflictReason && <p className="text-xs text-destructive mt-0.5">{conflictReason}</p>}
                           </div>
                           <button onClick={() => unmarkItem(item.id)} className="p-1 hover:bg-destructive/10 rounded text-destructive/70 hover:text-destructive" title="Quitar">
                             <X className="size-3.5" />
@@ -327,5 +406,3 @@ export function EquipmentPage() {
     </div>
   )
 }
-
-
