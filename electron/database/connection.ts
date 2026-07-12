@@ -412,6 +412,98 @@ function recipeIngredientFix(db: Database.Database): void {
   tx()
 }
 
+function extractAttributesFromDescriptions(db: Database.Database): void {
+  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v1'").get()
+  if (hasFix) return
+
+  const items = db.prepare("SELECT id, name, description, attributes FROM items WHERE attributes IS NULL OR attributes = '{}'").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
+
+  const updateItem = db.prepare('UPDATE items SET attributes = ? WHERE id = ?')
+  const clearItem = db.prepare("UPDATE items SET attributes = NULL WHERE id = ? AND (attributes = '{}' OR attributes IS NULL)")
+
+  const statKeyMap: Record<string, string> = {
+    'daño': 'ataque',
+    'defensa': 'defensa',
+    'armadura': 'armadura',
+    'nulimagia': 'nulimagia',
+    'mana': 'mana',
+    'maná': 'mana',
+    'vida': 'vida',
+    'estamina': 'estamina',
+    'sigilo': 'sigilo',
+    'agilidad': 'agilidad',
+    'robo': 'robo',
+  }
+
+  let updated = 0
+  let cleared = 0
+
+  const statPattern = /\*\*(Daño|Defensa|Armadura|Nulimagia|Mana|Maná|Vida|Estamina|Sigilo|Agilidad|Robo):\*\*\s*([^\n*]+)/gi
+
+  const tx = db.transaction(() => {
+    for (const item of items) {
+      if (!item.description) {
+        if (item.attributes === '{}') {
+          clearItem.run(item.id)
+          cleared++
+        }
+        continue
+      }
+
+      const found: string[] = []
+      const pattern = new RegExp(statPattern.source, 'gi')
+      let match: RegExpExecArray | null
+
+      while ((match = pattern.exec(item.description)) !== null) {
+        const key = match[1].toLowerCase()
+        const valueStr = match[2].trim()
+        const mappedKey = statKeyMap[key]
+        if (!mappedKey) continue
+
+        const tokens = valueStr.split(/\s+/).filter(Boolean)
+        const validTokens: string[] = []
+        for (const token of tokens) {
+          if (/^-?\d*d\d+$/.test(token) || /^-?\d+$/.test(token)) {
+            validTokens.push(token)
+          } else {
+            validTokens.length = 0
+            break
+          }
+        }
+
+        if (validTokens.length > 0) {
+          found.push(`${mappedKey}+${validTokens.join('+')}`)
+        }
+      }
+
+      // Also look for common patterns in **Efecto:** text
+      const efectoMatch1 = item.description.match(/aumenta (?:el|la|tu) (?:daño base mágico|daño mágico base) en (\d+)/i)
+      const efectoMatch2 = item.description.match(/aumenta en (\d+) la base de daño mágico/i)
+      const efectoMatch3 = item.description.match(/aumenta (?:el|la|tu) ataque base en (\d+)/i)
+      const efectoMatch4 = item.description.match(/aumenta (?:el|la|tu) (?:dado de defensa base|defensa base) en (\d+)/i)
+
+      if (efectoMatch1 && !found.some(f => f.startsWith('ataque_magico'))) found.push(`ataque_magico+${efectoMatch1[1]}`)
+      if (efectoMatch2 && !found.some(f => f.startsWith('ataque_magico'))) found.push(`ataque_magico+${efectoMatch2[1]}`)
+      if (efectoMatch3 && !found.some(f => f.startsWith('ataque'))) found.push(`ataque+${efectoMatch3[1]}`)
+      if (efectoMatch4 && !found.some(f => f.startsWith('defensa'))) found.push(`defensa+${efectoMatch4[1]}`)
+
+      if (found.length > 0) {
+        const attributes = found.join(', ')
+        updateItem.run(attributes, item.id)
+        updated++
+      } else if (item.attributes === '{}') {
+        clearItem.run(item.id)
+        cleared++
+      }
+    }
+
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('attribute_fix_v1', strftime('%s','now') * 1000)").run()
+  })
+
+  tx()
+  console.log(`Attribute fix: ${updated} items updated from descriptions, ${cleared} items cleared from '{}'`)
+}
+
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -423,4 +515,5 @@ export function initDatabase(): void {
   applyItemReview(db)
   applyTagReview(db)
   recipeIngredientFix(db)
+  extractAttributesFromDescriptions(db)
 }
