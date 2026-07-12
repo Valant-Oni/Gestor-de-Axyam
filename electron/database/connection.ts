@@ -465,9 +465,6 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
         for (const token of tokens) {
           if (/^-?\d*d\d+$/.test(token) || /^-?\d+$/.test(token)) {
             validTokens.push(token)
-          } else {
-            validTokens.length = 0
-            break
           }
         }
 

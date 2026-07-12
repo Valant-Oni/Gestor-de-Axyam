@@ -288,12 +288,12 @@ export function EquipmentPage() {
   }
 
   function statDisplay(key: string, baseVal: string | undefined, equipVal: string | undefined) {
-    if (!selectedRace && key !== 'armadura') return null
+    if (!selectedRace && key !== 'armadura' && key !== 'nulimagia') return null
     const label = key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' ')
     return (
       <div className="bg-muted/50 rounded-lg p-2 text-center">
         <p className="text-[10px] text-muted-foreground">{label}</p>
-        {key === 'armadura' ? (
+        {key === 'armadura' || key === 'nulimagia' ? (
           <>
             {equipVal ? <p className="text-xs font-semibold text-primary">{equipVal}</p> : <p className="text-xs text-muted-foreground/40">-</p>}
             {equipVal && <p className="text-sm font-bold">= {numericValue(equipVal)}</p>}
@@ -347,7 +347,7 @@ export function EquipmentPage() {
           <div className="border rounded-xl p-4 bg-card space-y-2">
             <h3 className="font-semibold text-sm">Estadísticas combinadas (raza + equipo)</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-              {(BASE_STATS as unknown as string[]).concat('armadura').map((key) =>
+              {(BASE_STATS as unknown as string[]).concat(['armadura', 'nulimagia']).map((key) =>
                 statDisplay(key, modifiedBase[key], key === 'armadura' ? armaduraExpr : equipStats[key])
               )}
             </div>
