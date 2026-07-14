@@ -416,10 +416,9 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
   const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v3'").get()
   if (hasFix) return
 
-  const items = db.prepare("SELECT id, name, description, attributes FROM items WHERE attributes IS NULL OR attributes = '{}'").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
-
   const updateItem = db.prepare('UPDATE items SET attributes = ? WHERE id = ?')
   const clearItem = db.prepare("UPDATE items SET attributes = NULL WHERE id = ? AND (attributes = '{}' OR attributes IS NULL)")
+  const forceStmt = db.prepare("UPDATE items SET attributes = ? WHERE name = ?")
 
   const statKeyMap: Record<string, string> = {
     'daño': 'ataque',
@@ -458,15 +457,18 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
   ]
 
   const tx = db.transaction(() => {
-    for (const item of items) {
-      // Hardcoded fallback first
-      const hardcodedAttr = hardcoded[item.name]
-      if (hardcodedAttr) {
-        updateItem.run(hardcodedAttr, item.id)
-        updated++
-        continue
-      }
+    // Phase 1: force update known items unconditionally (even if they already have attributes)
+    let forceUpdated = 0
+    for (const [name, attrs] of Object.entries(hardcoded)) {
+      const result = forceStmt.run(attrs, name)
+      if (result.changes > 0) forceUpdated++
+    }
+    if (forceUpdated > 0) console.log(`  force-updated ${forceUpdated} items`)
 
+    // Phase 2: auto-extract for items that still have '{}' or NULL
+    const items = db.prepare("SELECT id, name, description, attributes FROM items WHERE attributes IS NULL OR attributes = '{}'").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
+
+    for (const item of items) {
       if (!item.description) {
         if (item.attributes === '{}') {
           clearItem.run(item.id)
@@ -529,7 +531,7 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
   })
 
   tx()
-  console.log(`Attribute fix: ${updated} items updated from descriptions, ${cleared} items cleared from '{}'`)
+  console.log(`Attribute fix: ${updated} items auto-extracted from descriptions, ${cleared} items cleared from '{}'`)
 }
 
 export function initDatabase(): void {
