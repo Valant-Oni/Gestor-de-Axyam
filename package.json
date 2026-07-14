@@ -1,6 +1,6 @@
 {
   "name": "gestor-de-axyam",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Gestor de personajes, equipamiento y materiales para servidor de rol Axyam",
   "main": "dist-electron/main.js",
   "author": "Valant-Oni",

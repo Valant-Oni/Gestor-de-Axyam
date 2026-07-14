@@ -15,11 +15,41 @@ function parseItemAttributes(attrsStr: string | null): Record<string, string> {
 
 function combineExpr(a: string | undefined, b: string): string {
   if (!a) return b
-  if (/^\d+$/.test(a) && /^\d+$/.test(b)) return `${parseInt(a) + parseInt(b)}`
+  if (/^-?\d+$/.test(a) && /^-?\d+$/.test(b)) return `${parseInt(a) + parseInt(b)}`
   return `${a} + ${b}`
 }
 
-const STAT_KEYS = ['vida', 'ataque', 'ataque_magico', 'defensa', 'mana', 'estamina', 'agilidad', 'robo', 'sigilo'] as const
+function applyFlatToBase(baseExpr: string, flatAmount: number): string {
+  const diceMatch = baseExpr.match(/^(\d*)d(\d+)$/)
+  if (diceMatch) {
+    const count = parseInt(diceMatch[1] || '1')
+    const sides = parseInt(diceMatch[2]) + flatAmount
+    if (sides <= 0) return '0'
+    return `${count}d${sides}`
+  }
+  const numMatch = baseExpr.match(/^(-?\d+)$/)
+  if (numMatch) {
+    const val = parseInt(numMatch[1]) + flatAmount
+    return String(val)
+  }
+  return `${baseExpr} + ${flatAmount}`
+}
+
+function isFlatBonus(expr: string): number | null {
+  const m = expr.match(/^-?\d+$/)
+  return m ? parseInt(expr) : null
+}
+
+function computeTotal(base: string | undefined, equip: string | undefined): string {
+  if (!base && !equip) return '0'
+  if (!base) return equip || '0'
+  if (!equip) return base
+  const isNum = (s: string) => /^-?\d+$/.test(s)
+  if (isNum(base) && isNum(equip)) return String(parseInt(base) + parseInt(equip))
+  return `${base} + ${equip}`
+}
+
+const BASE_STATS = ['vida', 'ataque', 'ataque_magico', 'defensa', 'mana', 'estamina', 'agilidad', 'robo', 'sigilo'] as const
 
 export function CharactersPage() {
   const [characters, setCharacters] = useState<Character[]>([])
@@ -154,27 +184,48 @@ export function CharactersPage() {
                 </div>
                 {race && (() => {
                   const equipped = (charItems[c.id] || []).filter((i: any) => i.equipped)
+
+                  const modifiedBase: Record<string, string> = {}
+                  for (const k of BASE_STATS) {
+                    modifiedBase[k] = (race as any)[k] || '0'
+                  }
+
                   const equipStats: Record<string, string> = {}
                   for (const item of equipped) {
                     const parsed = parseItemAttributes(item.attributes)
-                    for (const [k, v] of Object.entries(parsed)) {
-                      equipStats[k] = combineExpr(equipStats[k], v)
+                    for (const [key, val] of Object.entries(parsed)) {
+                      if (!val) continue
+                      if (key === 'armadura' || key === 'nulimagia') {
+                        equipStats[key] = combineExpr(equipStats[key], val)
+                        continue
+                      }
+                      const flatAmt = isFlatBonus(val)
+                      if (flatAmt !== null && BASE_STATS.includes(key as any)) {
+                        modifiedBase[key] = applyFlatToBase(modifiedBase[key] || '0', flatAmt)
+                      } else {
+                        equipStats[key] = combineExpr(equipStats[key], val)
+                      }
                     }
                   }
-                  const keyMap: Record<string, string> = { vida: 'Vida', ataque: 'Ataque', ataque_magico: 'Atq Mágico', defensa: 'Defensa', mana: 'Mana', estamina: 'Estamina', agilidad: 'Agilidad', robo: 'Robo', sigilo: 'Sigilo' }
-                  const statMap: Record<string, string> = { vida: race.vida, ataque: race.ataque, ataque_magico: race.ataque_magico, defensa: race.defensa, mana: race.mana, estamina: race.estamina, agilidad: race.agilidad, robo: race.robo, sigilo: race.sigilo }
+
+                  const keyMap: Record<string, string> = { vida: 'Vida', ataque: 'Ataque', ataque_magico: 'Atq Mágico', defensa: 'Defensa', mana: 'Mana', estamina: 'Estamina', agilidad: 'Agilidad', robo: 'Robo', sigilo: 'Sigilo', armadura: 'Armadura', nulimagia: 'Nulimagia' }
+                  const allKeys = [...BASE_STATS, 'armadura', 'nulimagia'] as const
                   return (
                     <div className="grid grid-cols-3 gap-1 text-xs">
-                      {STAT_KEYS.map((k) => {
-                        const base = statMap[k]
+                      {allKeys.map((k) => {
+                        const base = modifiedBase[k]
                         const equip = equipStats[k]
-                        const total = equip ? combineExpr(base, equip) : base
+                        const total = computeTotal(base, equip)
+                        const showEquip = equip && base && base !== '0' && base !== total
                         return (
                           <div key={k} className="bg-muted/50 rounded-lg p-1.5 text-center">
                             <p className="text-muted-foreground">{keyMap[k]}</p>
-                            <p className="font-medium">{base === '0' ? '-' : base}</p>
-                            {equip && <p className="text-[10px] text-green-400">+ equip: {equip}</p>}
-                            {equip && <p className="text-[10px] text-yellow-400">total: {total}</p>}
+                            <p className="font-medium">{total}</p>
+                            {showEquip && (
+                              <p className="text-[10px] text-muted-foreground/60">
+                                {equip.startsWith('-') ? equip : `+ ${equip}`}
+                              </p>
+                            )}
                           </div>
                         )
                       })}

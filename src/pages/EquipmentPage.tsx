@@ -102,9 +102,8 @@ function computeTotal(base: string | undefined, equip: string | undefined): stri
   if (!base && !equip) return '0'
   if (!base) return equip || '0'
   if (!equip) return base
-  const bn = parseInt(base)
-  const en = parseInt(equip)
-  if (!isNaN(bn) && !isNaN(en)) return String(bn + en)
+  const isNum = (s: string) => /^-?\d+$/.test(s)
+  if (isNum(base) && isNum(equip)) return String(parseInt(base) + parseInt(equip))
   return `${base} + ${equip}`
 }
 
@@ -137,7 +136,7 @@ function applyFlatToBase(baseExpr: string, flatAmount: number): string {
     if (sides <= 0) return '0'
     return `${count}d${sides}`
   }
-  const numMatch = baseExpr.match(/^(\d+)$/)
+  const numMatch = baseExpr.match(/^(-?\d+)$/)
   if (numMatch) {
     const val = parseInt(numMatch[1]) + flatAmount
     return String(val)

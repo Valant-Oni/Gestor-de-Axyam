@@ -135,8 +135,19 @@ export function ObjectsPage() {
                   </button>
                 )}
               </div>
-              {item.description && <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>}
-              {item.attributes && <p className="text-xs text-muted-foreground">Atributos: {item.attributes}</p>}
+              {item.image ? (
+                <div className="flex justify-center py-2">
+                  <img src={item.image} alt={item.name}
+                    className="h-36 object-contain rounded-lg"
+                    onError={(e) => { (e.target as HTMLElement).style.display = 'none' }} />
+                </div>
+              ) : (
+                <div className="flex justify-center py-6">
+                  <span className="text-4xl">{item.emoji || '📦'}</span>
+                </div>
+              )}
+              {false && item.description && <p className="text-xs text-muted-foreground line-clamp-2">{item.description}</p>}
+              {false && item.attributes && <p className="text-xs text-muted-foreground">Atributos: {item.attributes}</p>}
 
               {itemTagIds.length > 0 && (
                 <div className="flex flex-wrap gap-1 pt-1">
