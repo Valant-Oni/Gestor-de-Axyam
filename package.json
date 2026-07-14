@@ -1,6 +1,6 @@
 {
   "name": "gestor-de-axyam",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gestor de personajes, equipamiento y materiales para servidor de rol Axyam",
   "main": "dist-electron/main.js",
   "author": "Valant-Oni",
@@ -11,7 +11,9 @@
     "preview": "vite preview",
     "postinstall": "electron-rebuild",
     "dist": "npm run build && electron-builder",
-    "dist:portable": "npm run build && electron-builder --config.win.target=portable"
+    "dist:portable": "npm run build && electron-builder --config.win.target=portable",
+    "release": "npm version patch --no-git-tag-version && npm run dist:portable",
+    "release:minor": "npm version minor --no-git-tag-version && npm run dist:portable"
   },
   "build": {
     "appId": "com.axyam.gestor",

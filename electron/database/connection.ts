@@ -413,7 +413,7 @@ function recipeIngredientFix(db: Database.Database): void {
 }
 
 function extractAttributesFromDescriptions(db: Database.Database): void {
-  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v2'").get()
+  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v3'").get()
   if (hasFix) return
 
   const items = db.prepare("SELECT id, name, description, attributes FROM items WHERE attributes IS NULL OR attributes = '{}'").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
@@ -431,22 +431,24 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
     'maná': 'mana',
     'vida': 'vida',
     'estamina': 'estamina',
+    'stamina': 'estamina',
     'sigilo': 'sigilo',
     'agilidad': 'agilidad',
     'robo': 'robo',
   }
 
   const hardcoded: Record<string, string> = {
-    'Azote de Mundos: Version Cetro': 'ataque+1d10',
+    'Azote de Mundos: Version Cetro': 'ataque_magico+1d10',
     'casco valkiria': 'armadura+8, nulimagia+8, defensa+1',
     'botas protectoras': 'armadura+8, nulimagia+6, mana-3, estamina-1, ataque+2',
     'Azote de Mundos': 'ataque+2d10',
+    'anillo de la valkiria': 'estamina+1, mana+2',
   }
 
   let updated = 0
   let cleared = 0
 
-  const statPattern = /\*\*(Da[nñ]o|Defensa|Armadura|Nulimagia|Man[áa]|Vida|Estamina|Sigilo|Agilidad|Robo):\*\*\s*([^\n*]+)/gi
+  const statPattern = /\*\*(Da[nñ]o|Defensa|Armadura|Nulimagia|Man[áa]|Vida|Estamina|Stamina|Sigilo|Agilidad|Robo):\*\*\s*([^\n*]+)/gi
   const efectoPatterns: [RegExp, string][] = [
     [/aumenta (?:el|la|tu) (?:da[nñ]o base m[aá]gico|da[nñ]o m[aá]gico base) en (\d+)/i, 'ataque_magico'],
     [/aumenta en (\d+) la base de da[nñ]o m[aá]gico/i, 'ataque_magico'],
@@ -474,20 +476,29 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
       }
 
       const found: string[] = []
+
+      const useMagicalAttack = /cetro/i.test(item.name) ||
+        /Utiliza la base de ataque m[aá]gico|Puedes usar tu base de da[nñ]o m[aá]gica/i.test(item.description)
+
       const pattern = new RegExp(statPattern.source, 'gi')
       let match: RegExpExecArray | null
 
       while ((match = pattern.exec(item.description)) !== null) {
         const key = match[1].toLowerCase()
         const valueStr = match[2].trim()
-        const mappedKey = statKeyMap[key]
+        let mappedKey = statKeyMap[key]
         if (!mappedKey) continue
+
+        if (useMagicalAttack && (key === 'daño' || key === 'dano')) {
+          mappedKey = 'ataque_magico'
+        }
 
         const tokens = valueStr.split(/\s+/).filter(Boolean)
         const validTokens: string[] = []
         for (const token of tokens) {
-          if (/^-?\d*d\d+$/.test(token) || /^-?\d+$/.test(token)) {
-            validTokens.push(token)
+          const cleanToken = token.replace(/^\+/, '')
+          if (/^-?\d*d\d+$/.test(cleanToken) || /^-?\d+$/.test(cleanToken)) {
+            validTokens.push(cleanToken)
           }
         }
 
@@ -513,8 +524,8 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
       }
     }
 
-    db.prepare("DELETE FROM data_migration WHERE name = 'attribute_fix_v1'").run()
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('attribute_fix_v2', strftime('%s','now') * 1000)").run()
+    db.prepare("DELETE FROM data_migration WHERE name IN ('attribute_fix_v1', 'attribute_fix_v2')").run()
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('attribute_fix_v3', strftime('%s','now') * 1000)").run()
   })
 
   tx()
