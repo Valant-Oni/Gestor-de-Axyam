@@ -412,13 +412,29 @@ function recipeIngredientFix(db: Database.Database): void {
   tx()
 }
 
+function forceUpdateKnownItems(db: Database.Database): void {
+  const hardcoded: Record<string, string> = {
+    'Azote de Mundos: Version Cetro': 'ataque_magico+1d10',
+    'casco valkiria': 'armadura+8, nulimagia+8, defensa+1',
+    'botas protectoras': 'armadura+8, nulimagia+6, mana-3, estamina-1, ataque+2',
+    'Azote de Mundos': 'ataque+2d10',
+    'anillo de la valkiria': 'estamina+1, mana+2',
+  }
+  const stmt = db.prepare("UPDATE items SET attributes = ? WHERE name = ?")
+  let count = 0
+  for (const [name, attrs] of Object.entries(hardcoded)) {
+    const result = stmt.run(attrs, name)
+    if (result.changes > 0) count++
+  }
+  if (count > 0) console.log(`  force-updated ${count} known items`)
+}
+
 function extractAttributesFromDescriptions(db: Database.Database): void {
-  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v3'").get()
+  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v4'").get()
   if (hasFix) return
 
   const updateItem = db.prepare('UPDATE items SET attributes = ? WHERE id = ?')
   const clearItem = db.prepare("UPDATE items SET attributes = NULL WHERE id = ? AND (attributes = '{}' OR attributes IS NULL)")
-  const forceStmt = db.prepare("UPDATE items SET attributes = ? WHERE name = ?")
 
   const statKeyMap: Record<string, string> = {
     'daño': 'ataque',
@@ -436,14 +452,6 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
     'robo': 'robo',
   }
 
-  const hardcoded: Record<string, string> = {
-    'Azote de Mundos: Version Cetro': 'ataque_magico+1d10',
-    'casco valkiria': 'armadura+8, nulimagia+8, defensa+1',
-    'botas protectoras': 'armadura+8, nulimagia+6, mana-3, estamina-1, ataque+2',
-    'Azote de Mundos': 'ataque+2d10',
-    'anillo de la valkiria': 'estamina+1, mana+2',
-  }
-
   let updated = 0
   let cleared = 0
 
@@ -457,20 +465,13 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
   ]
 
   const tx = db.transaction(() => {
-    // Phase 1: force update known items unconditionally (even if they already have attributes)
-    let forceUpdated = 0
-    for (const [name, attrs] of Object.entries(hardcoded)) {
-      const result = forceStmt.run(attrs, name)
-      if (result.changes > 0) forceUpdated++
-    }
-    if (forceUpdated > 0) console.log(`  force-updated ${forceUpdated} items`)
-
-    // Phase 2: auto-extract for items that still have '{}' or NULL
-    const items = db.prepare("SELECT id, name, description, attributes FROM items WHERE attributes IS NULL OR attributes = '{}'").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
+    // Re-extract for ALL items (not just {} ones), so cetros and other items
+    // that already had attributes from v1/v2/v3 get re-evaluated
+    const items = db.prepare("SELECT id, name, description, attributes FROM items").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
 
     for (const item of items) {
       if (!item.description) {
-        if (item.attributes === '{}') {
+        if (item.attributes === '{}' || item.attributes === null) {
           clearItem.run(item.id)
           cleared++
         }
@@ -516,22 +517,24 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
         }
       }
 
-      if (found.length > 0) {
-        const attributes = found.join(', ')
-        updateItem.run(attributes, item.id)
-        updated++
-      } else if (item.attributes === '{}') {
-        clearItem.run(item.id)
-        cleared++
+      const newAttrs = found.length > 0 ? found.join(', ') : null
+      if (newAttrs !== item.attributes) {
+        if (newAttrs) {
+          updateItem.run(newAttrs, item.id)
+          updated++
+        } else if (item.attributes === '{}' || item.attributes === null) {
+          clearItem.run(item.id)
+          cleared++
+        }
       }
     }
 
-    db.prepare("DELETE FROM data_migration WHERE name IN ('attribute_fix_v1', 'attribute_fix_v2')").run()
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('attribute_fix_v3', strftime('%s','now') * 1000)").run()
+    db.prepare("DELETE FROM data_migration WHERE name IN ('attribute_fix_v1', 'attribute_fix_v2', 'attribute_fix_v3')").run()
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('attribute_fix_v4', strftime('%s','now') * 1000)").run()
   })
 
   tx()
-  console.log(`Attribute fix: ${updated} items auto-extracted from descriptions, ${cleared} items cleared from '{}'`)
+  console.log(`Attribute fix v4: ${updated} items updated, ${cleared} items cleared`)
 }
 
 export function initDatabase(): void {
@@ -545,5 +548,6 @@ export function initDatabase(): void {
   applyItemReview(db)
   applyTagReview(db)
   recipeIngredientFix(db)
+  forceUpdateKnownItems(db)
   extractAttributesFromDescriptions(db)
 }
