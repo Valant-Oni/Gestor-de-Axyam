@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Item, Tag, Character, Recipe, RecipeIngredient } from '@/types'
+import { Item, Tag, Recipe, RecipeIngredient } from '@/types'
 import { Package, Search, Check, Tags as TagsIcon, Hammer } from 'lucide-react'
+import { useCharacterStore } from '@/stores/characterStore'
 
 export function ObjectsPage() {
+  const { selectedCharId, setSelectedCharId } = useCharacterStore()
   const [items, setItems] = useState<Item[]>([])
   const [tags, setTags] = useState<Tag[]>([])
-  const [characters, setCharacters] = useState<Character[]>([])
-  const [selectedChar, setSelectedChar] = useState<number | null>(null)
   const [markedItems, setMarkedItems] = useState<Set<number>>(new Set())
   const [itemTags, setItemTags] = useState<Record<number, number[]>>({})
   const [loading, setLoading] = useState(true)
@@ -18,15 +18,13 @@ export function ObjectsPage() {
 
   const load = async () => {
     try {
-      const [itemsData, tagsData, charsData, recipesData] = await Promise.all([
+      const [itemsData, tagsData, recipesData] = await Promise.all([
         window.electronAPI.items.getAll(),
         window.electronAPI.tags.getAll(),
-        window.electronAPI.characters.getAll(),
         window.electronAPI.recipes.getAll(),
       ])
       setItems(itemsData as Item[])
       setTags(tagsData as Tag[])
-      setCharacters(charsData as Character[])
       setRecipes(recipesData as Recipe[])
 
       // Eagerly load tags for all items
@@ -58,22 +56,22 @@ export function ObjectsPage() {
   }
 
   useEffect(() => {
-    if (!selectedChar) { setMarkedItems(new Set()); return }
-    window.electronAPI.characters.getItems(selectedChar).then((data: any[]) => {
+    if (!selectedCharId) { setMarkedItems(new Set()); return }
+    window.electronAPI.characters.getItems(selectedCharId).then((data: any[]) => {
       const marked = new Set<number>()
       for (const item of data) marked.add(item.id)
       setMarkedItems(marked)
     })
-  }, [selectedChar])
+  }, [selectedCharId])
 
   const toggleMark = async (itemId: number) => {
-    if (!selectedChar) return
+    if (!selectedCharId) return
     try {
       if (markedItems.has(itemId)) {
-        await window.electronAPI.characters.unmarkItem(selectedChar, itemId)
+        await window.electronAPI.characters.unmarkItem(selectedCharId, itemId)
         setMarkedItems((prev) => { const next = new Set(prev); next.delete(itemId); return next })
       } else {
-        await window.electronAPI.characters.markItem(selectedChar, itemId)
+        await window.electronAPI.characters.markItem(selectedCharId, itemId)
         setMarkedItems((prev) => new Set(prev).add(itemId))
       }
     } catch (e) { console.error(e) }
@@ -97,16 +95,9 @@ export function ObjectsPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Objetos</h1>
-          <p className="text-muted-foreground text-sm">Catálogo completo de objetos. Selecciona un personaje para marcar objetos.</p>
-        </div>
-        <select value={selectedChar || ''} onChange={(e) => setSelectedChar(e.target.value ? parseInt(e.target.value) : null)}
-          className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
-          <option value="">Sin personaje</option>
-          {characters.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-        </select>
+      <div>
+        <h1 className="text-2xl font-bold">Objetos</h1>
+        <p className="text-muted-foreground text-sm">Catálogo completo de objetos. Selecciona un personaje en la barra lateral para marcar objetos.</p>
       </div>
 
       <div className="flex gap-2">
@@ -137,7 +128,7 @@ export function ObjectsPage() {
                     {item.type && <p className="text-xs text-muted-foreground">{item.type}</p>}
                   </div>
                 </div>
-                {selectedChar && (
+                {selectedCharId && (
                   <button onClick={() => toggleMark(item.id)}
                     className={`p-1.5 rounded-full transition-colors ${markedItems.has(item.id) ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'}`}>
                     {markedItems.has(item.id) ? <Check className="size-3.5" /> : <Package className="size-3.5" />}

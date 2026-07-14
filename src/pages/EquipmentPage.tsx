@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Character, Tag, Race } from '@/types'
 import { ScrollText, ShieldCheck, X } from 'lucide-react'
+import { useCharacterStore } from '@/stores/characterStore'
 
 interface MarkedItem {
   link_id: number
@@ -97,6 +98,16 @@ function flatValue(expr: string): number | null {
   return null
 }
 
+function computeTotal(base: string | undefined, equip: string | undefined): string {
+  if (!base && !equip) return '0'
+  if (!base) return equip || '0'
+  if (!equip) return base
+  const bn = parseInt(base)
+  const en = parseInt(equip)
+  if (!isNaN(bn) && !isNaN(en)) return String(bn + en)
+  return `${base} + ${equip}`
+}
+
 function numericValue(expr: string): number {
   const n = parseInt(expr)
   if (!isNaN(n)) return n
@@ -150,10 +161,10 @@ function hasConflict(equippedTags: string[], candidateTags: string[]): string | 
 }
 
 export function EquipmentPage() {
+  const { selectedCharId, setSelectedCharId } = useCharacterStore()
   const [characters, setCharacters] = useState<Character[]>([])
   const [races, setRaces] = useState<Race[]>([])
   const [tags, setTags] = useState<Tag[]>([])
-  const [selectedChar, setSelectedChar] = useState<number | null>(null)
   const [markedItems, setMarkedItems] = useState<MarkedItem[]>([])
   const [selectedRace, setSelectedRace] = useState<Race | null>(null)
   const [loading, setLoading] = useState(true)
@@ -175,13 +186,13 @@ export function EquipmentPage() {
   useEffect(() => { load() }, [])
 
   useEffect(() => {
-    if (!selectedChar) { setMarkedItems([]); setSelectedRace(null); return }
-    const char = characters.find((c) => c.id === selectedChar)
+    if (!selectedCharId) { setMarkedItems([]); setSelectedRace(null); return }
+    const char = characters.find((c) => c.id === selectedCharId)
     const race = races.find((r) => r.id === char?.race_id) || null
     setSelectedRace(race)
     const fetchItems = async () => {
       try {
-        const data = await window.electronAPI.characters.getItems(selectedChar) as MarkedItem[]
+        const data = await window.electronAPI.characters.getItems(selectedCharId) as MarkedItem[]
         const enriched: MarkedItem[] = []
         for (const item of data) {
           const tagIds = await window.electronAPI.tags.getItemTags(item.id)
@@ -192,13 +203,13 @@ export function EquipmentPage() {
       } catch (e) { console.error(e) }
     }
     fetchItems()
-  }, [selectedChar, tags])
+  }, [selectedCharId, tags])
 
   const toggleEquipped = async (itemId: number, currentlyEquipped: number, itemTags: string[]) => {
-    if (!selectedChar) return
+    if (!selectedCharId) return
     if (currentlyEquipped) {
       try {
-        await window.electronAPI.characters.setEquipped(selectedChar, itemId, false)
+        await window.electronAPI.characters.setEquipped(selectedCharId, itemId, false)
         setMarkedItems((prev) => prev.map((it) => it.id === itemId ? { ...it, equipped: 0 } : it))
       } catch (e) { console.error(e) }
     } else {
@@ -206,16 +217,16 @@ export function EquipmentPage() {
       const conflict = hasConflict(equippedTags, itemTags)
       if (conflict) return
       try {
-        await window.electronAPI.characters.setEquipped(selectedChar, itemId, true)
+        await window.electronAPI.characters.setEquipped(selectedCharId, itemId, true)
         setMarkedItems((prev) => prev.map((it) => it.id === itemId ? { ...it, equipped: 1 } : it))
       } catch (e) { console.error(e) }
     }
   }
 
   const unmarkItem = async (itemId: number) => {
-    if (!selectedChar) return
+    if (!selectedCharId) return
     try {
-      await window.electronAPI.characters.unmarkItem(selectedChar, itemId)
+      await window.electronAPI.characters.unmarkItem(selectedCharId, itemId)
       setMarkedItems((prev) => prev.filter((it) => it.id !== itemId))
     } catch (e) { console.error(e) }
   }
@@ -290,6 +301,8 @@ export function EquipmentPage() {
   function statDisplay(key: string, baseVal: string | undefined, equipVal: string | undefined) {
     if (!selectedRace && key !== 'armadura' && key !== 'nulimagia') return null
     const label = key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' ')
+    const total = computeTotal(baseVal, equipVal)
+    const showEquip = equipVal && baseVal && baseVal !== '0' && baseVal !== total
     return (
       <div className="bg-muted/50 rounded-lg p-2 text-center">
         <p className="text-[10px] text-muted-foreground">{label}</p>
@@ -300,15 +313,12 @@ export function EquipmentPage() {
           </>
         ) : (
           <>
-            {baseVal && baseVal !== '0' ? (
-              <p className="text-[10px] text-muted-foreground/60">{baseVal}</p>
-            ) : baseVal === '0' ? (
-              <p className="text-[10px] text-muted-foreground/40">-</p>
-            ) : (
-              <p className="text-[10px] text-muted-foreground/40">-</p>
+            <p className="text-sm font-bold">{total}</p>
+            {showEquip && (
+              <p className="text-[10px] text-muted-foreground/60">
+                {equipVal.startsWith('-') ? equipVal : `+ ${equipVal}`} eq.
+              </p>
             )}
-            {equipVal ? <p className="text-xs font-semibold text-primary">+ {equipVal}</p> : <p className="text-xs text-muted-foreground/40">-</p>}
-            <p className="text-sm font-bold">{equipVal ? `${baseVal || '0'} + ${equipVal}` : baseVal || '0'}</p>
           </>
         )}
       </div>
@@ -324,14 +334,14 @@ export function EquipmentPage() {
           <h1 className="text-2xl font-bold">Equipamiento</h1>
           <p className="text-muted-foreground text-sm">Gestiona el equipo activo de tu personaje.</p>
         </div>
-        <select value={selectedChar || ''} onChange={(e) => setSelectedChar(e.target.value ? parseInt(e.target.value) : null)}
+        <select value={selectedCharId || ''} onChange={(e) => setSelectedCharId(e.target.value ? parseInt(e.target.value) : null)}
           className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
           <option value="">Selecciona personaje...</option>
           {characters.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
         </select>
       </div>
 
-      {!selectedChar ? (
+      {!selectedCharId ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <ScrollText className="size-12 text-muted-foreground mb-4" />
           <p className="text-muted-foreground">Selecciona un personaje para ver su equipamiento</p>
