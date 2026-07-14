@@ -413,7 +413,7 @@ function recipeIngredientFix(db: Database.Database): void {
 }
 
 function extractAttributesFromDescriptions(db: Database.Database): void {
-  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v1'").get()
+  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v2'").get()
   if (hasFix) return
 
   const items = db.prepare("SELECT id, name, description, attributes FROM items WHERE attributes IS NULL OR attributes = '{}'").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
@@ -423,6 +423,7 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
 
   const statKeyMap: Record<string, string> = {
     'daño': 'ataque',
+    'dano': 'ataque',
     'defensa': 'defensa',
     'armadura': 'armadura',
     'nulimagia': 'nulimagia',
@@ -435,13 +436,35 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
     'robo': 'robo',
   }
 
+  const hardcoded: Record<string, string> = {
+    'Azote de Mundos: Version Cetro': 'ataque+1d10',
+    'casco valkiria': 'armadura+8, nulimagia+8, defensa+1',
+    'botas protectoras': 'armadura+8, nulimagia+6, mana-3, estamina-1, ataque+2',
+    'Azote de Mundos': 'ataque+2d10',
+  }
+
   let updated = 0
   let cleared = 0
 
-  const statPattern = /\*\*(Daño|Defensa|Armadura|Nulimagia|Mana|Maná|Vida|Estamina|Sigilo|Agilidad|Robo):\*\*\s*([^\n*]+)/gi
+  const statPattern = /\*\*(Da[nñ]o|Defensa|Armadura|Nulimagia|Man[áa]|Vida|Estamina|Sigilo|Agilidad|Robo):\*\*\s*([^\n*]+)/gi
+  const efectoPatterns: [RegExp, string][] = [
+    [/aumenta (?:el|la|tu) (?:da[nñ]o base m[aá]gico|da[nñ]o m[aá]gico base) en (\d+)/i, 'ataque_magico'],
+    [/aumenta en (\d+) la base de da[nñ]o m[aá]gico/i, 'ataque_magico'],
+    [/aumenta (?:el|la|tu) ataque base en (\d+)/i, 'ataque'],
+    [/aumenta (?:el|la|tu) (?:dado de defensa base|defensa base|def base) en (\d+)/i, 'defensa'],
+    [/aumenta (?:el|la|tu) (?:dado de ataque base|ataque base) en (\d+)/i, 'ataque'],
+  ]
 
   const tx = db.transaction(() => {
     for (const item of items) {
+      // Hardcoded fallback first
+      const hardcodedAttr = hardcoded[item.name]
+      if (hardcodedAttr) {
+        updateItem.run(hardcodedAttr, item.id)
+        updated++
+        continue
+      }
+
       if (!item.description) {
         if (item.attributes === '{}') {
           clearItem.run(item.id)
@@ -473,16 +496,12 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
         }
       }
 
-      // Also look for common patterns in **Efecto:** text
-      const efectoMatch1 = item.description.match(/aumenta (?:el|la|tu) (?:daño base mágico|daño mágico base) en (\d+)/i)
-      const efectoMatch2 = item.description.match(/aumenta en (\d+) la base de daño mágico/i)
-      const efectoMatch3 = item.description.match(/aumenta (?:el|la|tu) ataque base en (\d+)/i)
-      const efectoMatch4 = item.description.match(/aumenta (?:el|la|tu) (?:dado de defensa base|defensa base) en (\d+)/i)
-
-      if (efectoMatch1 && !found.some(f => f.startsWith('ataque_magico'))) found.push(`ataque_magico+${efectoMatch1[1]}`)
-      if (efectoMatch2 && !found.some(f => f.startsWith('ataque_magico'))) found.push(`ataque_magico+${efectoMatch2[1]}`)
-      if (efectoMatch3 && !found.some(f => f.startsWith('ataque'))) found.push(`ataque+${efectoMatch3[1]}`)
-      if (efectoMatch4 && !found.some(f => f.startsWith('defensa'))) found.push(`defensa+${efectoMatch4[1]}`)
+      for (const [reg, stat] of efectoPatterns) {
+        const m = item.description.match(reg)
+        if (m && !found.some(f => f.startsWith(stat))) {
+          found.push(`${stat}+${m[1]}`)
+        }
+      }
 
       if (found.length > 0) {
         const attributes = found.join(', ')
@@ -494,7 +513,8 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
       }
     }
 
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('attribute_fix_v1', strftime('%s','now') * 1000)").run()
+    db.prepare("DELETE FROM data_migration WHERE name = 'attribute_fix_v1'").run()
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('attribute_fix_v2', strftime('%s','now') * 1000)").run()
   })
 
   tx()
