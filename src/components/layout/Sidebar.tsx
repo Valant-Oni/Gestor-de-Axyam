@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Sword, Users, Package, ScrollText, Dices, UserCircle, Sun, Moon, Hammer } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -15,7 +16,13 @@ const navItems = [
 
 export function Sidebar() {
   const { theme, toggle } = useThemeStore()
-  const { selectedCharId, setSelectedCharId, characters } = useCharacterStore()
+  const { selectedCharId, setSelectedCharId, characters, setCharacters } = useCharacterStore()
+
+  useEffect(() => {
+    if (characters.length === 0) {
+      window.electronAPI.characters.getAll().then((data: any[]) => setCharacters(data))
+    }
+  }, [])
 
   return (
     <aside className="w-56 border-r bg-sidebar flex flex-col shrink-0">
