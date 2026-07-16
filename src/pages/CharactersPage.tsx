@@ -59,7 +59,7 @@ export function CharactersPage() {
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<Character | null>(null)
-  const [form, setForm] = useState({ name: '', race_id: '', gender: '', level: '1', perk_10: '', perk_20: '' })
+  const [form, setForm] = useState({ name: '', race_id: '', gender: '', level: 'none', perk_10: '', perk_20: '' })
 
   const PERK_10_OPTIONS = [
     { id: 'estamina', label: '+1 Estamina' },
@@ -102,7 +102,8 @@ export function CharactersPage() {
 
   const handleSave = async () => {
     if (!form.name.trim()) return
-    const data = { name: form.name.trim(), race_id: form.race_id ? parseInt(form.race_id) : undefined, gender: form.gender || undefined, level: parseInt(form.level) || 1, perk_10: form.perk_10 || null, perk_20: form.perk_20 || null }
+    const levelVal = form.level === 'none' ? 0 : parseInt(form.level)
+    const data = { name: form.name.trim(), race_id: form.race_id ? parseInt(form.race_id) : undefined, gender: form.gender || undefined, level: levelVal, perk_10: form.level !== 'none' ? form.perk_10 || null : null, perk_20: form.level === '20' ? form.perk_20 || null : null }
     try {
       if (editing) {
         await window.electronAPI.characters.update(editing.id, data)
@@ -114,13 +115,13 @@ export function CharactersPage() {
     }
     setShowForm(false)
     setEditing(null)
-    setForm({ name: '', race_id: '', gender: '', level: '1', perk_10: '', perk_20: '' })
+    setForm({ name: '', race_id: '', gender: '', level: 'none', perk_10: '', perk_20: '' })
     load()
   }
 
   const handleEdit = (c: Character) => {
     setEditing(c)
-    setForm({ name: c.name, race_id: c.race_id?.toString() || '', gender: c.gender || '', level: String(c.level || 1), perk_10: c.perk_10 || '', perk_20: c.perk_20 || '' })
+    setForm({ name: c.name, race_id: c.race_id?.toString() || '', gender: c.gender || '', level: c.level === 10 ? '10' : c.level === 20 ? '20' : 'none', perk_10: c.perk_10 || '', perk_20: c.perk_20 || '' })
     setShowForm(true)
   }
 
@@ -140,7 +141,7 @@ export function CharactersPage() {
           <h1 className="text-2xl font-bold">Personajes</h1>
           <p className="text-muted-foreground text-sm">Gestiona tus personajes del servidor</p>
         </div>
-        <Button onClick={() => { setEditing(null); setForm({ name: '', race_id: '', gender: '', level: '1', perk_10: '', perk_20: '' }); setShowForm(true) }}>
+        <Button onClick={() => { setEditing(null); setForm({ name: '', race_id: '', gender: '', level: 'none', perk_10: '', perk_20: '' }); setShowForm(true) }}>
           <Plus className="size-4" /> Nuevo personaje
         </Button>
       </div>
@@ -169,14 +170,14 @@ export function CharactersPage() {
               <option value="Hombre">Hombre</option>
               <option value="Mujer">Mujer</option>
             </select>
-            <select value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value })}
+            <select value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value, perk_10: e.target.value === 'none' ? '' : form.perk_10, perk_20: e.target.value !== '20' ? '' : form.perk_20 })}
               className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
-              {Array.from({ length: 20 }, (_, i) => i + 1).map(n => (
-                <option key={n} value={n}>Nivel {n}</option>
-              ))}
+              <option value="none">Sin perks</option>
+              <option value="10">Nivel 10</option>
+              <option value="20">Nivel 20</option>
             </select>
           </div>
-          {parseInt(form.level) >= 10 && (
+          {form.level !== 'none' && (
             <div className="space-y-1.5">
               <p className="text-sm font-medium">Perk nivel 10</p>
               <div className="flex gap-4">
@@ -190,7 +191,7 @@ export function CharactersPage() {
               </div>
             </div>
           )}
-          {parseInt(form.level) >= 20 && (
+          {form.level === '20' && (
             <div className="space-y-1.5">
               <p className="text-sm font-medium">Perk nivel 20</p>
               <div className="flex gap-4">
@@ -226,7 +227,7 @@ export function CharactersPage() {
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-semibold">{c.name}</h3>
-                    <p className="text-sm text-muted-foreground">{race?.name || 'Sin raza'}{c.gender ? ` - ${c.gender}` : ''} · Nivel {c.level}</p>
+                    <p className="text-sm text-muted-foreground">{race?.name || 'Sin raza'}{c.gender ? ` - ${c.gender}` : ''}{c.level > 0 ? ` · Nivel ${c.level}` : ''}</p>
                   </div>
                   <div className="flex gap-1">
                     <button onClick={() => handleEdit(c)} className="p-1 hover:bg-accent rounded"><Edit2 className="size-4" /></button>
