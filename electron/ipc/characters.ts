@@ -73,4 +73,34 @@ export function registerCharacterHandlers() {
     const db = getDatabase()
     db.prepare('UPDATE character_items SET equipped = ? WHERE character_id = ? AND item_id = ?').run(equipped ? 1 : 0, charId, itemId)
   })
+
+  ipcMain.handle('characterMaterials:getNeeded', (_event, characterId: number) => {
+    const db = getDatabase()
+    return db.prepare(`
+      SELECT ri.item_id as id, i.name, i.emoji, SUM(ri.quantity) as total_needed
+      FROM character_items ci
+      JOIN recipes r ON r.product_item_id = ci.item_id
+      JOIN recipe_ingredients ri ON ri.recipe_id = r.id
+      JOIN items i ON i.id = ri.item_id
+      WHERE ci.character_id = ?
+      GROUP BY ri.item_id
+      ORDER BY i.name
+    `).all(characterId)
+  })
+
+  ipcMain.handle('characterMaterials:getByCharacter', (_event, characterId: number) => {
+    const db = getDatabase()
+    return db.prepare('SELECT * FROM character_materials WHERE character_id = ?').all(characterId)
+  })
+
+  ipcMain.handle('characterMaterials:setOwned', (_event, characterId: number, itemId: number, quantityOwned: number) => {
+    const db = getDatabase()
+    const existing = db.prepare('SELECT id FROM character_materials WHERE character_id = ? AND item_id = ?').get(characterId, itemId) as any
+    if (existing) {
+      db.prepare('UPDATE character_materials SET quantity_owned = ? WHERE id = ?').run(quantityOwned, existing.id)
+    } else {
+      db.prepare('INSERT INTO character_materials (character_id, item_id, quantity_needed, quantity_owned) VALUES (?, ?, 0, ?)').run(characterId, itemId, quantityOwned)
+    }
+    return { success: true }
+  })
 }

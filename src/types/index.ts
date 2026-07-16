@@ -103,6 +103,21 @@ export interface Character {
   race_name?: string
 }
 
+export interface NeededMaterial {
+  id: number
+  name: string
+  emoji: string | null
+  total_needed: number
+}
+
+export interface CharacterMaterial {
+  id: number
+  character_id: number
+  item_id: number
+  quantity_needed: number
+  quantity_owned: number
+}
+
 export interface DiceResult {
   result: number
   rolls: number[]
@@ -157,6 +172,11 @@ declare global {
       dice: {
         roll: (expr: string) => Promise<DiceResult>
         rollStat: (expr: string, bonuses: any[], conditions: Record<string, string>) => Promise<DiceResult>
+      }
+      characterMaterials: {
+        getNeeded: (characterId: number) => Promise<NeededMaterial[]>
+        getByCharacter: (characterId: number) => Promise<CharacterMaterial[]>
+        setOwned: (characterId: number, itemId: number, quantityOwned: number) => Promise<{ success: boolean }>
       }
     }
   }

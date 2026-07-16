@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Sword, Users, Package, ScrollText, Dices, UserCircle, Sun, Moon } from 'lucide-react'
+import { Sword, Users, Package, ScrollText, Dices, UserCircle, Sun, Moon, Hammer } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useThemeStore } from '@/stores/themeStore'
 import { useCharacterStore } from '@/stores/characterStore'
@@ -16,6 +16,7 @@ const navItems = [
   { to: '/objetos', icon: Package, label: 'Objetos' },
   { to: '/equipamiento', icon: ScrollText, label: 'Equipamiento' },
   { to: '/dados', icon: Dices, label: 'Dados' },
+  { to: '/materiales', icon: Hammer, label: 'Materiales' },
 ]
 
 export function Sidebar() {

@@ -46,4 +46,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     roll: (expr: string) => ipcRenderer.invoke('dice:roll', expr),
     rollStat: (expr: string, bonuses: any[], conditions: Record<string, string>) => ipcRenderer.invoke('dice:rollStat', expr, bonuses, conditions),
   },
+  characterMaterials: {
+    getNeeded: (characterId: number) => ipcRenderer.invoke('characterMaterials:getNeeded', characterId),
+    getByCharacter: (characterId: number) => ipcRenderer.invoke('characterMaterials:getByCharacter', characterId),
+    setOwned: (characterId: number, itemId: number, quantityOwned: number) => ipcRenderer.invoke('characterMaterials:setOwned', characterId, itemId, quantityOwned),
+  },
 })
