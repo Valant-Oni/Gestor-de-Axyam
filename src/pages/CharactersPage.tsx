@@ -157,14 +157,20 @@ export function CharactersPage() {
             <select value={form.race_id} onChange={(e) => setForm({ ...form, race_id: e.target.value })}
               className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
               <option value="">Selecciona raza...</option>
-              {baseRaces.map((r) => (
-                <optgroup key={r.id} label={r.name}>
-                  <option value={r.id}>{r.name}</option>
-                  {races.filter((ev) => ev.parent_race_id === r.id).map((ev) => (
-                    <option key={ev.id} value={ev.id}>  {ev.name} (evolución)</option>
-                  ))}
-                </optgroup>
-              ))}
+              {baseRaces.map((r) => {
+                const evolutions = races.filter((ev) => ev.parent_race_id === r.id)
+                if (evolutions.length > 0) {
+                  return (
+                    <optgroup key={r.id} label={r.name}>
+                      <option value={r.id}>{r.name}</option>
+                      {evolutions.map((ev) => (
+                        <option key={ev.id} value={ev.id}>  {ev.name} (evolución)</option>
+                      ))}
+                    </optgroup>
+                  )
+                }
+                return <option key={r.id} value={r.id}>{r.name}</option>
+              })}
             </select>
             <select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}
               className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
@@ -274,10 +280,12 @@ export function CharactersPage() {
                         const base = modifiedBase[k]
                         const equip = equipStats[k]
                         const total = computeTotal(base, equip)
+                        const restriction = race.restrictions.find((r) => r.restricted_stat === k)
+                        const displayTotal = restriction ? String(restriction.max_value) : total
                         return (
                           <div key={k} className="bg-muted/50 rounded-lg p-1.5 text-center">
                             <p className="text-muted-foreground">{keyMap[k]}</p>
-                            <p className="font-medium">{total}</p>
+                            <p className="font-medium">{displayTotal}</p>
                           </div>
                         )
                       })}

@@ -187,7 +187,11 @@ export function DicePage() {
   if (char?.perk_10 && perk10Map[char.perk_10]) { modifiedBase[char.perk_10] = applyFlatToBase(modifiedBase[char.perk_10] || '0', perk10Map[char.perk_10]) }
   if (char?.perk_20 && perk20Map[char.perk_20]) { modifiedBase[char.perk_20] = applyFlatToBase(modifiedBase[char.perk_20] || '0', perk20Map[char.perk_20]) }
 
-  const statExpr = (key: string) => computeTotal(modifiedBase[key], equipStats[key])
+  const statExpr = (key: string) => {
+    const restriction = race?.restrictions?.find((r) => r.restricted_stat === key)
+    if (restriction) return String(restriction.max_value)
+    return computeTotal(modifiedBase[key], equipStats[key])
+  }
   const ataqueExpr = statExpr('ataque')
   const ataqueMagicoExpr = statExpr('ataque_magico')
   const defensaExpr = statExpr('defensa')

@@ -314,6 +314,8 @@ export function EquipmentPage() {
     if (!selectedRace && key !== 'armadura' && key !== 'nulimagia') return null
     const label = key.charAt(0).toUpperCase() + key.slice(1).replace('_', ' ')
     const total = computeTotal(baseVal, equipVal)
+    const restriction = selectedRace?.restrictions?.find((r) => r.restricted_stat === key)
+    const displayTotal = restriction ? String(restriction.max_value) : total
     const showEquip = equipVal && baseVal && baseVal !== '0' && baseVal !== total
     return (
       <div className="bg-muted/50 rounded-lg p-2 text-center">
@@ -325,7 +327,7 @@ export function EquipmentPage() {
           </>
         ) : (
           <>
-            <p className="text-sm font-bold">{total}</p>
+            <p className="text-sm font-bold">{displayTotal}</p>
             {showEquip && (
               <p className="text-[10px] text-muted-foreground/60">
                 {equipVal.startsWith('-') ? equipVal : `+ ${equipVal}`} eq.
