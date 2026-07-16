@@ -76,16 +76,59 @@ export function registerCharacterHandlers() {
 
   ipcMain.handle('characterMaterials:getNeeded', (_event, characterId: number) => {
     const db = getDatabase()
-    return db.prepare(`
-      SELECT ri.item_id as id, i.name, i.emoji, SUM(ri.quantity) as total_needed
-      FROM character_items ci
-      JOIN recipes r ON r.product_item_id = ci.item_id
-      JOIN recipe_ingredients ri ON ri.recipe_id = r.id
-      JOIN items i ON i.id = ri.item_id
-      WHERE ci.character_id = ?
-      GROUP BY ri.item_id
-      ORDER BY i.name
-    `).all(characterId)
+
+    const markedItems = db.prepare('SELECT item_id FROM character_items WHERE character_id = ?').all(characterId) as any[]
+    if (markedItems.length === 0) return []
+
+    const allRecipes = db.prepare('SELECT * FROM recipes').all() as any[]
+    const allIngredients = db.prepare('SELECT * FROM recipe_ingredients').all() as any[]
+
+    const ingredientsByRecipe: Record<number, any[]> = {}
+    for (const ing of allIngredients) {
+      if (!ingredientsByRecipe[ing.recipe_id]) ingredientsByRecipe[ing.recipe_id] = []
+      ingredientsByRecipe[ing.recipe_id].push(ing)
+    }
+
+    const recipeByProduct: Record<number, any> = {}
+    for (const recipe of allRecipes) {
+      recipeByProduct[recipe.product_item_id] = recipe
+    }
+
+    const allItems = db.prepare('SELECT id, name, emoji FROM items').all() as any[]
+    const itemLookup: Record<number, any> = {}
+    for (const item of allItems) {
+      itemLookup[item.id] = item
+    }
+
+    const materialTotals: Record<number, number> = {}
+
+    function resolveItem(itemId: number, quantity: number, visited: Set<number>) {
+      if (visited.has(itemId)) return
+      visited = new Set(visited)
+      visited.add(itemId)
+
+      const recipe = recipeByProduct[itemId]
+      if (!recipe) {
+        materialTotals[itemId] = (materialTotals[itemId] || 0) + quantity
+        return
+      }
+
+      const ingredients = ingredientsByRecipe[recipe.id] || []
+      for (const ing of ingredients) {
+        resolveItem(ing.item_id, quantity * ing.quantity, visited)
+      }
+    }
+
+    for (const mark of markedItems) {
+      resolveItem(mark.item_id, 1, new Set())
+    }
+
+    return Object.entries(materialTotals)
+      .map(([id, total]) => {
+        const item = itemLookup[parseInt(id)]
+        return { id: parseInt(id), name: item?.name || 'Desconocido', emoji: item?.emoji || null, total_needed: total }
+      })
+      .sort((a, b) => a.name.localeCompare(b.name))
   })
 
   ipcMain.handle('characterMaterials:getByCharacter', (_event, characterId: number) => {
