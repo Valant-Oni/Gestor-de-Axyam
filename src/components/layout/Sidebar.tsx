@@ -15,8 +15,8 @@ const navItems = [
   { to: '/personajes', icon: Users, label: 'Personajes' },
   { to: '/objetos', icon: Package, label: 'Objetos' },
   { to: '/equipamiento', icon: ScrollText, label: 'Equipamiento' },
-  { to: '/dados', icon: Dices, label: 'Dados' },
   { to: '/materiales', icon: Hammer, label: 'Materiales' },
+  { to: '/dados', icon: Dices, label: 'Dados' },
 ]
 
 export function Sidebar() {
