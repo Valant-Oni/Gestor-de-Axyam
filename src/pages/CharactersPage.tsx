@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Character, Race, Zone } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit2, Trash2, User } from 'lucide-react'
+import { useCharacterStore } from '@/stores/characterStore'
 
 function parseItemAttributes(attrsStr: string | null): Record<string, string> {
   const result: Record<string, string> = {}
@@ -82,6 +83,7 @@ export function CharactersPage() {
         window.electronAPI.zones.getAll(),
       ])
       setCharacters(chars as Character[])
+      useCharacterStore.getState().setCharacters(chars as Character[])
       setRaces(raceData as Race[])
       setZones(zoneData as Zone[])
 

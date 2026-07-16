@@ -1,14 +1,8 @@
-import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Sword, Users, Package, ScrollText, Dices, UserCircle, Sun, Moon, Hammer } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useThemeStore } from '@/stores/themeStore'
 import { useCharacterStore } from '@/stores/characterStore'
-
-interface CharOption {
-  id: number
-  name: string
-}
 
 const navItems = [
   { to: '/', icon: UserCircle, label: 'Inicio' },
@@ -21,14 +15,7 @@ const navItems = [
 
 export function Sidebar() {
   const { theme, toggle } = useThemeStore()
-  const { selectedCharId, setSelectedCharId } = useCharacterStore()
-  const [chars, setChars] = useState<CharOption[]>([])
-
-  useEffect(() => {
-    window.electronAPI.characters.getAll().then((data: any[]) => {
-      setChars(data as CharOption[])
-    })
-  }, [])
+  const { selectedCharId, setSelectedCharId, characters } = useCharacterStore()
 
   return (
     <aside className="w-56 border-r bg-sidebar flex flex-col shrink-0">
@@ -60,7 +47,7 @@ export function Sidebar() {
           <select value={selectedCharId || ''} onChange={(e) => setSelectedCharId(e.target.value ? parseInt(e.target.value) : null)}
             className="w-full px-2 py-1.5 rounded-lg border bg-background text-xs focus:outline-none focus:ring-2 focus:ring-ring">
             <option value="">Selecciona...</option>
-            {chars.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            {characters.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </div>
       </nav>
