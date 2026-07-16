@@ -1,95 +1,140 @@
-import { useEffect, useState, useMemo } from 'react'
-import { Character, MaterialNode, CharacterMaterial } from '@/types'
+import { useEffect, useState, useMemo, useCallback } from 'react'
+import { MaterialNode, RootMaterialData } from '@/types'
 import { useCharacterStore } from '@/stores/characterStore'
-import { Hammer, Search, CheckCircle2, Circle, Package, ChevronRight, ChevronDown, Plus, Minus } from 'lucide-react'
+import { Hammer, Search, CheckCircle2, Circle, Package, ChevronRight, Plus, Minus } from 'lucide-react'
 
 export function RecipesPage() {
   const { selectedCharId } = useCharacterStore()
-  const [characters, setCharacters] = useState<Character[]>([])
-  const [tree, setTree] = useState<MaterialNode[]>([])
-  const [totalsMap, setTotalsMap] = useState<Record<string, number>>({})
-  const [ownedMap, setOwnedMap] = useState<Record<number, number>>({})
+  const [roots, setRoots] = useState<RootMaterialData[]>([])
+  const [ownedMap, setOwnedMap] = useState<Record<string, number>>({})
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    window.electronAPI.characters.getAll().then((chars) => {
-      setCharacters(chars as Character[])
-      setLoading(false)
-    })
+    setLoading(false)
   }, [])
 
   useEffect(() => {
-    if (!selectedCharId) { setTree([]); setTotalsMap({}); setOwnedMap({}); return }
+    if (!selectedCharId) { setRoots([]); setOwnedMap({}); return }
     const load = async () => {
-      const [result, owned] = await Promise.all([
-        window.electronAPI.characterMaterials.getNeeded(selectedCharId),
-        window.electronAPI.characterMaterials.getByCharacter(selectedCharId),
-      ])
-      setTree(result.tree as MaterialNode[])
-      setTotalsMap(result.totals as Record<string, number>)
-      const map: Record<number, number> = {}
-      for (const m of owned as CharacterMaterial[]) {
-        map[m.item_id] = m.quantity_owned
-      }
-      setOwnedMap(map)
+      const result = await window.electronAPI.characterMaterials.getNeeded(selectedCharId)
+      setRoots(result.roots as RootMaterialData[])
+      setOwnedMap(result.ownedByPath as Record<string, number>)
     }
     load()
   }, [selectedCharId])
 
-  const setOwned = async (itemId: number, value: number) => {
-    setOwnedMap((prev) => ({ ...prev, [itemId]: value }))
-    await window.electronAPI.characterMaterials.setOwned(selectedCharId!, itemId, value)
+  const pathToItemId = useMemo(() => {
+    const map: Record<string, number> = {}
+    function walk(node: MaterialNode) {
+      map[node.path] = node.id
+      for (const child of node.children) walk(child)
+    }
+    for (const root of roots) walk(root.tree)
+    return map
+  }, [roots])
+
+  const ownedByItem = useMemo(() => {
+    const itemTotals: Record<number, number> = {}
+    for (const [path, qty] of Object.entries(ownedMap)) {
+      const itemId = pathToItemId[path]
+      if (itemId !== undefined) {
+        itemTotals[itemId] = (itemTotals[itemId] || 0) + qty
+      }
+    }
+    return itemTotals
+  }, [ownedMap, pathToItemId])
+
+  const setOwned = async (itemId: number, value: number, nodePath: string) => {
+    setOwnedMap((prev) => ({ ...prev, [nodePath]: value }))
+    await window.electronAPI.characterMaterials.setOwned(selectedCharId!, itemId, value, nodePath)
   }
 
-  const handleToggle = (itemId: number, totalNeeded: number) => {
-    const current = ownedMap[itemId] || 0
-    setOwned(itemId, current >= totalNeeded ? 0 : totalNeeded)
+  const toggleCrafted = useCallback(async (root: RootMaterialData) => {
+    const path = root.tree.path || String(root.item.id)
+    await window.electronAPI.characterMaterials.setOwned(selectedCharId!, root.item.id, root.crafted ? 0 : 1, path)
+    const result = await window.electronAPI.characterMaterials.getNeeded(selectedCharId!)
+    setRoots(result.roots as RootMaterialData[])
+    setOwnedMap(result.ownedByPath as Record<string, number>)
+  }, [selectedCharId])
+
+  const handleToggle = (nodePath: string, itemId: number, totalNeeded: number) => {
+    const current = ownedMap[nodePath] || 0
+    setOwned(itemId, current >= totalNeeded ? 0 : totalNeeded, nodePath)
   }
 
-  const handleIncrement = (e: React.MouseEvent, itemId: number, totalNeeded: number) => {
+  const handleIncrement = (e: React.MouseEvent, nodePath: string, itemId: number, totalNeeded: number) => {
     e.stopPropagation()
-    const current = ownedMap[itemId] || 0
-    if (current < totalNeeded) setOwned(itemId, current + 1)
+    const current = ownedMap[nodePath] || 0
+    if (current < totalNeeded) setOwned(itemId, current + 1, nodePath)
   }
 
-  const handleDecrement = (e: React.MouseEvent, itemId: number) => {
+  const handleDecrement = (e: React.MouseEvent, nodePath: string, itemId: number) => {
     e.stopPropagation()
-    const current = ownedMap[itemId] || 0
-    if (current > 0) setOwned(itemId, current - 1)
+    const current = ownedMap[nodePath] || 0
+    if (current > 0) setOwned(itemId, current - 1, nodePath)
   }
 
-  // Flatten tree node names for search
   function flattenNames(node: MaterialNode): string[] {
     return [node.name.toLowerCase(), ...node.children.flatMap(flattenNames)]
   }
 
-  function matchesSearch(node: MaterialNode, q: string): boolean {
-    return flattenNames(node).some((name) => name.includes(q))
+  function matchesRoot(root: RootMaterialData, q: string): boolean {
+    return flattenNames(root.tree).some((name) => name.includes(q))
   }
 
-  function filterTree(nodes: MaterialNode[], q: string): MaterialNode[] {
-    if (!q) return nodes
-    return nodes
-      .map((n) => ({ ...n, children: filterTree(n.children, q) }))
-      .filter((n) => n.children.length > 0 || n.name.toLowerCase().includes(q))
+  function filterTree(node: MaterialNode, q: string): MaterialNode | null {
+    const filteredChildren = node.children.map((c) => filterTree(c, q)).filter(Boolean) as MaterialNode[]
+    const nameMatch = node.name.toLowerCase().includes(q)
+    if (nameMatch || filteredChildren.length > 0) {
+      return { ...node, children: filteredChildren }
+    }
+    return null
   }
 
-  const filteredTree = useMemo(() => filterTree(tree, search.trim().toLowerCase()), [tree, search])
+  const filteredRoots = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    if (!q) return roots
+    return roots.filter((r) => matchesRoot(r, q))
+  }, [roots, search])
 
-  const totalCount = Object.keys(totalsMap).length
-  const ownedCount = Object.entries(totalsMap).filter(([id, total]) => (ownedMap[parseInt(id)] || 0) >= total).length
+  const totals = useMemo(() => {
+    const t: Record<string, number> = {}
+    for (const root of roots) {
+      if (root.crafted) continue
+      for (const [id, qty] of Object.entries(root.totals)) {
+        t[id] = (t[id] || 0) + qty
+      }
+    }
+    return t
+  }, [roots])
+
+  const totalCount = Object.keys(totals).length
+  const ownedCount = Object.entries(totals).filter(([id, total]) => (ownedByItem[parseInt(id)] || 0) >= total).length
   const progressPct = totalCount > 0 ? Math.round((ownedCount / totalCount) * 100) : 0
 
-  function renderNode(node: MaterialNode, depth: number) {
-    const isBase = node.children.length === 0
-    const total = totalsMap[node.id] || 0
-    const owned = ownedMap[node.id] || 0
+  function renderNode(node: MaterialNode, depth: number, rootTotals: Record<string, number>) {
+    const isBase = node.children.length === 0 && !node.crafted
+    const total = isBase ? node.quantity : (rootTotals[node.id] || 0)
+    const owned = ownedMap[node.path] || 0
     const completed = owned >= total
+
+    if (node.crafted) {
+      return (
+        <div key={node.path}
+          className="flex items-center gap-2 px-3 py-2 rounded-lg opacity-50"
+          style={{ paddingLeft: `${depth * 20 + 12}px` }}>
+          <CheckCircle2 className="size-4 text-primary shrink-0" />
+          <span className="text-base shrink-0">{node.emoji || '📦'}</span>
+          <span className="text-sm flex-1 line-through text-muted-foreground/60">{node.name}</span>
+          <span className="text-xs text-muted-foreground/50">Ya hecho</span>
+        </div>
+      )
+    }
 
     if (isBase) {
       return (
-        <div key={`${node.id}-${depth}`} onClick={() => handleToggle(node.id, total)}
+        <div key={node.path} onClick={() => handleToggle(node.path, node.id, total)}
           className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-colors ${completed ? 'bg-primary/5' : 'hover:bg-accent/50'}`}
           style={{ paddingLeft: `${depth * 20 + 12}px` }}>
           <span className="shrink-0">
@@ -100,14 +145,14 @@ export function RecipesPage() {
             {node.quantity > 1 ? `${node.name} x${node.quantity}` : node.name}
           </span>
           <div className="flex items-center gap-1 shrink-0">
-            <button onClick={(e) => handleDecrement(e, node.id)}
+            <button onClick={(e) => handleDecrement(e, node.path, node.id)}
               className="p-0.5 rounded hover:bg-accent disabled:opacity-30" disabled={owned <= 0}>
               <Minus className="size-3" />
             </button>
             <span className={`text-sm font-mono min-w-[2ch] text-center ${completed ? 'text-muted-foreground/60' : 'text-foreground'}`}>
               {owned}
             </span>
-            <button onClick={(e) => handleIncrement(e, node.id, total)}
+            <button onClick={(e) => handleIncrement(e, node.path, node.id, total)}
               className="p-0.5 rounded hover:bg-accent disabled:opacity-30" disabled={owned >= total}>
               <Plus className="size-3" />
             </button>
@@ -121,7 +166,7 @@ export function RecipesPage() {
     }
 
     return (
-      <details key={`${node.id}-${depth}`} className="group"
+      <details key={node.path} className="group"
         style={{ paddingLeft: `${depth * 20}px` }}>
         <summary className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-accent/50 transition-colors list-none [&::-webkit-details-marker]:hidden">
           <ChevronRight className="size-4 shrink-0 text-muted-foreground group-open:rotate-90 transition-transform" />
@@ -131,7 +176,7 @@ export function RecipesPage() {
           <span className="text-xs text-muted-foreground/50 ml-auto">{node.children.length} material(es)</span>
         </summary>
         <div className="border-l border-border/50 ml-5 pl-2 space-y-0.5 mt-0.5">
-          {node.children.map((child) => renderNode(child, depth + 1))}
+          {node.children.map((child) => renderNode(child, depth + 1, rootTotals))}
         </div>
       </details>
     )
@@ -152,7 +197,7 @@ export function RecipesPage() {
           <p className="text-muted-foreground">Selecciona un personaje en la barra lateral</p>
           <p className="text-sm text-muted-foreground">Para ver los materiales que necesita para sus objetos marcados</p>
         </div>
-      ) : tree.length === 0 ? (
+      ) : roots.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Hammer className="size-12 text-muted-foreground mb-4" />
           <p className="text-muted-foreground">No hay materiales necesarios</p>
@@ -176,8 +221,49 @@ export function RecipesPage() {
             </div>
           </div>
 
-          <div className="space-y-1">
-            {filteredTree.map((root) => renderNode(root, 0))}
+          <div className="space-y-4">
+            {filteredRoots.map((root) => (
+              <div key={root.item.id} className="rounded-lg border border-border/50 overflow-hidden">
+                <div className="flex items-center gap-3 px-3 py-2.5 bg-accent/30 border-b border-border/30">
+                  <span className="text-lg">{root.item.emoji || '📦'}</span>
+                  <span className="text-sm font-semibold flex-1">{root.item.name}</span>
+                  {root.crafted ? (
+                    <>
+                      <span className="text-xs text-primary font-medium">✓ Ya hecho</span>
+                      <button onClick={() => toggleCrafted(root)}
+                        className="text-xs text-muted-foreground hover:text-foreground px-2 py-0.5 rounded hover:bg-accent/70 transition-colors">
+                        Rehacer
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-xs text-muted-foreground/50">{Object.keys(root.totals).length} material(es)</span>
+                      <button onClick={() => toggleCrafted(root)}
+                        className="text-xs text-muted-foreground hover:text-foreground px-2 py-0.5 rounded hover:bg-accent/70 transition-colors">
+                        Marcar hecho
+                      </button>
+                    </>
+                  )}
+                </div>
+                {root.crafted && (
+                  <div className="flex items-center gap-2 px-3 py-4 text-sm text-muted-foreground/60 italic">
+                    <CheckCircle2 className="size-4 text-primary" />
+                    Este objeto ya est&aacute; marcado como creado. Sus materiales no cuentan en el total.
+                  </div>
+                )}
+                {!root.crafted && (
+                  <div className="p-1">
+                    {root.tree.children.length > 0 ? (
+                      root.tree.children.map((child) => renderNode(child, 0, root.totals))
+                    ) : (
+                      <div className="px-3 py-4 text-sm text-muted-foreground/60 italic">
+                        Este objeto no requiere materiales adicionales
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </>
       )}

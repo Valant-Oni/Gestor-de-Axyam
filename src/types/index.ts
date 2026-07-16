@@ -109,6 +109,15 @@ export interface MaterialNode {
   emoji: string | null
   quantity: number
   children: MaterialNode[]
+  path: string
+  crafted?: boolean
+}
+
+export interface RootMaterialData {
+  item: { id: number; name: string; emoji: string | null }
+  tree: MaterialNode
+  totals: Record<string, number>
+  crafted: boolean
 }
 
 export interface NeededMaterial {
@@ -124,6 +133,7 @@ export interface CharacterMaterial {
   item_id: number
   quantity_needed: number
   quantity_owned: number
+  node_path?: string
 }
 
 export interface DiceResult {
@@ -182,9 +192,9 @@ declare global {
         rollStat: (expr: string, bonuses: any[], conditions: Record<string, string>) => Promise<DiceResult>
       }
       characterMaterials: {
-        getNeeded: (characterId: number) => Promise<{ tree: MaterialNode[]; totals: Record<string, number> }>
+        getNeeded: (characterId: number) => Promise<{ roots: RootMaterialData[]; ownedByPath: Record<string, number>; ownedByItem: Record<number, number> }>
         getByCharacter: (characterId: number) => Promise<CharacterMaterial[]>
-        setOwned: (characterId: number, itemId: number, quantityOwned: number) => Promise<{ success: boolean }>
+        setOwned: (characterId: number, itemId: number, quantityOwned: number, nodePath?: string) => Promise<{ success: boolean }>
       }
     }
   }

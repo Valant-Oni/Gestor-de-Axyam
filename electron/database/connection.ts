@@ -551,6 +551,20 @@ function applyLevelSystem(db: Database.Database): void {
   }
 }
 
+function applyMaterialNodePath(db: Database.Database): void {
+  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'material_node_path_v1'").get()
+  if (hasMigration) return
+
+  try {
+    db.exec(`ALTER TABLE character_materials ADD COLUMN node_path TEXT DEFAULT ''`)
+    db.exec(`CREATE INDEX IF NOT EXISTS idx_cm_path ON character_materials(character_id, item_id, node_path)`)
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('material_node_path_v1', strftime('%s','now') * 1000)").run()
+    console.log('Material node_path migration: added node_path column + index')
+  } catch (err: any) {
+    console.warn('Material node_path migration skipped or already applied:', err.message)
+  }
+}
+
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -565,4 +579,5 @@ export function initDatabase(): void {
   forceUpdateKnownItems(db)
   extractAttributesFromDescriptions(db)
   applyLevelSystem(db)
+  applyMaterialNodePath(db)
 }

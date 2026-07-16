@@ -78,7 +78,7 @@ export function registerCharacterHandlers() {
     const db = getDatabase()
 
     const markedItems = db.prepare('SELECT item_id FROM character_items WHERE character_id = ?').all(characterId) as any[]
-    if (markedItems.length === 0) return { tree: [], totals: {} }
+    if (markedItems.length === 0) return { roots: [] }
 
     const allRecipes = db.prepare('SELECT * FROM recipes').all() as any[]
     const allIngredients = db.prepare('SELECT * FROM recipe_ingredients').all() as any[]
@@ -94,24 +94,48 @@ export function registerCharacterHandlers() {
       recipeByProduct[recipe.product_item_id] = recipe
     }
 
-    const allItems = db.prepare('SELECT id, name, emoji FROM items').all() as any[]
+    const allItems = db.prepare('SELECT id, name, emoji, tags FROM items').all() as any[]
     const itemLookup: Record<number, any> = {}
     for (const item of allItems) {
       itemLookup[item.id] = item
     }
 
-    function buildTree(itemId: number, quantity: number, visited: Set<number>): any {
+    const ownedMaterials = db.prepare('SELECT item_id, quantity_owned, node_path FROM character_materials WHERE character_id = ?').all(characterId) as any[]
+    const ownedByPath: Record<string, number> = {}
+    const ownedByItem: Record<number, number> = {}
+    for (const om of ownedMaterials) {
+      const path = om.node_path || ''
+      ownedByPath[path] = (ownedByPath[path] || 0) + om.quantity_owned
+      ownedByItem[om.item_id] = (ownedByItem[om.item_id] || 0) + om.quantity_owned
+    }
+
+    const baseMaterialTags = ['Material', 'Mineral', 'Ingrediente', 'Gema', 'Madera', 'Planta']
+
+    function isBaseMaterial(tags: string | null): boolean {
+      if (!tags) return false
+      const tagList = tags.split(',').map((t: string) => t.trim())
+      return tagList.some((t: string) => baseMaterialTags.includes(t))
+    }
+
+    function isCrafted(itemId: number): boolean {
+      return !!recipeByProduct[itemId] && (ownedByItem[itemId] || 0) > 0
+    }
+
+    function buildTree(itemId: number, quantity: number, visited: Set<number>, path: string): any {
       const item = itemLookup[itemId]
       const recipe = recipeByProduct[itemId]
       const isVisited = visited.has(itemId)
       const newVisited = new Set(visited)
       newVisited.add(itemId)
+      const isBase = isBaseMaterial(item?.tags)
+      const crafted = isCrafted(itemId)
 
       const children: any[] = []
-      if (recipe && !isVisited) {
+      if (recipe && !isVisited && !isBase && !crafted) {
         const ingredients = ingredientsByRecipe[recipe.id] || []
         for (const ing of ingredients) {
-          children.push(buildTree(ing.item_id, quantity * ing.quantity, newVisited))
+          const childPath = path + '>' + ing.item_id
+          children.push(buildTree(ing.item_id, quantity * ing.quantity, newVisited, childPath))
         }
       }
 
@@ -121,24 +145,39 @@ export function registerCharacterHandlers() {
         emoji: item?.emoji || null,
         quantity,
         children,
+        path,
+        crafted: recipe && !isBase && crafted,
       }
     }
 
-    const totals: Record<string, number> = {}
-    function accumulateBase(node: any) {
-      if (node.children.length === 0) {
-        totals[node.id] = (totals[node.id] || 0) + node.quantity
-      } else {
-        for (const child of node.children) {
-          accumulateBase(child)
+    function accumulateBase(node: any): Record<string, number> {
+      const totals: Record<string, number> = {}
+      function walk(n: any) {
+        if (n.crafted) return
+        if (n.children.length === 0) {
+          totals[n.id] = (totals[n.id] || 0) + n.quantity
+        } else {
+          for (const child of n.children) walk(child)
         }
       }
+      walk(node)
+      return totals
     }
 
-    const tree = markedItems.map((mark: any) => buildTree(mark.item_id, 1, new Set()))
-    for (const root of tree) accumulateBase(root)
+    const roots = markedItems.map((mark: any) => {
+      const path = mark.item_id.toString()
+      const tree = buildTree(mark.item_id, 1, new Set(), path)
+      const totals = accumulateBase(tree)
+      const item = itemLookup[mark.item_id]
+      return {
+        item: { id: mark.item_id, name: item?.name || 'Desconocido', emoji: item?.emoji || null },
+        tree,
+        totals,
+        crafted: !!recipeByProduct[mark.item_id] && (ownedByItem[mark.item_id] || 0) > 0,
+      }
+    })
 
-    return { tree, totals }
+    return { roots, ownedByPath, ownedByItem }
   })
 
   ipcMain.handle('characterMaterials:getByCharacter', (_event, characterId: number) => {
@@ -146,13 +185,13 @@ export function registerCharacterHandlers() {
     return db.prepare('SELECT * FROM character_materials WHERE character_id = ?').all(characterId)
   })
 
-  ipcMain.handle('characterMaterials:setOwned', (_event, characterId: number, itemId: number, quantityOwned: number) => {
+  ipcMain.handle('characterMaterials:setOwned', (_event, characterId: number, itemId: number, quantityOwned: number, nodePath: string = '') => {
     const db = getDatabase()
-    const existing = db.prepare('SELECT id FROM character_materials WHERE character_id = ? AND item_id = ?').get(characterId, itemId) as any
+    const existing = db.prepare('SELECT id FROM character_materials WHERE character_id = ? AND item_id = ? AND node_path = ?').get(characterId, itemId, nodePath) as any
     if (existing) {
       db.prepare('UPDATE character_materials SET quantity_owned = ? WHERE id = ?').run(quantityOwned, existing.id)
     } else {
-      db.prepare('INSERT INTO character_materials (character_id, item_id, quantity_needed, quantity_owned) VALUES (?, ?, 0, ?)').run(characterId, itemId, quantityOwned)
+      db.prepare('INSERT INTO character_materials (character_id, item_id, quantity_needed, quantity_owned, node_path) VALUES (?, ?, 0, ?, ?)').run(characterId, itemId, quantityOwned, nodePath)
     }
     return { success: true }
   })
