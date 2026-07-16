@@ -24,8 +24,8 @@ export function registerCharacterHandlers() {
 
   ipcMain.handle('characters:create', (_event, char: any) => {
     const db = getDatabase()
-    const result = db.prepare(`INSERT INTO characters (name, race_id, gender, description, notes, active_zone, active_blood, wings_open) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`).run(
-      char.name, char.race_id || null, char.gender || null, char.description || null, char.notes || null,
+    const result = db.prepare(`INSERT INTO characters (name, race_id, gender, perk_10, perk_20, description, notes, active_zone, active_blood, wings_open) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run(
+      char.name, char.race_id || null, char.gender || null, char.perk_10 || null, char.perk_20 || null, char.description || null, char.notes || null,
       char.active_zone || null, char.active_blood || null, char.wings_open ? 1 : 0
     )
     return { id: result.lastInsertRowid, ...char }
@@ -33,8 +33,8 @@ export function registerCharacterHandlers() {
 
   ipcMain.handle('characters:update', (_event, id: number, char: any) => {
     const db = getDatabase()
-    db.prepare(`UPDATE characters SET name=?, race_id=?, gender=?, description=?, notes=?, active_zone=?, active_blood=?, wings_open=? WHERE id=?`).run(
-      char.name, char.race_id || null, char.gender || null, char.description || null, char.notes || null,
+    db.prepare(`UPDATE characters SET name=?, race_id=?, gender=?, perk_10=?, perk_20=?, description=?, notes=?, active_zone=?, active_blood=?, wings_open=? WHERE id=?`).run(
+      char.name, char.race_id || null, char.gender || null, char.perk_10 || null, char.perk_20 || null, char.description || null, char.notes || null,
       char.active_zone || null, char.active_blood || null, char.wings_open ? 1 : 0, id
     )
     return { id, ...char }

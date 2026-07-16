@@ -537,6 +537,20 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
   console.log(`Attribute fix v4: ${updated} items updated, ${cleared} items cleared`)
 }
 
+function applyLevelSystem(db: Database.Database): void {
+  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'level_system_v1'").get()
+  if (hasMigration) return
+
+  try {
+    db.exec(`ALTER TABLE characters ADD COLUMN perk_10 TEXT`)
+    db.exec(`ALTER TABLE characters ADD COLUMN perk_20 TEXT`)
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('level_system_v1', strftime('%s','now') * 1000)").run()
+    console.log('Level system migration: added perk_10, perk_20 columns')
+  } catch (err: any) {
+    console.warn('Level system migration skipped or already applied:', err.message)
+  }
+}
+
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -550,4 +564,5 @@ export function initDatabase(): void {
   recipeIngredientFix(db)
   forceUpdateKnownItems(db)
   extractAttributesFromDescriptions(db)
+  applyLevelSystem(db)
 }

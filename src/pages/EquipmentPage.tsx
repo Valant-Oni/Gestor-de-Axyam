@@ -253,6 +253,19 @@ export function EquipmentPage() {
     }
   }
 
+  // Apply level perks
+  const char = characters.find(c => c.id === selectedCharId)
+  if (char) {
+    const perk10Map: Record<string, number> = { estamina: 1, mana: 2, vida: 2, robo: 2 }
+    const perk20Map: Record<string, number> = { ataque: 1, ataque_magico: 1, vida: 3, sigilo: 2 }
+    if (char.perk_10 && perk10Map[char.perk_10]) {
+      modifiedBase[char.perk_10] = applyFlatToBase(modifiedBase[char.perk_10] || '0', perk10Map[char.perk_10])
+    }
+    if (char.perk_20 && perk20Map[char.perk_20]) {
+      modifiedBase[char.perk_20] = applyFlatToBase(modifiedBase[char.perk_20] || '0', perk20Map[char.perk_20])
+    }
+  }
+
   // Compute equipment stats
   const equipStats: Record<string, string> = {}
   let armaduraExpr = ''

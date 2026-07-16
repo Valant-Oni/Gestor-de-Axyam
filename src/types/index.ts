@@ -92,6 +92,8 @@ export interface Character {
   base_agilidad: number
   base_robo: number
   base_sigilo: number
+  perk_10: string | null
+  perk_20: string | null
   description: string | null
   notes: string | null
   active_zone: string | null

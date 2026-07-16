@@ -59,7 +59,20 @@ export function CharactersPage() {
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<Character | null>(null)
-  const [form, setForm] = useState({ name: '', race_id: '', gender: '' })
+  const [form, setForm] = useState({ name: '', race_id: '', gender: '', level: '1', perk_10: '', perk_20: '' })
+
+  const PERK_10_OPTIONS = [
+    { id: 'estamina', label: '+1 Estamina' },
+    { id: 'mana', label: '+2 Mana' },
+    { id: 'vida', label: '+2 Vida' },
+    { id: 'robo', label: '+2 Robo' },
+  ]
+  const PERK_20_OPTIONS = [
+    { id: 'ataque', label: '+1 Ataque' },
+    { id: 'ataque_magico', label: '+1 Atq Mágico' },
+    { id: 'vida', label: '+3 Vida' },
+    { id: 'sigilo', label: '+2 Sigilo' },
+  ]
 
   const load = async () => {
     try {
@@ -89,7 +102,7 @@ export function CharactersPage() {
 
   const handleSave = async () => {
     if (!form.name.trim()) return
-    const data = { name: form.name.trim(), race_id: form.race_id ? parseInt(form.race_id) : undefined, gender: form.gender || undefined }
+    const data = { name: form.name.trim(), race_id: form.race_id ? parseInt(form.race_id) : undefined, gender: form.gender || undefined, level: parseInt(form.level) || 1, perk_10: form.perk_10 || null, perk_20: form.perk_20 || null }
     try {
       if (editing) {
         await window.electronAPI.characters.update(editing.id, data)
@@ -101,13 +114,13 @@ export function CharactersPage() {
     }
     setShowForm(false)
     setEditing(null)
-    setForm({ name: '', race_id: '', gender: '' })
+    setForm({ name: '', race_id: '', gender: '', level: '1', perk_10: '', perk_20: '' })
     load()
   }
 
   const handleEdit = (c: Character) => {
     setEditing(c)
-    setForm({ name: c.name, race_id: c.race_id?.toString() || '', gender: c.gender || '' })
+    setForm({ name: c.name, race_id: c.race_id?.toString() || '', gender: c.gender || '', level: String(c.level || 1), perk_10: c.perk_10 || '', perk_20: c.perk_20 || '' })
     setShowForm(true)
   }
 
@@ -127,7 +140,7 @@ export function CharactersPage() {
           <h1 className="text-2xl font-bold">Personajes</h1>
           <p className="text-muted-foreground text-sm">Gestiona tus personajes del servidor</p>
         </div>
-        <Button onClick={() => { setEditing(null); setForm({ name: '', race_id: '', gender: '' }); setShowForm(true) }}>
+        <Button onClick={() => { setEditing(null); setForm({ name: '', race_id: '', gender: '', level: '1', perk_10: '', perk_20: '' }); setShowForm(true) }}>
           <Plus className="size-4" /> Nuevo personaje
         </Button>
       </div>
@@ -135,7 +148,7 @@ export function CharactersPage() {
       {showForm && (
         <div className="border rounded-xl p-4 space-y-3 bg-card">
           <h3 className="font-semibold">{editing ? 'Editar personaje' : 'Nuevo personaje'}</h3>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-4 gap-3">
             <input placeholder="Nombre" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
             <select value={form.race_id} onChange={(e) => setForm({ ...form, race_id: e.target.value })}
@@ -150,9 +163,47 @@ export function CharactersPage() {
                 </optgroup>
               ))}
             </select>
-            <input placeholder="Género (opcional)" value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}
-              className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
+            <select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}
+              className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+              <option value="">Sin género</option>
+              <option value="Hombre">Hombre</option>
+              <option value="Mujer">Mujer</option>
+            </select>
+            <select value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value })}
+              className="px-3 py-2 rounded-lg border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+              {Array.from({ length: 20 }, (_, i) => i + 1).map(n => (
+                <option key={n} value={n}>Nivel {n}</option>
+              ))}
+            </select>
           </div>
+          {parseInt(form.level) >= 10 && (
+            <div className="space-y-1.5">
+              <p className="text-sm font-medium">Perk nivel 10</p>
+              <div className="flex gap-4">
+                {PERK_10_OPTIONS.map(p => (
+                  <label key={p.id} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                    <input type="radio" name="perk_10" value={p.id} checked={form.perk_10 === p.id}
+                      onChange={(e) => setForm({ ...form, perk_10: e.target.value })} />
+                    {p.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+          {parseInt(form.level) >= 20 && (
+            <div className="space-y-1.5">
+              <p className="text-sm font-medium">Perk nivel 20</p>
+              <div className="flex gap-4">
+                {PERK_20_OPTIONS.map(p => (
+                  <label key={p.id} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                    <input type="radio" name="perk_20" value={p.id} checked={form.perk_20 === p.id}
+                      onChange={(e) => setForm({ ...form, perk_20: e.target.value })} />
+                    {p.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="flex gap-2">
             <Button onClick={handleSave} disabled={!form.name.trim() || !form.race_id}>{editing ? 'Guardar' : 'Crear'}</Button>
             <Button variant="ghost" onClick={() => { setShowForm(false); setEditing(null) }}>Cancelar</Button>
@@ -175,7 +226,7 @@ export function CharactersPage() {
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-semibold">{c.name}</h3>
-                    <p className="text-sm text-muted-foreground">{race?.name || 'Sin raza'}{c.gender ? ` - ${c.gender}` : ''}</p>
+                    <p className="text-sm text-muted-foreground">{race?.name || 'Sin raza'}{c.gender ? ` - ${c.gender}` : ''} · Nivel {c.level}</p>
                   </div>
                   <div className="flex gap-1">
                     <button onClick={() => handleEdit(c)} className="p-1 hover:bg-accent rounded"><Edit2 className="size-4" /></button>
@@ -208,6 +259,10 @@ export function CharactersPage() {
                     }
                   }
 
+                  const perk10Map: Record<string, number> = { estamina: 1, mana: 2, vida: 2, robo: 2 }
+                  const perk20Map: Record<string, number> = { ataque: 1, ataque_magico: 1, vida: 3, sigilo: 2 }
+                  if (c.perk_10 && perk10Map[c.perk_10]) { modifiedBase[c.perk_10] = applyFlatToBase(modifiedBase[c.perk_10] || '0', perk10Map[c.perk_10]) }
+                  if (c.perk_20 && perk20Map[c.perk_20]) { modifiedBase[c.perk_20] = applyFlatToBase(modifiedBase[c.perk_20] || '0', perk20Map[c.perk_20]) }
                   const keyMap: Record<string, string> = { vida: 'Vida', ataque: 'Ataque', ataque_magico: 'Atq Mágico', defensa: 'Defensa', mana: 'Mana', estamina: 'Estamina', agilidad: 'Agilidad', robo: 'Robo', sigilo: 'Sigilo', armadura: 'Armadura', nulimagia: 'Nulimagia' }
                   const allKeys = [...BASE_STATS, 'armadura', 'nulimagia'] as const
                   return (
