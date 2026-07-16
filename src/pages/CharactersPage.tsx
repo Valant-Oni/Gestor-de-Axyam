@@ -272,16 +272,10 @@ export function CharactersPage() {
                         const base = modifiedBase[k]
                         const equip = equipStats[k]
                         const total = computeTotal(base, equip)
-                        const showEquip = equip && base && base !== '0' && base !== total
                         return (
                           <div key={k} className="bg-muted/50 rounded-lg p-1.5 text-center">
                             <p className="text-muted-foreground">{keyMap[k]}</p>
                             <p className="font-medium">{total}</p>
-                            {showEquip && (
-                              <p className="text-[10px] text-muted-foreground/60">
-                                {equip.startsWith('-') ? equip : `+ ${equip}`}
-                              </p>
-                            )}
                           </div>
                         )
                       })}
