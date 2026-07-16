@@ -78,7 +78,7 @@ export function registerCharacterHandlers() {
     const db = getDatabase()
 
     const markedItems = db.prepare('SELECT item_id FROM character_items WHERE character_id = ?').all(characterId) as any[]
-    if (markedItems.length === 0) return []
+    if (markedItems.length === 0) return { tree: [], totals: {} }
 
     const allRecipes = db.prepare('SELECT * FROM recipes').all() as any[]
     const allIngredients = db.prepare('SELECT * FROM recipe_ingredients').all() as any[]
@@ -100,35 +100,45 @@ export function registerCharacterHandlers() {
       itemLookup[item.id] = item
     }
 
-    const materialTotals: Record<number, number> = {}
-
-    function resolveItem(itemId: number, quantity: number, visited: Set<number>) {
-      if (visited.has(itemId)) return
-      visited = new Set(visited)
-      visited.add(itemId)
-
+    function buildTree(itemId: number, quantity: number, visited: Set<number>): any {
+      const item = itemLookup[itemId]
       const recipe = recipeByProduct[itemId]
-      if (!recipe) {
-        materialTotals[itemId] = (materialTotals[itemId] || 0) + quantity
-        return
+      const isVisited = visited.has(itemId)
+      const newVisited = new Set(visited)
+      newVisited.add(itemId)
+
+      const children: any[] = []
+      if (recipe && !isVisited) {
+        const ingredients = ingredientsByRecipe[recipe.id] || []
+        for (const ing of ingredients) {
+          children.push(buildTree(ing.item_id, quantity * ing.quantity, newVisited))
+        }
       }
 
-      const ingredients = ingredientsByRecipe[recipe.id] || []
-      for (const ing of ingredients) {
-        resolveItem(ing.item_id, quantity * ing.quantity, visited)
+      return {
+        id: itemId,
+        name: item?.name || 'Desconocido',
+        emoji: item?.emoji || null,
+        quantity,
+        children,
       }
     }
 
-    for (const mark of markedItems) {
-      resolveItem(mark.item_id, 1, new Set())
+    const totals: Record<string, number> = {}
+    function accumulateBase(node: any) {
+      if (node.children.length === 0) {
+        totals[node.id] = (totals[node.id] || 0) + node.quantity
+      } else {
+        for (const child of node.children) {
+          accumulateBase(child)
+        }
+      }
     }
 
-    return Object.entries(materialTotals)
-      .map(([id, total]) => {
-        const item = itemLookup[parseInt(id)]
-        return { id: parseInt(id), name: item?.name || 'Desconocido', emoji: item?.emoji || null, total_needed: total }
-      })
-      .sort((a, b) => a.name.localeCompare(b.name))
+    const tree = markedItems.map((mark: any) => buildTree(mark.item_id, 1, new Set()))
+    for (const root of tree) accumulateBase(root)
+
+    return { tree, totals }
   })
 
   ipcMain.handle('characterMaterials:getByCharacter', (_event, characterId: number) => {

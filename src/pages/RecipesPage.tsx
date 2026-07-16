@@ -1,12 +1,13 @@
 import { useEffect, useState, useMemo } from 'react'
-import { Character, NeededMaterial, CharacterMaterial } from '@/types'
+import { Character, MaterialNode, CharacterMaterial } from '@/types'
 import { useCharacterStore } from '@/stores/characterStore'
-import { Hammer, Search, CheckCircle2, Circle, Package, Plus, Minus } from 'lucide-react'
+import { Hammer, Search, CheckCircle2, Circle, Package, ChevronRight, ChevronDown, Plus, Minus } from 'lucide-react'
 
 export function RecipesPage() {
   const { selectedCharId } = useCharacterStore()
   const [characters, setCharacters] = useState<Character[]>([])
-  const [materials, setMaterials] = useState<NeededMaterial[]>([])
+  const [tree, setTree] = useState<MaterialNode[]>([])
+  const [totalsMap, setTotalsMap] = useState<Record<string, number>>({})
   const [ownedMap, setOwnedMap] = useState<Record<number, number>>({})
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
@@ -19,13 +20,14 @@ export function RecipesPage() {
   }, [])
 
   useEffect(() => {
-    if (!selectedCharId) { setMaterials([]); setOwnedMap({}); return }
+    if (!selectedCharId) { setTree([]); setTotalsMap({}); setOwnedMap({}); return }
     const load = async () => {
-      const [needed, owned] = await Promise.all([
+      const [result, owned] = await Promise.all([
         window.electronAPI.characterMaterials.getNeeded(selectedCharId),
         window.electronAPI.characterMaterials.getByCharacter(selectedCharId),
       ])
-      setMaterials(needed as NeededMaterial[])
+      setTree(result.tree as MaterialNode[])
+      setTotalsMap(result.totals as Record<string, number>)
       const map: Record<number, number> = {}
       for (const m of owned as CharacterMaterial[]) {
         map[m.item_id] = m.quantity_owned
@@ -57,15 +59,83 @@ export function RecipesPage() {
     if (current > 0) setOwned(itemId, current - 1)
   }
 
-  const filtered = useMemo(() => {
-    if (!search.trim()) return materials
-    const q = search.toLowerCase()
-    return materials.filter((m) => m.name.toLowerCase().includes(q))
-  }, [materials, search])
+  // Flatten tree node names for search
+  function flattenNames(node: MaterialNode): string[] {
+    return [node.name.toLowerCase(), ...node.children.flatMap(flattenNames)]
+  }
 
-  const totalCount = materials.length
-  const ownedCount = materials.filter((m) => (ownedMap[m.id] || 0) >= m.total_needed).length
+  function matchesSearch(node: MaterialNode, q: string): boolean {
+    return flattenNames(node).some((name) => name.includes(q))
+  }
+
+  function filterTree(nodes: MaterialNode[], q: string): MaterialNode[] {
+    if (!q) return nodes
+    return nodes
+      .map((n) => ({ ...n, children: filterTree(n.children, q) }))
+      .filter((n) => n.children.length > 0 || n.name.toLowerCase().includes(q))
+  }
+
+  const filteredTree = useMemo(() => filterTree(tree, search.trim().toLowerCase()), [tree, search])
+
+  const totalCount = Object.keys(totalsMap).length
+  const ownedCount = Object.entries(totalsMap).filter(([id, total]) => (ownedMap[parseInt(id)] || 0) >= total).length
   const progressPct = totalCount > 0 ? Math.round((ownedCount / totalCount) * 100) : 0
+
+  function renderNode(node: MaterialNode, depth: number) {
+    const isBase = node.children.length === 0
+    const total = totalsMap[node.id] || 0
+    const owned = ownedMap[node.id] || 0
+    const completed = owned >= total
+
+    if (isBase) {
+      return (
+        <div key={`${node.id}-${depth}`} onClick={() => handleToggle(node.id, total)}
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-colors ${completed ? 'bg-primary/5' : 'hover:bg-accent/50'}`}
+          style={{ paddingLeft: `${depth * 20 + 12}px` }}>
+          <span className="shrink-0">
+            {completed ? <CheckCircle2 className="size-4 text-primary" /> : <Circle className="size-4 text-muted-foreground/40" />}
+          </span>
+          <span className="text-base shrink-0">{node.emoji || '📦'}</span>
+          <span className={`text-sm flex-1 ${completed ? 'line-through text-muted-foreground/60' : ''}`}>
+            {node.quantity > 1 ? `${node.name} x${node.quantity}` : node.name}
+          </span>
+          <div className="flex items-center gap-1 shrink-0">
+            <button onClick={(e) => handleDecrement(e, node.id)}
+              className="p-0.5 rounded hover:bg-accent disabled:opacity-30" disabled={owned <= 0}>
+              <Minus className="size-3" />
+            </button>
+            <span className={`text-sm font-mono min-w-[2ch] text-center ${completed ? 'text-muted-foreground/60' : 'text-foreground'}`}>
+              {owned}
+            </span>
+            <button onClick={(e) => handleIncrement(e, node.id, total)}
+              className="p-0.5 rounded hover:bg-accent disabled:opacity-30" disabled={owned >= total}>
+              <Plus className="size-3" />
+            </button>
+            <span className="text-sm text-muted-foreground/50 mx-0.5">/</span>
+            <span className={`text-sm font-mono ${completed ? 'text-muted-foreground/60' : 'text-muted-foreground'}`}>
+              {total}
+            </span>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <details key={`${node.id}-${depth}`} className="group"
+        style={{ paddingLeft: `${depth * 20}px` }}>
+        <summary className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer hover:bg-accent/50 transition-colors list-none [&::-webkit-details-marker]:hidden">
+          <ChevronRight className="size-4 shrink-0 text-muted-foreground group-open:rotate-90 transition-transform" />
+          <span className="text-base shrink-0">{node.emoji || '📦'}</span>
+          <span className="text-sm font-medium">{node.name}</span>
+          {node.quantity > 1 && <span className="text-xs text-muted-foreground font-mono">x{node.quantity}</span>}
+          <span className="text-xs text-muted-foreground/50 ml-auto">{node.children.length} material(es)</span>
+        </summary>
+        <div className="border-l border-border/50 ml-5 pl-2 space-y-0.5 mt-0.5">
+          {node.children.map((child) => renderNode(child, depth + 1))}
+        </div>
+      </details>
+    )
+  }
 
   if (loading) return <div className="flex items-center justify-center h-full"><p className="text-muted-foreground">Cargando...</p></div>
 
@@ -82,7 +152,7 @@ export function RecipesPage() {
           <p className="text-muted-foreground">Selecciona un personaje en la barra lateral</p>
           <p className="text-sm text-muted-foreground">Para ver los materiales que necesita para sus objetos marcados</p>
         </div>
-      ) : materials.length === 0 ? (
+      ) : tree.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Hammer className="size-12 text-muted-foreground mb-4" />
           <p className="text-muted-foreground">No hay materiales necesarios</p>
@@ -107,37 +177,7 @@ export function RecipesPage() {
           </div>
 
           <div className="space-y-1">
-            {filtered.map((m) => {
-              const owned = ownedMap[m.id] || 0
-              const completed = owned >= m.total_needed
-              return (
-                <div key={m.id} onClick={() => handleToggle(m.id, m.total_needed)}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-colors ${completed ? 'bg-primary/5' : 'hover:bg-accent/50'}`}>
-                  <span className="shrink-0">
-                    {completed ? <CheckCircle2 className="size-5 text-primary" /> : <Circle className="size-5 text-muted-foreground/40" />}
-                  </span>
-                  <span className="text-lg shrink-0">{m.emoji || '📦'}</span>
-                  <span className={`text-sm flex-1 ${completed ? 'line-through text-muted-foreground/60' : ''}`}>{m.name}</span>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button onClick={(e) => handleDecrement(e, m.id)}
-                      className="p-0.5 rounded hover:bg-accent disabled:opacity-30" disabled={owned <= 0}>
-                      <Minus className="size-3.5" />
-                    </button>
-                    <span className={`text-sm font-mono min-w-[2ch] text-center ${completed ? 'text-muted-foreground/60' : 'text-foreground'}`}>
-                      {owned}
-                    </span>
-                    <button onClick={(e) => handleIncrement(e, m.id, m.total_needed)}
-                      className="p-0.5 rounded hover:bg-accent disabled:opacity-30" disabled={owned >= m.total_needed}>
-                      <Plus className="size-3.5" />
-                    </button>
-                    <span className="text-sm text-muted-foreground/50 mx-1">/</span>
-                    <span className={`text-sm font-mono ${completed ? 'text-muted-foreground/60' : 'text-muted-foreground'}`}>
-                      {m.total_needed}
-                    </span>
-                  </div>
-                </div>
-              )
-            })}
+            {filteredTree.map((root) => renderNode(root, 0))}
           </div>
         </>
       )}

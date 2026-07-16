@@ -103,6 +103,14 @@ export interface Character {
   race_name?: string
 }
 
+export interface MaterialNode {
+  id: number
+  name: string
+  emoji: string | null
+  quantity: number
+  children: MaterialNode[]
+}
+
 export interface NeededMaterial {
   id: number
   name: string
@@ -174,7 +182,7 @@ declare global {
         rollStat: (expr: string, bonuses: any[], conditions: Record<string, string>) => Promise<DiceResult>
       }
       characterMaterials: {
-        getNeeded: (characterId: number) => Promise<NeededMaterial[]>
+        getNeeded: (characterId: number) => Promise<{ tree: MaterialNode[]; totals: Record<string, number> }>
         getByCharacter: (characterId: number) => Promise<CharacterMaterial[]>
         setOwned: (characterId: number, itemId: number, quantityOwned: number) => Promise<{ success: boolean }>
       }
