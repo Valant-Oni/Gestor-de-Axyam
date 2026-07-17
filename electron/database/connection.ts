@@ -303,23 +303,10 @@ function seedItemsAndRecipes(db: Database.Database): void {
   const insertRecipe = db.prepare('INSERT OR IGNORE INTO recipes (product_item_id, method, time) VALUES (?, ?, ?)')
   const insertIngredient = db.prepare('INSERT INTO recipe_ingredients (recipe_id, item_id, quantity) VALUES (?, ?, ?)')
   const getItemId = db.prepare('SELECT id FROM items WHERE name = ?')
-  const insertTag = db.prepare('INSERT OR IGNORE INTO tags (name) VALUES (?)')
-  const getTag = db.prepare('SELECT id FROM tags WHERE name = ?')
-  const insertItemTag = db.prepare('INSERT OR IGNORE INTO item_tags (item_id, tag_id) VALUES (?, ?)')
 
   const tx = db.transaction(() => {
     for (const row of itemsData) {
       insertItem.run(row.type || null, row.name, row.description || null, row.use || null, row.image || null, row.emoji || null, row.template || null, row.tags || null, row.attributes || null, row.required_race || null, row.required_class || null, row.required_gender || null)
-      if (row.tags) {
-        const itemRow = getItemId.get(row.name.trim()) as { id: number } | undefined
-        if (itemRow) {
-          for (const tagName of row.tags.split(',').map((t: string) => t.trim()).filter(Boolean)) {
-            insertTag.run(tagName)
-            const tagRow = getTag.get(tagName) as { id: number } | undefined
-            if (tagRow) insertItemTag.run(itemRow.id, tagRow.id)
-          }
-        }
-      }
     }
     for (const row of recipesData) {
       if (!row.product) continue
@@ -457,9 +444,11 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
   const statKeyMap: Record<string, string> = {
     'daño': 'ataque',
     'dano': 'ataque',
+    'ataque': 'ataque',
     'defensa': 'defensa',
     'armadura': 'armadura',
     'nulimagia': 'nulimagia',
+    'nullimagia': 'nulimagia',
     'mana': 'mana',
     'maná': 'mana',
     'vida': 'vida',
@@ -473,7 +462,7 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
   let updated = 0
   let cleared = 0
 
-  const statPattern = /\*\*(Da[nñ]o|Defensa|Armadura|Nulimagia|Man[áa]|Vida|Estamina|Stamina|Sigilo|Agilidad|Robo):\*\*\s*([^\n*]+)/gi
+  const statPattern = /\*\*(Ataque|Da[nñ]o|Defensa|Armadura|Nul[li]?magia|Man[áa]|Vida|Estamina|Stamina|Sigilo|Agilidad|Robo):\*\*\s*([^\n*]+)/gi
   const efectoPatterns: [RegExp, string][] = [
     [/aumenta (?:el|la|tu) (?:da[nñ]o base m[aá]gico|da[nñ]o m[aá]gico base) en (\d+)/i, 'ataque_magico'],
     [/aumenta en (\d+) la base de da[nñ]o m[aá]gico/i, 'ataque_magico'],
@@ -514,7 +503,8 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
           mappedKey = 'ataque_magico'
         }
 
-        const tokens = valueStr.split(/\s+/).filter(Boolean)
+        const fixed = valueStr.replace(/- /g, '-')
+        const tokens = fixed.split(/\s+/).filter(Boolean)
         const validTokens: string[] = []
         for (const token of tokens) {
           const cleanToken = token.replace(/^\+/, '')
@@ -583,34 +573,6 @@ function applyMaterialNodePath(db: Database.Database): void {
   }
 }
 
-function importTagsFromCSV(db: Database.Database): void {
-  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'import_tags_from_csv_v1'").get()
-  if (hasMigration) return
-
-  const insertTag = db.prepare('INSERT OR IGNORE INTO tags (name) VALUES (?)')
-  const getTag = db.prepare('SELECT id FROM tags WHERE name = ?')
-  const getItem = db.prepare('SELECT id, tags FROM items WHERE tags IS NOT NULL')
-  const insertItemTag = db.prepare('INSERT OR IGNORE INTO item_tags (item_id, tag_id) VALUES (?, ?)')
-
-  const tx = db.transaction(() => {
-    const items = getItem.all() as { id: number; tags: string }[]
-    let count = 0
-    for (const item of items) {
-      for (const tagName of item.tags.split(',').map(t => t.trim()).filter(Boolean)) {
-        insertTag.run(tagName)
-        const tagRow = getTag.get(tagName) as { id: number } | undefined
-        if (tagRow) {
-          insertItemTag.run(item.id, tagRow.id)
-          count++
-        }
-      }
-    }
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('import_tags_from_csv_v1', strftime('%s','now') * 1000)").run()
-    console.log(`Tags from CSV imported: ${count} item_tags created`)
-  })
-  tx()
-}
-
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -622,9 +584,8 @@ export function initDatabase(): void {
   applyItemReview(db)
   applyTagReview(db)
   recipeIngredientFix(db)
-  importTagsFromCSV(db)
-  forceUpdateKnownItems(db)
   extractAttributesFromDescriptions(db)
+  forceUpdateKnownItems(db)
   applyLevelSystem(db)
   applyMaterialNodePath(db)
 }
