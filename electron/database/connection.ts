@@ -505,8 +505,8 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
           }
         }
 
-        if (validTokens.length > 0) {
-          found.push(`${mappedKey}+${validTokens.join('+')}`)
+        for (const token of validTokens) {
+          found.push(token.startsWith('-') ? `${mappedKey}${token}` : `${mappedKey}+${token}`)
         }
       }
 

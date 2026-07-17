@@ -78,7 +78,7 @@ export function registerCharacterHandlers() {
     const db = getDatabase()
 
     const markedItems = db.prepare('SELECT item_id FROM character_items WHERE character_id = ?').all(characterId) as any[]
-    if (markedItems.length === 0) return { roots: [] }
+    if (markedItems.length === 0) return { roots: [], ownedByPath: {}, ownedByItem: {} }
 
     const allRecipes = db.prepare('SELECT * FROM recipes').all() as any[]
     const allIngredients = db.prepare('SELECT * FROM recipe_ingredients').all() as any[]

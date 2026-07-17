@@ -60,23 +60,24 @@ function parseAttributes(attrs: string | null): Record<string, string> {
       else if (key.includes('robo')) result.robo = combineExpr(result.robo, expr)
       else if (key.includes('sigilo')) result.sigilo = combineExpr(result.sigilo, expr)
       else if (key.includes('nulimag')) result.nulimagia = combineExpr(result.nulimagia, expr)
-    }
-    const m2 = part.match(/^(.+?)\s*-\s*(\d+)$/)
-    if (m2) {
-      const key = m2[1].trim().replace(/[^a-záéíóúñ]/g, '')
-      const val = parseInt(m2[2])
-      const expr = `-${val}`
-      if (key.includes('vida')) result.vida = combineExpr(result.vida, expr)
-      else if (key.includes('ataque') && key.includes('mag')) result.ataque_magico = combineExpr(result.ataque_magico, expr)
-      else if (key.includes('ataque')) result.ataque = combineExpr(result.ataque, expr)
-      else if (key.includes('defensa')) result.defensa = combineExpr(result.defensa, expr)
-      else if (key.includes('armadur')) result.armadura = combineExpr(result.armadura, expr)
-      else if (key.includes('mana')) result.mana = combineExpr(result.mana, expr)
-      else if (key.includes('estamin')) result.estamina = combineExpr(result.estamina, expr)
-      else if (key.includes('agilid')) result.agilidad = combineExpr(result.agilidad, expr)
-      else if (key.includes('robo')) result.robo = combineExpr(result.robo, expr)
-      else if (key.includes('sigilo')) result.sigilo = combineExpr(result.sigilo, expr)
-      else if (key.includes('nulimag')) result.nulimagia = combineExpr(result.nulimagia, expr)
+    } else {
+      const m2 = part.match(/^(.+?)\s*-\s*(\d+)$/)
+      if (m2) {
+        const key = m2[1].trim().replace(/[^a-záéíóúñ]/g, '')
+        const val = parseInt(m2[2])
+        const expr = `-${val}`
+        if (key.includes('vida')) result.vida = combineExpr(result.vida, expr)
+        else if (key.includes('ataque') && key.includes('mag')) result.ataque_magico = combineExpr(result.ataque_magico, expr)
+        else if (key.includes('ataque')) result.ataque = combineExpr(result.ataque, expr)
+        else if (key.includes('defensa')) result.defensa = combineExpr(result.defensa, expr)
+        else if (key.includes('armadur')) result.armadura = combineExpr(result.armadura, expr)
+        else if (key.includes('mana')) result.mana = combineExpr(result.mana, expr)
+        else if (key.includes('estamin')) result.estamina = combineExpr(result.estamina, expr)
+        else if (key.includes('agilid')) result.agilidad = combineExpr(result.agilidad, expr)
+        else if (key.includes('robo')) result.robo = combineExpr(result.robo, expr)
+        else if (key.includes('sigilo')) result.sigilo = combineExpr(result.sigilo, expr)
+        else if (key.includes('nulimag')) result.nulimagia = combineExpr(result.nulimagia, expr)
+      }
     }
   }
   return result
