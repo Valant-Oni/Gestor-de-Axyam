@@ -573,6 +573,34 @@ function applyMaterialNodePath(db: Database.Database): void {
   }
 }
 
+function cleanCSVTags(db: Database.Database): void {
+  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'clean_csv_tags_v1'").get()
+  if (hasMigration) return
+
+  const validTagNames = [
+    'cabeza','torso','brazos','piernas','anillo de stats','anillo de utilidad',
+    'cuello','extra','arma a 1 mano','arma a 2 manos','arma ligera',
+    'escudo a 1 mano','escudo a 2 manos','set completo','pociones',
+  ]
+
+  const tx = db.transaction(() => {
+    const allTags = db.prepare('SELECT id, name FROM tags').all() as { id: number; name: string }[]
+    let deletedItems = 0
+    let deletedTags = 0
+    for (const tag of allTags) {
+      if (!validTagNames.includes(tag.name.toLowerCase())) {
+        const result = db.prepare('DELETE FROM item_tags WHERE tag_id = ?').run(tag.id)
+        if (result.changes > 0) deletedItems += result.changes
+        db.prepare('DELETE FROM tags WHERE id = ?').run(tag.id)
+        deletedTags++
+      }
+    }
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('clean_csv_tags_v1', strftime('%s','now') * 1000)").run()
+    console.log(`Cleaned CSV tags: ${deletedItems} item_tags removed, ${deletedTags} tags deleted`)
+  })
+  tx()
+}
+
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -582,6 +610,7 @@ export function initDatabase(): void {
   seedZonesAndRaces(db)
   seedItemsAndRecipes(db)
   applyItemReview(db)
+  cleanCSVTags(db)
   applyTagReview(db)
   recipeIngredientFix(db)
   extractAttributesFromDescriptions(db)
