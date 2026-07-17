@@ -35,8 +35,10 @@ const itemsToDelete: ItemDelete[] = [
   { name: 'rana' },
   { name: 'z latigo divino' },
   { name: 'z latigo oscuro' },
-  { name: 'puntos de amistad' },
-  { name: 'banhammer' },
+  { name: '**Puntos de Amistad**' },
+  { name: '<:BanHammer:505714059652366337>' },
+  { name: 'Cofre de Oro' },
+  { name: 'cofre semanal' },
 ]
 
 const itemsToUpdate: ItemUpdate[] = [

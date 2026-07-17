@@ -670,19 +670,22 @@ function seedBundledAttributes(db: Database.Database): void {
     return
   }
 
-  const seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8')) as { id: number; name: string; attributes: string | null }[]
+  const seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8')) as { name: string; attributes: string | null }[]
 
   const tx = db.transaction(() => {
-    db.exec("UPDATE items SET attributes = NULL")
-
+    const findItem = db.prepare('SELECT id FROM items WHERE name = ?')
     const updateItem = db.prepare('UPDATE items SET attributes = ? WHERE id = ?')
+
     let updated = 0
     for (const entry of seedData) {
-      if (entry.attributes) {
-        const result = updateItem.run(entry.attributes, entry.id)
-        if (result.changes > 0) updated++
-      }
+      if (!entry.attributes) continue
+      const row = findItem.get(entry.name) as { id: number } | undefined
+      if (!row) continue
+      const result = updateItem.run(entry.attributes, row.id)
+      if (result.changes > 0) updated++
     }
+
+    db.exec("UPDATE items SET attributes = NULL WHERE attributes = '{}'")
 
     db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('seed_bundled_attributes_v1', strftime('%s','now') * 1000)").run()
     console.log(`Bundled attributes seeded: ${updated} items updated from snapshot`)
