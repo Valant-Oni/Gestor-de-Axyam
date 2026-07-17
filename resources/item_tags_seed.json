@@ -1,0 +1,2798 @@
+[
+  {
+    "name": "daga oscura",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "escudo cuero",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo tortuga",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "espada larga",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada larga plata",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "guantes cuero",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "daga",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga de plata",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "escudo madera",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "espada corta",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada corta plata",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "martillo",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha de mano",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion vida",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion mana grande",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "hacha vikinga",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pistola",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo de piel",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion silenciosa",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "botas rastrero",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "colgante volcanico",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "casco del guerrero",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "coraza de hojas",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza del guerrero",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza sacrosanta",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "botas megacanalizadoras",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "lanza corta",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "guantes canalizadores",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "casco hierro",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "casco tortuga",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "martillo de combate",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "lanza oscura",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "sombrero hechicero",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "coraza canalizadora",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "colgante fusionado",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "tunica archimagica",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "tunica corrupta",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "guantes curandero",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "guanteletes de hierro",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "casco de caballero",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "casco enano",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "casco absorbente",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "espada angel",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pistola aumentada",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada energizada",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada llameante",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta cazadora",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta potenciada",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha rubi",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "tanto",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion corazon latente",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "espadon del caballero dragon",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "Ultima Voluntad del Caballero",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "botas canalizadoras",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "cetro avanzado",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro colibri cristalizado",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "dagas punzantes",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "dagas de la naturaleza",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "espada gelida",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada invernal",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "arco explosivo",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "revolver de hueso",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "bajo del dragon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "katana",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "guante filo oculto",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "guanteletes bestiales",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "botas hechicero",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "guantes astrales",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "katana armonica",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha del paraiso",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "katana marea infinita",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "sombrero maligno",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "hacha de magma",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "pocion brumosa",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "la demoledora",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion escamas dragon",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion energizante",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion lujuriosa",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion protectora",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "capucha del druida",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "escudo espinas",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "traje conchas",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "ballesta fenix",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espadon dragon",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "traje cuero ligero",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "tunica",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "tunica sacerdote",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "tunica del arzobispo",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "escudo pesado",
+    "tags": [
+      "escudo a 2 manos"
+    ]
+  },
+  {
+    "name": "arco pesado gelido",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "lanza de combate",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha de fundicion",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espadon gelido",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo demoniaco",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espada doble invierno",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "Excalibur",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espadon cristal",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha de cristal",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "arco oscuro",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "arco elfico",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "cetro rayo",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "arco igneo",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha de guerra",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha del cosmos",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "anillo del cuervo",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "anillo hueso",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "anillo oro",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "anillo runico",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "anillo volcanico",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "anillo del gato",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "anillo floreciente",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza raiz magica",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza muro instantaneo",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza caos carmesi",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza divina",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza sombras",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza maldita",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "chakram imbuido",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram lunar",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram pesado",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "chakram esmeralda",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram oscuro",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram aumentado",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram hielo",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram arcano",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "aro potara",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "anillo grandeza solar",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "cetro floreciente",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro hoja dorada",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "estaca",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro dragon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro experto",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro natural",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro fenix",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro maestro",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro maligno",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espadon archidemoniaco",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "chakram dentado",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram crescendum",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro marino",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada oscura",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro oscuro",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "mandoble",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espada rota",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada sangrante",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada sombria",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada tiburon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "manto del necromancer",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "manto matriarca del bosque",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "cinturon blanco",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espadon demoniaco",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espadon cristal demoniaco",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espadon del cielo",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo berserker",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espadon sagrado",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo carbonizado",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espadon eclipse",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo de almas",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "mazo de la vida",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "mazo sagrado",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chakram destello",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "estoque celestial",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "mazo de ebano",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo de fundicion",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo oscuro",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo del bosque",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "estrella del invierno",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "mazo del reino de las sombras",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "chisa katana",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cinturon rojo dan",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mazo obsidiana",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "claymore",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "nudillera",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mosquete",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "colgante carmesi",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante de ajo",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante de fe",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante de huesos",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante electrico",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante gelido",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante lazuli",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante luz sagrada",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante natura",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante santo",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "colgante hechicero",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "coraza absorbente",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "piel de obsidiana",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza de hierro",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza celestial",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza de diamante",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza de ebano",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "pistola aumentada++",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion acuatica",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion alada",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion antimagia",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza bestia marina",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza acido",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "coraza tortuga",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza bomba slime",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "coraza de obsidiana",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza del bosque",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza sagrada",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza de picaro",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza de huesos",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza mithril",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza dorada",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza floreciente",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza runica",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "coraza sombria",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "botas hierro",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "corona de hermos",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "daga argentea",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga carmesi",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga cristalizada",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga maldita",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga necrotica",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga nocturna",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga ruin",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga sangrienta",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "dagas letales",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "escudo escamas dragon",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo magico",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo hierro",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo antimagia",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo marino",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo templario",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo plata",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo aumentado",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "espada cadena de lava",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada del yggdrasil",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada luz",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "traje cazador demonio",
+    "tags": [
+      "set completo"
+    ]
+  },
+  {
+    "name": "espada megalodon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "traje del cazador nocturno",
+    "tags": [
+      "set completo"
+    ]
+  },
+  {
+    "name": "tunica aprendiz",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "escudo obsidiana",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "tunica del devorador",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "tunica mago",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "espada endless",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "vestido acorazado reforzado",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "traje del devorador",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "ballesta arcana",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "anillo estrella fugaz",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "vestido acorazado",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "armadura lider dorada",
+    "tags": [
+      "set completo"
+    ]
+  },
+  {
+    "name": "ballesta de cristal",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta de mano",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta doble",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta dragon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta enana",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "baston del bufon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "boca del dragon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "Azote de Mundos: Version Cetro",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "Cetro archimago oscuro",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "Corazon de Mana",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "Cetro archimago",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "Dagas del Rey",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "Voluntad del bosque",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "guanteletes de sanacion",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "anillo de la valkiria",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "anillo de sacerdote",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "anillo gelido",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "anillo mana",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "anillo ouroboros",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "anillo de la vida",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "arco largo",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "arco corto",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "arco vikingo",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "pocion vida grande",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "arco trishot",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "arco dark hole",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "arco alto elfo",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "arco belial",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha angelical",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "lanza oscura sobrecargada",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha calabaza liberada",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha maligna",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha dios del trueno",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha holy",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha rubi perfecta",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "katana relampago",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "lanza holy",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza chispazo",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza colmena",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza escarcha",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza espacio",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza explosion arcana",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion furiosa",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza flema de araña",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "lanza sangrienta despertada",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza huracan",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "revolver",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza incineradora",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza noche instantanea",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion arrojadiza tiempo",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion de invisibilidad",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion espectral",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion genesis vampirica",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion de resucitacion",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion del druida",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion kvas de luna plateada",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "revolver cazador",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "revolver de gran calibre",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "revolver maldito",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "sombrero magico",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "sombrero sacerdote",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "rifle de alta precision",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "rifle",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "guanteletes coral",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "botas cuero",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "guadaña del bufon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "guanteletes arcanos",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "guanteletes obsidiana",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "guantes del guerrero",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "guanteletes de fundicion",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "guanteletes incendiados",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "botas de entrenamiento",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "botas elficas",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "botas obsidiana",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "botas protectoras",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "botas sagradas",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "casco runico",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "capucha del asesino",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "casco cuero",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "casco dragon",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "casco valkiria",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "cetro de agua fluyente",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pistola rapida",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "pistola ramus",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "hacha leñador",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "colgante de oro",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "cinturon negro",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "anillo elemental agua",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "hacha calabaza",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cetro del bosque",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "colgante guerrero",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "katana filo acuatico",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta ejecutora",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada dragon",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "arco sagrado",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "arco natura",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "chakram pesado oscuro",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "pocion fortificante",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "pocion invencible",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "katana resplandor blanco",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "armadura dragon",
+    "tags": [
+      "set completo"
+    ]
+  },
+  {
+    "name": "Mjolnir",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "armadura perfecta de hojas",
+    "tags": [
+      "set completo"
+    ]
+  },
+  {
+    "name": "armadura de la torre",
+    "tags": [
+      "set completo"
+    ]
+  },
+  {
+    "name": "corona de critias",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "chakram valkiria",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "corona carmesi",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "daga del devorador",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "cetro solar",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "lanza sangrienta",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "corona de timaeus",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "chakram electrico",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "lanza del necromancer",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "Corazon de Vlad",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "cetro lunar",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "arcoescudo",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "katana ardiente",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "estoque lujurioso",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "manto de almas",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "botas tiburon",
+    "tags": [
+      "piernas"
+    ]
+  },
+  {
+    "name": "cetro de hermes",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "capa insectoide",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "capa estelar",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "tableta runica",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "putrefaccion radiante",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "escudo dark hole",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "capucha elemental oscura",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "daga del fin",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "hacha demoniaca",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "revolver oscuro",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "anillo elemental natura",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "espadas del cosmos",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "anillo de precision",
+    "tags": [
+      "Anillo de stats"
+    ]
+  },
+  {
+    "name": "ballesta maldita",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "lanza angelical",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "cinturon torrencial",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "Katana de sangre",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "guanteletes de combate",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "katana fuego del sur",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "mosca revividora",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "funda de arma",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "mascara del ciclo",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "arenas del tiempo",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "escudo corazon de puas",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "tunica runica",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "cetro sangriento",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espada nigromante",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "Ojos de sucubo",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "colgante trivalor",
+    "tags": [
+      "cuello"
+    ]
+  },
+  {
+    "name": "coraza insecto sangriento",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "Guantes de Fenrir",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "anillo de la calamidad",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "Guantes de excavacion",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "cinturon dragon",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "oscuridad alternante",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hacha fundida",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "Azote de Mundos",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "rifle arcano",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "hoja primogenita",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "anillo grandeza lunar",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "coraza canalizadora desatada",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "mazo reloj de arena",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "espada piedra",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "Justicia de los Cielos",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "katana lunar",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "maldicion del sombrero",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "katana viento del norte",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "escudo impenetrable",
+    "tags": [
+      "escudo a 2 manos"
+    ]
+  },
+  {
+    "name": "escudo lobo corrupto",
+    "tags": [
+      "escudo a 2 manos"
+    ]
+  },
+  {
+    "name": "guantes filo bestial",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "katana solar",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "escudo guardian de la torre",
+    "tags": [
+      "escudo a 2 manos"
+    ]
+  },
+  {
+    "name": "espada cero absoluto",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "espadon invierno eterno",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "guanteletes toxicos",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "guantes de huesos",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "vendas de combate",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "Corazon del Necromancer",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "anillo aguila dorada",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "guantes ladronzuelo",
+    "tags": [
+      "brazos"
+    ]
+  },
+  {
+    "name": "chakram divino",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "escudo templario iluminado",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "Corazon del Bosque",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "daga de mana",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga del erudito",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "daga imbuida",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "chakram volcanico",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo dragon dorado",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo reflectante",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo espartano",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo conchas",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo templario profanado",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo diamante",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo archimagico",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo demoniaco",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo maligno",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo del devorador",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "escudo del valhalla",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "pocion mana",
+    "tags": [
+      "pociones"
+    ]
+  },
+  {
+    "name": "anillo elemental viento",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "anillo omnielemental",
+    "tags": [
+      "Anillo de utilidad"
+    ]
+  },
+  {
+    "name": "mazo de la creacion",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "maza",
+    "tags": [
+      "arma a 2 manos"
+    ]
+  },
+  {
+    "name": "corona de hojas",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "caña de pesca",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "cerbatana",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "cetro calavera",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "capa de sombras",
+    "tags": [
+      "extra"
+    ]
+  },
+  {
+    "name": "daga esmeralda",
+    "tags": [
+      "arma ligera"
+    ]
+  },
+  {
+    "name": "coraza espinosa",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "escudo podrido",
+    "tags": [
+      "escudo a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta volcanica",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta de la ira",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "ballesta cosmica",
+    "tags": [
+      "Arma a 1 mano"
+    ]
+  },
+  {
+    "name": "coraza samurai",
+    "tags": [
+      "torso"
+    ]
+  },
+  {
+    "name": "mascara protectora",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "kabuto",
+    "tags": [
+      "cabeza"
+    ]
+  },
+  {
+    "name": "coraza samurai legendario",
+    "tags": [
+      "torso"
+    ]
+  }
+]

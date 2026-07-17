@@ -601,6 +601,55 @@ function cleanCSVTags(db: Database.Database): void {
   tx()
 }
 
+function seedBundledTags(db: Database.Database): void {
+  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'seed_bundled_tags_v1'").get()
+  if (hasMigration) return
+
+  const fs = require('fs')
+  const seedPath = app.isPackaged
+    ? path.join(process.resourcesPath, 'item_tags_seed.json')
+    : path.join(__dirname, '..', '..', 'resources', 'item_tags_seed.json')
+
+  if (!fs.existsSync(seedPath)) {
+    console.log('item_tags_seed.json not found, skipping bundled tag seed')
+    return
+  }
+
+  const seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8')) as { name: string; tags: string[] }[]
+
+  const tx = db.transaction(() => {
+    db.exec('DELETE FROM item_tags')
+    db.exec('DELETE FROM tags')
+
+    const insertTag = db.prepare('INSERT OR IGNORE INTO tags (name) VALUES (?)')
+    const getTag = db.prepare('SELECT id FROM tags WHERE name = ?')
+    const findItem = db.prepare('SELECT id FROM items WHERE name = ?')
+    const insertItemTag = db.prepare('INSERT OR IGNORE INTO item_tags (item_id, tag_id) VALUES (?, ?)')
+
+    let tagged = 0
+    for (const entry of seedData) {
+      const itemRow = findItem.get(entry.name) as { id: number } | undefined
+      if (!itemRow) continue
+      for (const tagName of entry.tags) {
+        insertTag.run(tagName)
+        const tagRow = getTag.get(tagName) as { id: number } | undefined
+        if (tagRow) {
+          insertItemTag.run(itemRow.id, tagRow.id)
+          tagged++
+        }
+      }
+    }
+
+    db.exec("DELETE FROM data_migration WHERE name = 'tag_review_v1'")
+    db.exec("DELETE FROM data_migration WHERE name = 'tag_review_v2'")
+    db.exec("DELETE FROM data_migration WHERE name = 'clean_csv_tags_v1'")
+    db.exec("DELETE FROM data_migration WHERE name = 'import_tags_from_csv_v1'")
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('seed_bundled_tags_v1', strftime('%s','now') * 1000)").run()
+    console.log(`Bundled tags seeded: ${tagged} item_tags for ${seedData.length} items`)
+  })
+  tx()
+}
+
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -611,8 +660,8 @@ export function initDatabase(): void {
   seedItemsAndRecipes(db)
   applyItemReview(db)
   cleanCSVTags(db)
-  applyTagReview(db)
   recipeIngredientFix(db)
+  seedBundledTags(db)
   extractAttributesFromDescriptions(db)
   forceUpdateKnownItems(db)
   applyLevelSystem(db)

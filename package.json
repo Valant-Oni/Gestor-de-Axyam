@@ -25,6 +25,10 @@
       {
         "from": "resources/csv",
         "to": "csv"
+      },
+      {
+        "from": "resources/item_tags_seed.json",
+        "to": "item_tags_seed.json"
       }
     ],
     "files": [
