@@ -1,0 +1,607 @@
+ingredients,product,method,name,time
+"diamantex2,gema manax3,aquamarinax3,pistola aumentadax1,lagrima del cosmosx1",rifle arcanox1,crafting,rifle arcano,1hr35m0s
+"orox3,diamantex2,ebanox3,mithrilx1,riflex1",rifle de alta precisionx1,crafting,rifle de alta precision,1hr35m0s
+"tunica magox1,gema manax5,rosa etereax3,lagrima del cosmosx1",tunica archimagicax1,crafting,tunica archimagica,1hr28m0s
+"orox3,diamantex2,mineral embrujadox3,pistola ramusx1,mithrilx1",la demoledorax1,crafting,la demoledora,1hr35m0s
+"gema truenox5,mithrilx1,hacha de cristalx1,flor cristalizadax3",hacha tormentax1,crafting,hacha tormenta,1hr35m0s
+"hierbas curativasx5,rosa etereax3,mazo del bosquex1,lagrima del cosmosx1",mazo de la vidax1,crafting,mazo de la vida,1hr35m0s
+"hierrox2,gema gelidax5",colgante gelidox1,crafting,colgante gelido,0hr5m0s
+"hierrox2,gema truenox5",colgante electricox1,crafting,colgante electrico,0hr5m0s
+"platax1,colgante luz sagradax1,holyx2",colgante santox1,crafting,colgante santo,0hr5m0s
+"platax4,gema manax2,amatistax1,aquamarinax2",colgante lazulix1,crafting,colgante lazuli,0hr3m0s
+"orox3,diamantex1,holyx2",anillo de sacerdotex1,crafting,anillo de sacerdote,0hr3m0s
+"cuerox2,maderax1,hierbas curativasx4,botas rastrerox1,rosa etereax1",botas elficasx1,crafting,botas elficas,0hr10m0s
+"cuerox1,casco cuerox1,perlasx2,gema manax1",sombrero magicox1,crafting,sombrero magico,0hr5m0s
+"cuerox2,maderax2,casco tortugax1,huesosx8,mineral embrujadox2",casco del guerrerox1,crafting,casco del guerrero,0hr10m0s
+"diamantex2,casco tortugax1,huesosx5,mineral embrujadox1",casco absorbentex1,crafting,casco absorbente,0hr10m0s
+"platax4,diamantex1,sombrero magicox1,gema manax1,aquamarinax2",casco runicox1,crafting,casco runico,0hr10m0s
+sombrero sacerdotex1,"orox1,perlasx1,sombrero magicox1,holyx1,amatistax1",crafting,sombrero sacerdote descomponer,0hr0m0s
+maderax2,estacax1,crafting,estaca,0hr0m30s
+"hierbas curativasx2,mineral embrujadox1,rosa etereax2,flor cristalizadax1",pocion de invisibilidadx1,crafting,pocion de invisibilidad,0hr1m0s
+"platax2,orox4,maderax1,holyx1,casco hierrox1",casco valkiriax1,crafting,casco valkiria,0hr10m0s
+"orox3,diamantex2,gema gelidax2,martillo de combatex1,holyx5,graciax0",mazo sagradox1,crafting,mazo sagrado,0hr20m0s
+"maderax5,hierbas curativasx5,martillo de combatex1,rosa etereax6,amatistax2,aquamarinax1",mazo del bosquex1,crafting,mazo del bosque,0hr20m0s
+"mazo berserkerx1,esencia demoniacax4,mineral embrujadox8,amatistax2",mazo oscurox1,crafting,mazo oscuro,0hr20m0s
+"gema vidax5,lanza sangrientax1,rosa etereax3,mithrilx1",lanza sangrienta despertadax1,crafting,lanza sangrienta despertada,1hr35m0s
+chakramx1,"cuerox1,hierrox2",crafting,chakram descomponer,0hr0m10s
+"hierrox3,platax3,estacax1",lanza cortax1,crafting,lanza corta,0hr8m0s
+"hierrox3,orox1,estacax1",lanza de combatex1,crafting,lanza de combate,0hr8m0s
+"orox1,perlasx2,mineral embrujadox5,rosa etereax2,lanza cortax1",lanza oscurax1,crafting,lanza oscura,0hr20m0s
+"platax5,lanza de combatex1,holyx6,rosa etereax1",lanza holyx1,crafting,lanza holy,0hr20m0s
+"perlasx2,sombrero magicox1,gema manax2,rosa etereax1,amatistax2,aquamarinax1",sombrero hechicerox1,crafting,sombrero hechicero,0hr10m0s
+"perlasx2,sombrero magicox1,mineral embrujadox4,rosa etereax1,amatistax1",sombrero malignox1,crafting,sombrero maligno,0hr10m0s
+"cuerox6,guantes ladronzuelox1,huesosx8,mineral embrujadox3",guantes del guerrerox1,crafting,guantes del guerrero,0hr10m0s
+"orox1,arco largox1,mineral embrujadox4,rosa etereax1,amatistax3,ebanox5",arco belialx1,crafting,arco belial,0hr20m0s
+"hierrox2,orox1,gema igneax1,maderax2,hachax1,polvorax2",hacha de guerrax1,crafting,hacha de guerra,0hr12m0s
+"orox3,maderax3,hachax1,holyx1",hacha holyx1,crafting,hacha holy,0hr12m0s
+"orox3,gema vidax1,hierbas curativasx5,guantes curanderox1,aquamarinax2",guanteletes de sanacionx1,crafting,guanteletes de sanacion,0hr10m0s
+escudo cuerox1,"cuerox2,maderax1",crafting,escudo cuero descomponer,0hr0m1s
+escudo aumentadox1,"diamantex1,gema manax1,rosa etereax1,aquamarinax1,escudo magicox1",crafting,escudo aumentado descomponer,0hr0m1s
+escudo maderax1,maderax2,crafting,escudo madera descomponer,0hr0m1s
+escudo hierrox1,"hierrox5,escudo maderax1",crafting,escudo hierro descomponer,0hr0m1s
+cetro expertox1,"maderax5,gema manax3,aquamarinax4,cetro avanzadox1",crafting,cetro experto descomponer,0hr0m1s
+botas canalizadorasx1,"platax1,botas cuerox1,gema manax1",crafting,botas canalizadoras descomponer,0hr0m1s
+dagax1,"hierrox1,maderax1",crafting,daga descomponer,0hr0m0s
+botas megacanalizadorasx1,"orox1,diamantex1,botas canalizadorasx1,holyx1,aquamarinax2",crafting,botas megacanalizadoras descomponer,0hr0m1s
+sombrero hechicerox1,"perlasx1,sombrero magicox1,gema manax1,rosa etereax1,amatistax1,aquamarinax1",crafting,sombrero hechicero descomponer,0hr0m1s
+casco runicox1,"platax3,diamantex1,sombrero magicox1,gema manax1,aquamarinax1",crafting,casco runico descomponer,0hr0m1s
+botas cuerox1,cuerox2,crafting,botas cuero descomponer,0hr0m1s
+sombrero malignox1,"perlasx1,sombrero magicox1,mineral embrujadox3,rosa etereax1,amatistax1",crafting,sombrero maligno descomponer,0hr0m1s
+cetro naturalx1,"maderax1,hierbas curativasx1,gema manax1,cetrox1",crafting,cetro natural descomponer,0hr0m1s
+cetro rayox1,"diamantex1,gema truenox4,mineral embrujadox1,amatistax2,cetro avanzadox1",crafting,cetro rayo descomponer,0hr0m1s
+escudo de pielx1,"cuerox2,maderax1",crafting,escudo de piel descomponer,0hr0m1s
+"orox4,diamantex2,holyx6,amatistax2,hacha holyx1,graciax0",hacha angelicalx1,crafting,hacha angelical,0hr25m0s
+escudo magicox1,"maderax1,escudo cuerox1,gema manax2,aquamarinax1",crafting,escudo magico descomponer,0hr0m1s
+escudo espinasx1,"maderax2,escudo maderax1,huesosx5",crafting,escudo espinas descomponer,0hr0m1s
+hacha de guerrax1,"hierrox1,orox1,gema igneax1,maderax1,hachax1,polvorax1",crafting,hacha de guerra descomponer,0hr5m0s
+daga de manax1,"maderax1,dagax1,gema manax2",crafting,daga de mana descomponer,0hr0m0s
+botas hierrox1,"hierrox3,maderax1,botas cuerox1",crafting,botas hierro descomponer,0hr0m1s
+botas elficasx1,"cuerox1,maderax1,hierbas curativasx3,botas rastrerox1,rosa etereax1",crafting,botas elficas descomponer,0hr0m1s
+cetro avanzadox1,"orox1,maderax1,gema manax1,cetrox1",crafting,cetro avanzado descomponer,0hr0m1s
+revolverx1,"hierrox1,maderax1,polvorax1",crafting,revolver descomponer,0hr0m1s
+daga imbuidax1,"platax1,daga de manax1,gema manax2,amatistax1,aquamarinax2",crafting,daga imbuida descomponer,0hr0m0s
+escudo tortugax1,"caparazon de tortugax2,escudo de pielx1",crafting,escudo tortuga descomponer,0hr0m1s
+botas de entrenamientox1,"cuerox2,hierrox1,botas cuerox1,huesosx1",crafting,botas de entrenamiento descomponer,0hr0m1s
+casco hierrox1,"hierrox3,maderax1,casco cuerox1",crafting,casco hierro descomponer,0hr0m1s
+casco de caballerox1,"hierrox1,platax2,orox1,diamantex1,casco hierrox1",crafting,casco de caballero descomponer,0hr0m1s
+casco del guerrerox1,"cuerox1,maderax1,casco tortugax1,huesosx7,mineral embrujadox1",crafting,casco del guerrero descomponer,0hr0m1s
+casco absorbentex1,"diamantex1,casco tortugax1,huesosx4,mineral embrujadox1",crafting,casco absorbente descomponer,0hr0m1s
+pistola rapidax1,"hierrox2,orox1,pistolax1,polvorax3",crafting,pistola rapida descomponer,0hr0m1s
+espada rotax1,"hierrox1,maderax1",crafting,espada rota descomponer,0hr0m1s
+espada luzx1,"hierrox1,orox3,gema igneax1,espada rotax1",crafting,espada luz descomponer,0hr0m1s
+cuerox4,cinturon blancox1,crafting,cinturon blanco,0hr2m0s
+"hierrox4,orox1,cinturon blancox1",nudillerax1,crafting,nudillera,0hr4m0s
+escudo espartanox1,"hierrox1,platax1,orox7,escudo tortugax1",crafting,escudo espartano descomponer,0hr0m1s
+cetrox1,"maderax3,perlasx2",crafting,cetro descomponer,0hr0m1s
+casco valkiriax1,"platax1,orox3,maderax1,holyx1,casco hierrox1",crafting,casco valkiria descomponer,0hr0m1s
+pistolax1,"hierrox1,maderax1,polvorax1",crafting,pistola descomponer,0hr0m1s
+hacha holyx1,"orox2,maderax2,hachax1,holyx1",crafting,hacha holy descomponer,0hr10m0s
+hacha malignax1,"maderax3,gema truenox1,hacha de manox1,huesosx7,esencia demoniacax1,mineral embrujadox4",crafting,hacha maligna descomponer,0hr0m1s
+botas rastrerox1,"cuerox3,maderax1,botas cuerox1",crafting,botas rastrero descomponer,0hr0m1s
+casco cuerox1,cuerox2,crafting,casco cuero descomponer,0hr0m1s
+sombrero magicox1,"cuerox1,casco cuerox1,perlasx1,gema manax1",crafting,sombrero magico descomponer,0hr0m1s
+casco tortugax1,"caparazon de tortugax1,casco cuerox1",crafting,casco tortuga descomponer,0hr0m1s
+"sangriax1,alcohol potentex1,vodka azulx1,maestria culinariax0",levantamuertosx1,crafting,levantamuertos,0hr0m0s
+hacha angelicalx1,"orox3,diamantex1,holyx5,amatistax1,hacha holyx1",crafting,hacha angelical descomponer,0hr30m0s
+"orox3,gema manax4,amatistax1,aquamarinax3,pistola rapidax1",pistola aumentadax1,crafting,pistola aumentada,0hr20m0s
+"hierrox2,orox4,gema igneax1,espada rotax1",espada luzx1,crafting,espada luz,0hr18m0s
+"orox4,gema truenox2,polvorax6,amatistax3,aquamarinax2,pistola rapidax1",pistola ramusx1,crafting,pistola ramus,1hr30m0s
+"hierrox3,orox3,diamantex2,maderax4,mosquetex1,polvorax6",riflex1,crafting,rifle,0hr23m20s
+pistola ramusx1,"orox3,gema truenox1,polvorax5,amatistax2,aquamarinax1,pistola rapidax1",crafting,pistola ramus descomponer,0hr0m1s
+riflex1,"hierrox2,orox2,diamantex1,maderax3,mosquetex1,polvorax5",crafting,rifle descomponer,0hr0m1s
+revolver de gran calibrex1,"hierrox3,orox1,polvorax3,revolverx1",crafting,revolver de gran calibre descomponer,0hr0m1s
+espada gelidax1,"hierrox1,gema gelidax4,espada rotax1",crafting,espada gelida descomponer,0hr0m1s
+"orox2,gema vidax5,espada largax1,mineral embrujadox4,amatistax1",espada sangrantex1,crafting,espada sangrante,0hr35m0s
+"hierrox5,maderax4,espada cortax1",espada largax1,crafting,espada larga,0hr13m0s
+"maderax2,escudo cuerox1,gema manax3,aquamarinax1",escudo magicox1,crafting,escudo magico,0hr10m50s
+"panx1,tomatex1",pa amb tomacax1,crafting,pa amb tomaca,0hr0m5s
+"cuerox1,hierrox4,martillox1,huesosx3",mazax1,crafting,maza,0hr7m40s
+"hierrox2,gema gelidax5,espada rotax1",espada gelidax1,crafting,espada gelida,0hr18m0s
+"platax2,diamantex5,espada largax1,gema truenox2,huesosx10",espada piedrax1,crafting,espada piedra,0hr30m0s
+mosquetex1,"maderax3,pistolax1,polvorax3,revolverx1",crafting,mosquete descomponer,0hr0m1s
+"onicex999,mithrilx999,lagrima del cosmosx999",nunchuksx1,crafting,nunchuks,9hr46m39s
+cuerox3,guantes cuerox1,crafting,guantes cuero,0hr1m0s
+maderax2,sombrero de pajax1,crafting,sombrero de paja,0hr0m45s
+"cuerox2,maderax4,hierbas curativasx2,arco cortox1",arco elficox1,crafting,arco elfico,0hr10m0s
+"cuerox2,hierbas curativasx5",corona de hojasx1,crafting,corona de hojas,0hr1m0s
+"cuerox1,hierrox1,maderax2",hachax1,crafting,hacha,0hr2m30s
+"cuerox2,maderax3",arco cortox1,crafting,arco corto,0hr2m30s
+"cuerox2,orox3,hierbas curativasx2",botafumeirox1,crafting,botafumeiro,0hr3m0s
+cuerox5,capa con capuchax1,crafting,capa con capucha,0hr0m30s
+"cuerox2,maderax3",caña de pescax1,crafting,caña de pesca,0hr2m30s
+"cuerox2,maderax1",cerbatanax1,crafting,cerbatana,0hr0m45s
+"cuerox2,hierrox4",chakramx1,crafting,chakram,0hr2m0s
+"cuerox1,hierrox3,maderax2",cimitarrax1,crafting,cimitarra,0hr3m30s
+"cuerox2,maderax1,huesosx4",cuerno de cazax1,crafting,cuerno de caza,0hr1m30s
+"hierrox2,maderax1",dagax1,crafting,daga,0hr1m0s
+maderax1,dardosx6,crafting,dardos,0hr0m30s
+"hierrox2,maderax1",espada rotax1,crafting,espada rota,0hr1m20s
+guantes del guerrerox1,"cuerox5,guantes ladronzuelox1,huesosx7,mineral embrujadox2",crafting,guantes del guerrero descomponer,0hr1m0s
+"hierrox1,maderax2,polvorax1",pistolax1,crafting,pistola,0hr3m30s
+"cuerox4,capa con capuchax1",capa del guerrerox1,crafting,capa del guerrero,0hr5m30s
+"hierrox1,maderax2",picox1,crafting,pico,0hr1m30s
+cuerox3,botas cuerox1,crafting,botas cuero,0hr1m0s
+"hierrox1,maderax2",ballesta de manox1,crafting,ballesta de mano,0hr4m0s
+cuerox3,casco cuerox1,crafting,casco cuero,0hr0m45s
+"hierrox1,maderax2,polvorax2",revolverx1,crafting,revolver,0hr2m30s
+maderax3,escudo maderax1,crafting,escudo madera,0hr1m0s
+"cuerox3,maderax1",escudo cuerox1,crafting,escudo cuero,0hr1m30s
+"cuerox5,maderax1",traje cuero ligerox1,crafting,traje cuero ligero,0hr2m30s
+"cuerox3,maderax5,arco cortox1",arco largox1,crafting,arco largo,0hr10m0s
+"cuerox2,ajox8",colgante de ajox1,crafting,colgante de ajo,0hr5m0s
+"orox6,diamantex2",colgante de orox1,crafting,colgante de oro,0hr5m0s
+"maderax3,gema manax1",cetrox1,crafting,cetro,0hr2m30s
+"platax1,orox2,maderax1",colgante de fex1,crafting,colgante de fe,0hr5m0s
+cuerox3,tunicax1,crafting,tunica,0hr1m0s
+"cuerox4,maderax2,botas cuerox1",botas rastrerox1,crafting,botas rastrero,0hr5m0s
+"cuerox1,hierrox2,orox1,maderax1,ballesta de manox1",ballesta doblex1,crafting,ballesta doble,0hr8m0s
+"caparazon de tortugax1,casco cuerox1",casco tortugax1,crafting,casco tortuga,0hr6m0s
+"hierrox3,orox2,pistolax1,polvorax4",pistola rapidax1,crafting,pistola rapida,0hr10m0s
+"maderax3,cetro calaverax1,huesosx3,mineral embrujadox3,amatistax4",cetro malignox1,crafting,cetro maligno,0hr25m0s
+"cuerox3,guantes cuerox1,huesosx2",guantes ladronzuelox1,crafting,guantes ladronzuelo,0hr5m50s
+"gema manax3,ballesta de manox1",ballesta de cristalx1,crafting,ballesta de cristal,0hr7m30s
+"orox3,diamantex1,gema vidax1,perlasx2",anillo orox1,crafting,anillo oro,0hr3m0s
+"platax2,diamantex1,perlasx1,gema manax3",anillo manax1,crafting,anillo mana,0hr3m0s
+"hierrox2,maderax1",martillox1,crafting,martillo,0hr1m30s
+"platax2,botas cuerox1,gema manax2",botas canalizadorasx1,crafting,botas canalizadoras,0hr5m0s
+"cuerox3,hierrox1,botas cuerox1,huesosx1",botas de entrenamientox1,crafting,botas de entrenamiento,0hr5m0s
+espada energizadax1,"platax1,orox1,diamantex1,holyx1,rosa etereax1,espada luzx1",crafting,espada energizada descomponer,0hr0m1s
+"hierrox4,maderax1,casco cuerox1",casco hierrox1,crafting,casco hierro,0hr6m0s
+"hierrox6,escudo maderax1",escudo hierrox1,crafting,escudo hierro,0hr10m0s
+espada largax1,"hierrox3,maderax3,espada cortax1",crafting,espada larga descomponer,0hr0m1s
+daga nocturnax1,"platax1,maderax1,dagax1,gema truenox1",crafting,daga nocturna descomponer,0hr0m0s
+"especiasx1,salx1,champiñonx2,maestria culinariax0",sopa de hongosx1,crafting,sopa de hongos,0hr1m30s
+"pescadox1,salx1,maestria culinariax0","huesosx1,pescadito fritox1",crafting,pescadito frito,0hr0m30s
+"platax3,maderax2,dagax1",daga de platax1,crafting,daga de plata,0hr5m50s
+"especiasx2,calabazax4,azucarx4,maestria culinariax0",pastel de calabazax1,crafting,pastel de calabaza,0hr3m20s
+"hierrox4,orox2,polvorax4,revolverx1",revolver de gran calibrex1,crafting,revolver de gran calibre,0hr10m0s
+"platax6,orox2,katanax1,holyx1,amatistax4",katana armonicax1,crafting,katana armonica,0hr30m0s
+mandoblex1,"hierrox1,platax2,maderax1,espada corta platax1",crafting,mandoble descomponer,0hr0m1s
+carnex1,huesosx1,crafting,huesos,0hr0m0s
+"especiasx2,manzanax8,azucarx4,maestria culinariax0",castillo de calabazax1,crafting,tarta de manzana,0hr3m0s
+espada piedrax1,"platax1,diamantex4,espada largax1,gema truenox1,huesosx9",crafting,espada piedra descomponer,0hr0m1s
+guantes curanderox1,"cuerox1,gema vidax1,guantes cuerox1,gema manax1",crafting,guantes curandero descomponer,0hr0m1s
+"maderax2,hierbas curativasx2,gema manax2,cetrox1",cetro naturalx1,crafting,cetro natural,0hr7m0s
+"hierrox1,maderax2,huesosx4,chakramx1",chakram dentadox1,crafting,chakram dentado,0hr8m0s
+"diamantex2,coraza canalizadorax1,gema manax3,amatistax3,lagrima del cosmosx1",coraza canalizadora desatadax1,crafting,coraza canalizadora desatada,1hr28m0s
+"maderax2,dagax1,gema manax3",daga de manax1,crafting,daga de mana,0hr5m50s
+"hierrox8,escudo cuerox1,escudo maderax1",gran escudo de hierrox1,crafting,gran escudo de hierro,0hr9m0s
+"maderax3,gema manax2,cetrox1",cetro avanzadox1,crafting,cetro avanzado,0hr7m0s
+"orox6,gema gelidax2,gema truenox2,arco largox1,amatistax2",arco vikingox1,crafting,arco vikingo,0hr20m0s
+"hierbas curativasx5,botafumeirox1,mineral embrujadox3,holyx6",botafumeiro divinox1,crafting,botafumeiro divino,0hr23m0s
+"hierrox2,platax4,espada corta platax1",espada larga platax1,crafting,espada larga plata,0hr13m0s
+"hierrox4,platax1,maderax2,espada cortax1",claymorex1,crafting,claymore,0hr15m0s
+"platax3,orox2,diamantex1,holyx1,amatistax2,ballesta doblex1",ballesta potenciadax1,crafting,ballesta potenciada,0hr25m0s
+"hierrox2,platax3,orox1,diamantex1,casco hierrox1",casco de caballerox1,crafting,casco de caballero,0hr10m0s
+"maderax3,escudo maderax1,huesosx6",escudo espinasx1,crafting,escudo espinas,0hr10m0s
+"platax4,maderax4,arco elficox1,holyx3,amatistax3",arco trishotx1,crafting,arco trishot,0hr20m0s
+"maderax4,pistolax1,polvorax4,revolverx1",mosquetex1,crafting,mosquete,0hr10m0s
+"diamantex1,gema truenox5,mineral embrujadox2,amatistax3,cetro avanzadox1",cetro rayox1,crafting,cetro rayo,0hr25m0s
+"hierrox4,maderax2,botas cuerox1",botas hierrox1,crafting,botas hierro,0hr5m0s
+espada larga platax1,"hierrox1,platax3,espada corta platax1",crafting,espada larga plata descomponer,0hr0m1s
+"orox10,diamantex4,coraza de hierrox1,amatistax2",coraza doradax1,crafting,coraza dorada,0hr29m0s
+"cuerox6,coraza de hojasx1,huesosx12,mineral embrujadox3",coraza del guerrerox1,crafting,coraza del guerrero,0hr29m0s
+"cuerox4,tunicax1,gema manax2",tunica aprendizx1,crafting,tunica aprendiz,0hr6m20s
+"gema vidax4,mineral embrujadox3,amatistax2,daga carmesix1",daga sangrientax1,crafting,daga sangrienta,0hr20m0s
+"diamantex2,holyx1,amatistax4,aquamarinax4,ballesta de cristalx1",ballesta arcanax1,crafting,ballesta arcana,0hr23m20s
+"orox1,colgante de fex1,holyx1",colgante luz sagradax1,crafting,colgante luz sagrada,0hr2m30s
+claymorex1,"hierrox3,platax1,maderax1,espada cortax1",crafting,claymore descomponer,0hr0m1s
+"orox1,diamantex1,botas canalizadorasx1,holyx1,aquamarinax3",botas megacanalizadorasx1,crafting,botas megacanalizadoras,0hr10m0s
+guantes ladronzuelox1,"cuerox2,guantes cuerox1,huesosx1",crafting,guantes ladronzuelo descomponer,0hr0m1s
+daga de platax1,"platax2,maderax1,dagax1",crafting,daga de plata descomponer,0hr0m0s
+daga argenteax1,"platax5,orox1,daga de platax1,holyx3",crafting,daga argentea descomponer,0hr0m0s
+"orox2,diamantex2,gema vidax2,botas de entrenamientox1,ebanox8",botas protectorasx1,crafting,botas protectoras,0hr24m0s
+"capa con capuchax1,mineral embrujadox4,amatistax3,ebanox5",capa de sombrasx1,crafting,capa de sombras,0hr22m0s
+"maderax3,hierbas curativasx4,arco elficox1,rosa etereax5,amatistax3",arco alto elfox1,crafting,arco alto elfo,0hr20m0s
+"platax6,orox1,escudo hierrox1,amatistax2",escudo platax1,crafting,escudo plata,0hr20m0s
+"diamantex2,gema vidax1,escudo hierrox1,holyx3,amatistax2",escudo templariox1,crafting,escudo templario,0hr20m0s
+katana armonicax1,"platax5,orox1,katanax1,holyx1,amatistax3",crafting,katana armonica descomponer,0hr1m0s
+"hierrox2,platax2,orox8,escudo tortugax1",escudo espartanox1,crafting,escudo espartano,0hr20m0s
+"mineral embrujadox4,amatistax2,aquamarinax2,daga nocturnax1",daga oscurax1,crafting,daga oscura,0hr15m0s
+"platax4,gema gelidax5,holyx2,mithrilx1,katana armonicax1",katana viento del nortex1,crafting,katana viento del norte,1hr0m0s
+guanteletes de sanacionx1,"orox2,gema vidax1,hierbas curativasx4,guantes curanderox1,aquamarinax1",crafting,guanteletes de sanacion descomponer,0hr0m1s
+dagas punzantesx1,"hierrox1,platax5,daga de platax1,holyx1",crafting,dagas punzantes descomponer,0hr0m0s
+daga ruinx1,"gema vidax1,mineral embrujadox2,amatistax2,daga carmesix1",crafting,daga ruin descomponer,0hr0m0s
+guantes del guerrerox1,"cuerox5,guantes ladronzuelox1,huesosx9,mineral embrujadox2",crafting,guantes de guerrero descomponer,0hr0m1s
+"carnex3,especiasx1,huesosx2,salx2,maestria culinariax0",pucherox1,crafting,puchero,0hr30m0s
+"orox1,guantes cuerox1,gema manax3,aquamarinax1",guantes canalizadoresx1,crafting,guantes canalizadores,0hr5m0s
+guanteletes de hierrox1,"hierrox3,maderax1,guantes cuerox1",crafting,guanteletes de hierro descomponer,0hr0m1s
+daga carmesix1,"gema vidax2,maderax1,dagax1",crafting,daga carmesi descomponer,0hr0m0s
+daga sangrientax1,"gema vidax3,mineral embrujadox2,amatistax1,daga carmesix1",crafting,daga sangrienta descomponer,0hr0m0s
+gran escudo de hierrox1,"hierrox7,escudo cuerox1,escudo maderax1",crafting,gran escudo de hierro descomponer,0hr0m0s
+"cuerox4,tunica aprendizx1,gema manax2,amatistax2,aquamarinax5",tunica magox1,crafting,tunica mago,0hr24m0s
+gema truenox1,encantamiento electricox2,crafting,encantamiento electrico,0hr0m30s
+"cuerox3,orox2,diamantex1,tunica aprendizx1,holyx3",tunica sacerdotex1,crafting,tunica sacerdote,0hr24m0s
+guantes cuerox1,cuerox2,crafting,guantes cuero descomponer,0hr0m1s
+guantes canalizadoresx1,"orox1,guantes cuerox1,gema manax2,aquamarinax1",crafting,guantes canalizadores descomponer,0hr0m1s
+gema igneax1,encantamiento fuegox2,crafting,encantamiento fuego,0hr0m30s
+gema vidax1,encantamiento vidax2,crafting,encantamiento vida,0hr0m30s
+maderax6,flautax1,crafting,flauta,0hr4m10s
+hierrox1,balax4,crafting,bala,0hr0m20s
+maderax1,flechax4,crafting,flecha,0hr0m10s
+"platax3,gema gelidax5,mineral embrujadox3,katana armonicax1,lagrima del cosmosx1",katana lunarx1,crafting,katana lunar,1hr0m0s
+"gema vidax2,mineral embrujadox4,amatistax4",colgante carmesix1,crafting,colgante carmesi,0hr5m0s
+"cuerox7,hierrox3,orox1",acordeonx1,crafting,acordeon,0hr8m20s
+"cuerox6,maderax6",tambor de guerrax1,crafting,tambor de guerra,0hr10m0s
+hierrox3,grilletesx1,crafting,grilletes,0hr0m30s
+gema gelidax1,encantamiento gelidox2,crafting,encantamiento gelido,0hr0m30s
+chakram dentadox1,"hierrox1,maderax1,huesosx2,chakramx1",crafting,chakram dentado descomponer,0hr0m20s
+"platax4,gema manax2,amatistax4",colgante hechicerox1,crafting,colgante hechicero,0hr5m0s
+"cuerox2,hierrox2,maderax2",kit de reparacionesx1,crafting,kit de reparaciones,0hr0m0s
+"cuerox4,maderax6",laudx1,crafting,laud,0hr8m0s
+"gema vidax2,guantes curanderox1,gema manax3,mineral embrujadox3,amatistax2,ebanox3",z guante arcanox1,crafting,guante arcano,0hr24m0s
+hierrox1,virotex4,crafting,virote,0hr0m20s
+"platax1,maderax2,dagax1,gema truenox2",daga nocturnax1,crafting,daga nocturna,0hr5m50s
+"hierrox4,maderax2,guantes cuerox1",guanteletes de hierrox1,crafting,guanteletes de hierro,0hr5m0s
+"gema vidax3,maderax2,dagax1",daga carmesix1,crafting,daga carmesi,0hr5m50s
+"hierbas curativasx4,caparazon de tortugax3,rosa etereax2,flor cristalizadax1,slimex3",pocion protectorax1,crafting,pocion protectora,0hr1m0s
+"platax1,daga de manax1,gema manax3,amatistax2,aquamarinax3",daga imbuidax1,crafting,daga imbuida,0hr10m0s
+"hierrox3,tunicax1,gema manax3,amatistax1",coraza runicax1,crafting,coraza runica,0hr10m0s
+hierbas curativasx2,pocion vidax1,crafting,pocion vida,0hr1m0s
+"hierrox2,platax3,maderax2,espada corta platax1",mandoblex1,crafting,mandoble,0hr15m0s
+coraza de hierrox1,"hierrox7,traje cuero ligerox1",crafting,coraza de hierro descomponer,0hr10m0s
+"cuerox2,maderax4,hierbas curativasx2,traje cuero ligerox1",coraza de hojasx1,crafting,coraza de hojas,0hr10m0s
+"platax2,orox4,holyx6,amatistax2,espada luzx1,graciax0",espadon sagradox1,crafting,espadon sagrado,0hr32m0s
+"diamantex2,gema manax2,rosa etereax2,aquamarinax2,escudo magicox1",escudo aumentadox1,crafting,escudo aumentado,0hr20m50s
+"platax2,diamantex4",anillo diamantex1,crafting,anillo diamante,0hr3m0s
+estacax1,maderax1,crafting,estaca descomponer,0hr5m0s
+lanza de combatex1,"hierrox2,orox1,estacax1",crafting,lanza de combate descomponer,0hr10m0s
+lanza cortax1,"hierrox2,platax2,estacax1",crafting,lanza corta descomponer,0hr5m0s
+"caparazon de tortugax3,escudo de pielx1",escudo tortugax1,crafting,escudo tortuga,0hr10m0s
+lanza holyx1,"platax4,lanza de combatex1,holyx5,rosa etereax1",crafting,lanza holy descomponer,0hr20m0s
+lanza oscurax1,"orox1,perlasx1,mineral embrujadox4,rosa etereax1,lanza cortax1",crafting,lanza oscura descomponer,0hr20m0s
+"cuerox3,maderax1",escudo de pielx1,crafting,escudo de piel,0hr1m40s
+traje cuero ligerox1,"cuerox4,maderax1",crafting,traje cuero ligero descomponer,0hr2m0s
+"hierrox8,traje cuero ligerox1",coraza de hierrox1,crafting,coraza de hierro,0hr5m0s
+"gema vidax2,hierbas curativasx5",pocion vida grandex1,crafting,pocion vida grande,0hr1m0s
+"hierbas curativasx2,gema manax2,amatistax1",pocion mana grandex1,crafting,pocion mana grande,0hr1m0s
+coraza del bosquex1,"maderax2,hierbas curativasx3,coraza de hojasx1,rosa etereax1,amatistax1",crafting,coraza del bosque descomponer,0hr20m0s
+coraza sagradax1,"hierrox3,traje conchasx1,holyx5,amatistax1",crafting,coraza sagrada descomponer,0hr30m0s
+"hierrox2,platax6,daga de platax1,holyx2",dagas punzantesx1,crafting,dagas punzantes,0hr15m0s
+"gema vidax2,mineral embrujadox3,amatistax3,daga carmesix1",daga ruinx1,crafting,daga ruin,0hr20m0s
+"diamantex1,hierbas curativasx2,daga de manax1,rosa etereax1,amatistax3",daga esmeraldax1,crafting,daga esmeralda,0hr10m0s
+coraza de hojasx1,"cuerox1,maderax3,hierbas curativasx1,traje cuero ligerox1",crafting,coraza de hojas descomponer,0hr2m0s
+"ajox1,hierbas curativasx1,especiasx1,salx1",pocion silenciosax1,crafting,pocion silenciosa,0hr1m0s
+coraza del guerrerox1,"cuerox5,coraza de hojasx1,huesosx11,mineral embrujadox2",crafting,coraza del guerrero descomponer,0hr20m0s
+coraza doradax1,"orox9,diamantex3,coraza de hierrox1,amatistax1",crafting,coraza dorada descomponer,0hr20m0s
+"maderax3,hierbas curativasx4,coraza de hojasx1,rosa etereax2,amatistax1",coraza del bosquex1,crafting,coraza del bosque,0hr25m0s
+"hierrox2,gema gelidax7,amatistax5,espada gelidax1",espadon gelidox1,crafting,espadon gelido,0hr50m0s
+"platax6,orox1,daga de platax1,holyx4",daga argenteax1,crafting,daga argentea,0hr16m40s
+"hierrox4,diamantex2,coraza de hojasx1,huesosx5,mineral embrujadox2",coraza absorbentex1,crafting,coraza absorbente,0hr25m0s
+"orox3,diamantex1,gema igneax3",anillo grandeza solarx1,crafting,anillo grandeza solar,0hr3m0s
+"picox1,bola de carne podridax3,pierna bloodstalkerx1,antenas gigantesx1,slimex2",pico aumentadox1,crafting,pico aumentado,0hr1m0s
+"gema vidax2,hierbas curativasx4,perlasx3,venenox1,flor cristalizadax1",pocion lujuriosax1,crafting,pocion lujuriosa,0hr1m0s
+"platax2,orox1,diamantex2,holyx2,rosa etereax1,espada luzx1",espada energizadax1,crafting,espada energizada,0hr26m0s
+"gema igneax3,polvorax2,ebanox3,mithrilx1,arco igneox1",arco explosivox1,crafting,arco explosivo,1hr30m0s
+"diamantex5,coraza doradax1,ebanox3,mithrilx1",coraza de diamantex1,crafting,coraza de diamante,1hr28m0s
+"gema vidax1,caparazon de tortugax1,huesosx2,mineral embrujadox1,flor cristalizadax2",pocima de amorx1,crafting,pocima de amor,0hr1m0s
+tunicax1,cuerox2,crafting,tunica descomponer,0hr0m0s
+"gema manax5,aquamarinax3,cetro expertox1,lagrima del cosmosx1",cetro colibri cristalizadox1,crafting,cetro colibri cristalizado,0hr50m0s
+"gema gelidax5,arco vikingox1,rosa etereax3,mithrilx1",arco pesado gelidox1,crafting,arco pesado gelido,1hr30m0s
+"maderax3,hierbas curativasx2,rosa etereax3,daga esmeraldax1,lagrima del cosmosx1",dagas de la naturalezax1,crafting,dagas de la naturaleza,1hr25m0s
+"orox3,diamantex2,onicex1,mineral embrujadox3,ballesta cazadorax1",ballesta ejecutorax1,crafting,ballesta ejecutora,1hr30m0s
+"hierrox5,mineral embrujadox3,mithrilx1,dagas punzantesx1",dagas letalesx1,crafting,dagas letales,1hr25m0s
+"diamantex5,escudo obsidianax1,holyx3,mithrilx1",escudo diamantex1,crafting,escudo diamante,1hr28m0s
+"hierrox5,holyx3,ballesta potenciadax1,mithrilx1",ballesta enanax1,crafting,ballesta enana,1hr30m0s
+"cuerox5,rosa etereax3,cinturon rojo danx1,mithrilx1",cinturon dragonx1,crafting,cinturon dragon,1hr27m0s
+"orox3,diamantex2,amatistax3,escudo marinox1,mithrilx1",escudo antimagiax1,crafting,escudo antimagia,0hr50m0s
+"gema igneax5,mineral embrujadox3,cetro rayox1,lagrima del cosmosx1",cetro fenixx1,crafting,cetro fenix,0hr50m0s
+"gema manax5,aquamarinax3,escudo aumentadox1,lagrima del cosmosx1",escudo archimagicox1,crafting,escudo archimagico,1hr28m0s
+"huesosx5,ebanox3,coraza del guerrerox1,mithrilx1",coraza de huesosx1,crafting,coraza de huesos,1hr28m0s
+"gema manax5,aquamarinax3,daga imbuidax1,lagrima del cosmosx1",daga del eruditox1,crafting,daga del erudito,1hr25m0s
+"orox5,mineral embrujadox3,escudo pesadox1,mithrilx1",escudo impenetrablex1,crafting,escudo impenetrable,1hr28m0s
+"hierrox3,orox2,amatistax3,escudo marinox1,mithrilx1",escudo reflectantex1,crafting,escudo reflectante,1hr28m0s
+"hierbas curativasx1,rosa etereax1",pocion espectralx1,crafting,pocion espectral,0hr1m0s
+"rosa etereax2,graciax0,flor cristalizadax2",pocion de resucitacionx1,"flor cristalizadax2,
+rosa etereax1,
+aquamarinax1,
+graciax0",pocion de resucitacion,0hr1m0s
+tunica aprendizx1,"cuerox2,tunicax1,gema manax1",crafting,tunica aprendiz descomponer,0hr0m0s
+"orox3,diamantex2,holyx3,coraza sagradax1,lagrima del cosmosx1",coraza celestialx1,crafting,coraza celestial,1hr28m0s
+"cuerox1,hierrox2,maderax2",tantox1,crafting,tanto,0hr1m0s
+"hierrox3,orox2,maderax2,tantox1",chisa katanax1,crafting,chisa katana,0hr5m50s
+botas protectorasx1,"orox2,diamantex1,gema vidax1,botas de entrenamientox1,ebanox7",crafting,botas protectoras descomponer,0hr0m1s
+"carnex3,flechax1,salx1,maestria culinariax0","huesosx3,carne a la flechax3",crafting,carne a la flecha,0hr5m0s
+platax2,grilletes de platax1,crafting,grilletes de plata,0hr0m0s
+"gema vidax5,onicex1,amatistax3,daga sangrientax1",daga cristalizadax1,crafting,daga cristalizada,1hr25m0s
+"hierbas curativasx6,rosa etereax3,amatistax2",colgante naturax1,crafting,colgante natura,0hr5m0s
+"platax3,tunica aprendizx1,mineral embrujadox4,amatistax4",tunica cultox1,crafting,tunica culto,0hr16m40s
+"orox5,escudo espartanox1,ebanox3,mithrilx1",escudo dragon doradox1,crafting,escudo dragon dorado,1hr28m0s
+"hierrox5,escudo templariox1,esencia demoniacax3,onicex1",escudo templario profanadox1,crafting,escudo templario profanado,1hr28m0s
+"orox2,perlasx1,sombrero magicox1,holyx1,amatistax2",sombrero sacerdotex1,crafting,sombrero sacerdote,0hr10m0s
+"gema manax5,mineral embrujadox3,escudo aumentadox1,lagrima del cosmosx1",escudo malignox1,crafting,escudo maligno,0hr50m0s
+"orox5,holyx3,mithrilx1,espada energizadax1,graciax0",espada angelx1,crafting,espada angel,1hr35m0s
+"hierrox3,maderax2,espadon demoniacox1,esencia demoniacax3,onicex1",espadon archidemoniacox1,crafting,espadon archidemoniaco,1hr35m0s
+"hierrox3,platax2,esencia demoniacax3,espadon cristalx1,mithrilx1",espadon cristal demoniacox1,crafting,espadon cristal demoniaco,1hr35m0s
+"orox5,holyx3,espadon sagradox1,graciax0,lagrima del cosmosx1",espadon del cielox1,crafting,espadon del cielo,1hr35m0s
+"guanteletes de combatex1,huesosx5,ebanox3,mithrilx1",guantes de huesosx1,crafting,guantes de huesos,1hr35m0s
+"gema gelidax5,aquamarinax3,mithrilx1,katana filo acuaticox1",katana marea infinitax1,crafting,katana marea infinita,1hr35m0s
+"tunica magox1,gema manax5,aquamarinax3,lagrima del cosmosx1",tunica runicax1,crafting,tunica runica,1hr28m0s
+"diamantex1,maderax3,hierbas curativasx3,huesosx2,gema manax1",anillo elemental naturax1,crafting,anillo elemental natura,0hr5m0s
+arco alto elfox1,"maderax2,hierbas curativasx3,arco elficox1,rosa etereax4,amatistax2",crafting,arco alto elfo descomponer,0hr1m0s
+arco elficox1,"cuerox1,maderax3,hierbas curativasx1,arco cortox1",crafting,arco elfico descomponer,0hr0m0s
+"cuerox3,diamantex1,gema igneax1,gema gelidax1,gema truenox1,gema manax1,botas canalizadorasx1,aquamarinax1",botas hechicerox1,crafting,botas hechicero,0hr10m0s
+cinturon blancox1,cuerox3,crafting,cinturon blanco descomponer,0hr0m0s
+botas sagradasx1,"cuerox2,hierrox1,platax1,holyx1",crafting,botas sagradas descomponer,0hr0m10s
+"platax6,orox2,gema truenox2,holyx2,chisa katanax1",katana relampagox1,crafting,katana relampago,0hr0m0s
+botas hechicerox1,"cuerox2,diamantex1,gema igneax1,gema gelidax1,gema truenox1,gema manax1,botas canalizadorasx1,aquamarinax1",crafting,botas hechicero descomponer,0hr0m0s
+arco cortox1,"cuerox1,maderax2",crafting,arco corto descomponer,0hr0m0s
+"diamantex4,maderax6,hacha de manox1,amatistax8",hacha vikingax1,crafting,hacha vikinga,0hr40m0s
+"gema vidax2,martillo de combatex1,esencia demoniacax1,mineral embrujadox2,amatistax3,obsidianax3",chakram oscurox1,crafting,chakram oscuro,0hr20m0s
+"orox2,diamantex1,gema gelidax2",anillo gelidox1,crafting,anillo gelido,0hr3m0s
+"platax1,diamantex1,perlasx2,aquamarinax2",anillo grandeza lunarx1,crafting,anillo grandeza lunar,0hr3m0s
+"orox3,diamantex2,ebanox2",anillo de la calamidadx1,crafting,anillo de la calamidad,0hr3m0s
+"platax2,diamantex1,amatistax1",anillo elemental vientox1,crafting,anillo elemental viento,0hr3m0s
+"orox3,diamantex1,aquamarinax2",anillo del cuervox1,crafting,anillo del cuervo,0hr3m0s
+"diamantex5,holyx3,mazo sagradox1,graciax0,lagrima del cosmosx1",mazo de la creacionx1,crafting,mazo de la creacion,1hr35m0s
+espadon sagradox1,"platax1,orox3,holyx5,amatistax1,espada luzx1",crafting,espadon sagrado descomponer,0hr1m0s
+"platax2,diamantex1,huesosx2,gema manax1",anillo ouroborosx1,crafting,anillo ouroboros,0hr3m0s
+"platax1,orox2,diamantex1,perlasx2,aquamarinax1",anillo runicox1,crafting,anillo runico,0hr3m0s
+"gema igneax1,ajox3,gema truenox1,rosa etereax3,flor cristalizadax1,pierna bloodstalkerx1",pocion energizantex1,crafting,pocion energizante,0hr1m0s
+"diamantex1,hierbas curativasx3,rosa etereax2,flor cristalizadax1",anillo florecientex1,crafting,anillo floreciente,0hr3m0s
+"platax2,orox3,diamantex1",anillo aguila doradax1,crafting,anillo aguila dorada,0hr3m0s
+"hierrox2,huesosx6,mineral embrujadox1,ebanox1",casco de huesosx1,crafting,casco de huesos,0hr10m0s
+"hierbas curativasx2,huesosx2,rosa etereax1",pocion aladax1,crafting,pocion alada,0hr1m0s
+"esencia demoniacax1,mineral embrujadox2,nucleo potenciadorx1,obsidianax2",alma corruptax1,crafting,alma corrupta,0hr10m0s
+nunchuksx1,"onicex998,mithrilx998,lagrima del cosmosx998",crafting,nunchuks descomponer,17hr46m39s
+"maderax4,gema truenox2,hacha de manox1,huesosx8,esencia demoniacax1,mineral embrujadox5",hacha malignax1,crafting,hacha maligna,0hr40m0s
+"hierbas curativasx4,rosa etereax3,flor cristalizadax1,corazon cristalizadox1",pocion corazon latentex1,crafting,pocion corazon latente,0hr1m0s
+"maderax5,onicex1,mineral embrujadox3,coraza del bosquex1",coraza espinosax1,crafting,coraza espinosa,0hr50m0s
+"orox5,tunica sacerdotex1,holyx3,mithrilx1",tunica del arzobispox1,crafting,tunica del arzobispo,0hr50m0s
+"hierbas curativasx4,gema truenox2,polvorax3,flor cristalizadax1,nucleo potenciadorx1",pocion fortificantex1,crafting,pocion fortificante,0hr1m0s
+"hierbas curativasx1,gema truenox1,polvorax4,flor cristalizadax1,sangre coagulada doradax2",pocion furiosax1,crafting,pocion furiosa,0hr1m0s
+"orox5,onicex1,ebanox3,guanteletes bestialesx1",guante filo ocultox1,crafting,guante filo oculto,0hr58m20s
+tunica sacerdotex1,"cuerox2,orox1,diamantex1,tunica aprendizx1,holyx2",crafting,tunica sacerdote descomponer,0hr0m10s
+martillox1,"hierrox1,maderax2",crafting,martillo descomponer,0hr0m10s
+hachax1,"cuerox1,hierrox1,maderax1",crafting,hacha descomponer,0hr0m10s
+"hierrox5,onicex1,mineral embrujadox3,escudo pesadox1",escudo lobo corruptox1,crafting,escudo lobo corrupto,0hr50m0s
+"hierrox2,caparazon de tortugax2,escamas dragonx2,perlasx2",bajo del dragonx1,crafting,bajo del dragon,0hr33m20s
+escudo dragon doradox1,"orox4,escudo espartanox1,ebanox2",crafting,escudo dragon dorado descomponer,0hr0m30s
+"gema vidax1,hierbas curativasx3,holyx1,rosa etereax1",pocion genesis vampiricax1,crafting,pocion genesis vampirica,0hr1m0s
+"orox1,gema gelidax5,nucleo potenciadorx1",modulo gelidox1,crafting,modulo gelido,0hr2m0s
+"orox1,gema igneax5,nucleo potenciadorx1",modulo incendiariox1,crafting,modulo incendiario,0hr2m0s
+"orox1,mineral embrujadox2,amatistax2,nucleo potenciadorx1",modulo oscurox1,crafting,modulo oscuro,0hr2m0s
+"platax5,orox1,nucleo potenciadorx1",modulo de platax1,crafting,modulo de plata,0hr2m0s
+"orox1,perlasx2,holyx2,nucleo potenciadorx1",modulo sagradox1,crafting,modulo sagrado,0hr2m0s
+"gema vidax2,venenox2,nucleo potenciadorx1",modulo toxicox1,crafting,modulo toxico,0hr2m0s
+"orox1,gema truenox5,nucleo potenciadorx1",modulo electricox1,crafting,modulo electrico,0hr2m0s
+"hierrox5,orox2,traje conchasx1,holyx3,amatistax3",coraza sagradax1,crafting,coraza sagrada,0hr21m40s
+mazo oscurox1,"mazo berserkerx1,esencia demoniacax3,mineral embrujadox7,amatistax1",crafting,mazo oscuro descomponer,0hr1m0s
+"huesosx5,ebanox3,revolver cazadorx1,mithrilx1",revolver de huesox1,crafting,revolver de hueso,1hr35m0s
+platax1,hierrox1,crafting,hierro,0hr0m0s
+hierrox3,platax1,crafting,plata,0hr0m0s
+platax3,orox1,crafting,oro,0hr0m0s
+orox3,diamantex1,crafting,diamante,0hr0m0s
+mazo sagradox1,"orox2,diamantex1,gema gelidax1,martillo de combatex1,holyx4",crafting,mazo sagrado descomponer,0hr1m0s
+cuerox2,cuerda trampax1,crafting,cuerda trampa,0hr0m0s
+mazax1,"cuerox1,hierrox3,martillox1,huesosx2",crafting,maza descomponer,0hr1m0s
+nucleo golemx2,aquamarinax1,crafting,aquamarina,0hr0m0s
+mazo de la creacionx1,"diamantex4,holyx2,mazo sagradox1,mithrilx1",crafting,mazo de la creacion descomponer,0hr1m0s
+mazo de la vidax1,"hierbas curativasx4,rosa etereax2,mazo del bosquex1,lagrima del cosmosx1",crafting,mazo de la vida descomponer,0hr1m0s
+mazo del bosquex1,"maderax4,hierbas curativasx4,martillo de combatex1,rosa etereax5,amatistax1,aquamarinax1",crafting,mazo del bosque descomponer,0hr1m0s
+"platax5,onicex1,mineral embrujadox1,ebanox2,guanteletes bestialesx1",guanteletes toxicosx1,crafting,guanteletes toxicos,0hr50m0s
+guanteletes toxicosx1,"platax4,onicex1,mineral embrujadox1,ebanox1,guanteletes bestialesx1",crafting,guanteletes toxicos descomponer,0hr1m0s
+"nucleo golemx1,orbe elementalx2,sangre coagulada doradax2,corazon cristalizadox1,hacha leñadorx1",hacha aumentadax1,crafting,hacha aumentada,0hr1m0s
+"hierbas curativasx1,gema manax1",pocion manax1,crafting,pocion mana,0hr1m0s
+arco explosivox1,"gema igneax2,polvorax1,ebanox2,arco igneox1",crafting,arco explosivo descomponer,0hr0m0s
+arco pesado gelidox1,"gema gelidax4,arco vikingox1,rosa etereax2",crafting,arco pesado gelido descomponer,0hr0m0s
+ballesta ejecutorax1,"orox2,diamantex1,mineral embrujadox2,ballesta cazadorax1",crafting,ballesta ejecutora descomponer,0hr0m0s
+ballesta de manox1,"hierrox1,maderax1",crafting,ballesta de mano descomponer,0hr0m0s
+"diamantex5,aquamarinax3,hacha de cristalx1,lagrima del cosmosx1",hacha del cosmosx1,crafting,hacha del cosmos,1hr35m0s
+"platax2,gema gelidax3,aquamarinax3,espadon gelidox1,lagrima del cosmosx1",espadon invierno eternox1,crafting,espadon invierno eterno,1hr35m0s
+"platax3,gema gelidax4,amatistax3,espada gelidax1",espada invernalx1,crafting,espada invernal,0hr40m0s
+"diamantex2,gema truenox3,hacha vikingax1,amatistax3,mithrilx1",hacha dios del truenox1,crafting,hacha dios del trueno,1hr35m0s
+"maderax5,onicex1,ebanox3,escudo podridox1",escudo corazon de puasx1,crafting,escudo corazon de puas,1hr21m40s
+"platax2,gema gelidax3,aquamarinax3,lagrima del cosmosx1,espada invernalx1",espada cero absolutox1,crafting,espada cero absoluto,0hr50m0s
+"diamantex2,gema gelidax3,aquamarinax3,lagrima del cosmosx1,espada invernalx1",espada doble inviernox1,crafting,espada doble invierno,0hr50m0s
+"platax3,gema truenox2,perlasx1,pierna bloodstalkerx1,conchas y coralx2",anillo de precisionx1,crafting,anillo de precision,0hr3m0s
+"gema vidax2,onicex1,mineral embrujadox3,amatistax3,hacha rubix1",hacha rubi perfectax1,crafting,hacha rubi perfecta,1hr35m0s
+"maderax6,escudo espinasx1,mineral embrujadox3,holyx3,ebanox4",escudo podridox1,crafting,escudo podrido,0hr20m0s
+"maderax5,hierbas curativasx4,onicex1,rosa etereax4,coraza del bosquex1",coraza florecientex1,crafting,coraza floreciente,1hr28m0s
+guantes hechicerox1,"platax4,guantes canalizadoresx1,gema manax1,amatistax1,aquamarinax1",crafting,guantes hechicero descomponer,0hr0m0s
+"platax1,gema truenox2,polvorax4",granada flashx1,crafting,granada flash,0hr1m0s
+"cuerox2,gema truenox4,guanteletes de hierrox1,perlasx3,amatistax4",guantes filo bestialx1,crafting,guantes filo bestial,0hr10m0s
+guanteletes arcanosx1,"platax2,guantes canalizadoresx1,gema manax1,amatistax2,aquamarinax1",crafting,guanteletes arcanos descomponer,0hr0m1s
+"platax3,guantes canalizadoresx1,gema manax2,amatistax3,aquamarinax1",guanteletes arcanosx1,crafting,guanteletes arcanos,0hr10m0s
+guantes filo bestialx1,"cuerox1,gema truenox3,guanteletes de hierrox1,perlasx2,amatistax3",crafting,guantes filo bestial descomponer,0hr0m0s
+"platax5,guantes canalizadoresx1,gema manax2,amatistax2,aquamarinax1",guantes hechicerox1,crafting,guantes hechicero,0hr30m0s
+"cuerox8,orox3,hierbas curativasx6,sombrero magicox1,flor cristalizadax2",capucha del druidax1,crafting,capucha del druida,0hr13m20s
+capucha del druidax1,"cuerox7,orox2,hierbas curativasx5,sombrero magicox1,flor cristalizadax1",crafting,capucha del druida descomponer,0hr0m10s
+"diamantex3,gema gelidax5,lagrima del cosmosx1,chakram lunarx1",chakram hielox1,crafting,chakram hielo,0hr50m0s
+"hierrox3,platax2,holyx3,mithrilx1,chakram antiguox1",chakram divinox1,crafting,chakram divino,0hr50m0s
+"hierrox2,platax3,amatistax3,lagrima del cosmosx1,chakram lunarx1",chakram crescendumx1,crafting,chakram crescendum,0hr50m0s
+"hierrox3,platax2,onicex1,mineral embrujadox3,chakram oscurox1",chakram pesado oscurox1,crafting,chakram pesado oscuro,0hr50m0s
+"diamantex3,gema igneax5,onicex1,chakram esmeraldax1",chakram volcanicox1,crafting,chakram volcanico,0hr50m0s
+"platax4,gema truenox1,holyx3,mithrilx1,chakram esmeraldax1",chakram destellox1,crafting,chakram destello,0hr50m0s
+"orox3,gema manax2,amatistax3,lagrima del cosmosx1,chakram aumentadox1",chakram arcanox1,crafting,chakram arcano,0hr50m0s
+"gema igneax5,rosa etereax3,ballesta potenciadax1,mithrilx1",ballesta fenixx1,crafting,ballesta fenix,1hr30m0s
+"diamantex1,gema truenox5,mineral embrujadox1,holyx1,mithrilx1,chakram aumentadox1",chakram electricox1,crafting,chakram electrico,0hr50m0s
+"onicex1,mineral embrujadox3,ballesta potenciadax1,obsidianax5",ballesta volcanicax1,crafting,ballesta volcanica,0hr50m0s
+ballesta de la humildadx1,"platax2,orox1,holyx2,ballesta cazadorax1,mithrilx1",crafting,ballesta de la humildad descomponer,0hr0m0s
+"platax3,orox2,holyx3,ballesta cazadorax1,mithrilx1,graciax0",ballesta de la humildadx1,crafting,ballesta de la humildad,0hr50m0s
+ballesta volcanicax1,"onicex1,mineral embrujadox2,ballesta cazadorax1,obsidianax4",crafting,ballesta volcanica descomponer,0hr0m0s
+ballesta de la irax1,"huesosx4,onicex1,mineral embrujadox2,ballesta cazadorax1",crafting,ballesta de la ira descomponer,0hr0m0s
+"huesosx5,onicex1,mineral embrujadox3,ballesta cazadorax1",ballesta de la irax1,crafting,ballesta de la ira,0hr50m0s
+"gema igneax1,gema gelidax1,gema truenox1,gema manax1,amatistax3,ballesta arcanax1,lagrima del cosmosx1",ballesta cosmicax1,crafting,ballesta cosmica,0hr50m0s
+ballesta cosmicax1,"gema igneax1,gema gelidax1,gema truenox1,gema manax1,amatistax2,ballesta arcanax1,lagrima del cosmosx1",crafting,ballesta cosmica descomponer,0hr0m0s
+"ebanox3,mithrilx1,vestido acorazadox1,obsidianax5",vestido acorazado reforzadox1,crafting,vestido acorazado reforzado,0hr50m0s
+"orox2,diamantex3,holyx3,coraza sagradax1,lagrima del cosmosx1",coraza sacrosantax1,crafting,coraza sacrosanta,0hr50m0s
+"caparazon de tortugax5,ebanox3,coraza del guerrerox1,mithrilx1",coraza tortugax1,crafting,coraza tortuga,0hr50m0s
+"gema gelidax5,aquamarinax3,cetro marinox1,lagrima del cosmosx1",cetro de agua fluyentex1,crafting,cetro de agua fluyente,0hr50m0s
+"Media justicia: oscurax1,Media justicia: sagradax1",Justicia de los Cielosx1,crafting,Justicia de los Cielos,0hr0m0s
+"diamantex2,gema manax3,aquamarinax3,cetro expertox1,lagrima del cosmosx1",cetro maestrox1,crafting,cetro maestro,0hr50m0s
+"platax3,gema igneax2,onicex1,amatistax3,espada llameantex1",espada cadena de lavax1,crafting,espada cadena de lava,0hr50m0s
+"gema vidax5,onicex1,amatistax3,cetro malignox1",cetro sangrientox1,crafting,cetro sangriento,0hr50m0s
+"amanita muscariax1,azucarx1",asucarx1,crafting,asucar,0hr0m0s
+"amanita muscariax4,venenox2",veneno mortalx1,crafting,veneno mortal,0hr0m0s
+"platax1,hierbas curativasx3,polvorax4",granada curativax1,crafting,granada curativa,0hr1m0s
+"platax1,gema igneax1,huesosx3,polvorax4",granada de humox1,crafting,granada de humo,0hr1m0s
+"platax1,gema igneax2,polvorax4",granada explosivax1,crafting,granada explosiva,0hr1m0s
+cuerox5,bolsa de alquimistax1,crafting,bolsa de alquimista,0hr0m10s
+"hierrox2,diamantex1,conchas y coralx3",anillo del gatox1,crafting,anillo del gato,0hr3m0s
+"platax3,orox1,mineral embrujadox3,amatistax2,revolver de gran calibrex1,obsidianax4",revolver cazadorx1,crafting,revolver cazador,0hr20m0s
+"orox3,gema igneax1,gema gelidax1,holyx1,obsidianax1",colgante fusionadox1,crafting,colgante fusionado,0hr5m0s
+"onicex1,mineral embrujadox3,cetro malignox1,obsidianax5",cetro oscurox1,crafting,cetro oscuro,0hr50m0s
+"especiasx2,salx2,manzanax2,carne de primerax1,champiñonx3,maestria culinariax0",tentacion del yakshax1,crafting,tentacion del yaksha,0hr25m0s
+"cuerox3,hierrox2,platax2,botas de entrenamientox1,holyx2",botas sagradasx1,crafting,botas sagradas,0hr33m20s
+"diamantex5,holyx3,lanza holyx1,graciax0,lagrima del cosmosx1",lanza angelicalx1,crafting,lanza angelical,0hr50m0s
+"caparazon de tortugax1,perlasx5,aquamarinax3,chisa katanax1,conchas y coralx4",katana filo acuaticox1,crafting,katana filo acuatico,0hr25m0s
+"hierrox1,maderax2",hacha leñadorx1,crafting,hacha leñador,0hr0m10s
+"cuerox5,guanteletes de combatex1,ebanox3,mithrilx1",vendas de combatex1,crafting,vendas de combate,1hr40m0s
+"esencia demoniacax2,mineral embrujadox4,amatistax3,claymorex1,obsidianax3",espadon demoniacox1,crafting,espadon demoniaco,0hr25m0s
+"diamantex1,huesosx7,obsidianax1",anillo huesox1,crafting,anillo hueso,0hr3m0s
+"cuerox8,cinturon blancox1,obsidianax2",cinturon negrox1,crafting,cinturon negro,0hr5m0s
+"hierrox2,gema truenox3,ebanox3,mithrilx1,katana relampagox1",katana resplandor blancox1,crafting,katana resplandor blanco,1hr40m0s
+"gema manax3,tunica cultox1,mineral embrujadox3,lagrima del cosmosx1,obsidianax2",tunica corruptax1,crafting,tunica corrupta,1hr31m40s
+"hierbas curativasx6,amatistax4,ebanox4,cetro naturalx1",cetro del bosquex1,crafting,cetro del bosque,0hr25m0s
+"gema gelidax5,mineral embrujadox3,cinturon rojo danx1,mithrilx1",cinturon torrencialx1,crafting,cinturon torrencial,1hr40m0s
+"hierrox2,diamantex1,perlasx3,conchas y coralx2",anillo elemental aguax1,crafting,anillo elemental agua,0hr3m0s
+"huesosx12,mineral embrujadox1,obsidianax1",colgante de huesosx1,crafting,colgante de huesos,0hr5m0s
+"platax1,escudo conchasx1,aquamarinax3,obsidianax2,conchas y coralx6",escudo marinox1,crafting,escudo marino,0hr20m50s
+"escudo de pielx1,conchas y coralx8",escudo conchasx1,crafting,escudo conchas,0hr5m0s
+"onicex1,mineral embrujadox3,espada sombriax1,obsidianax5",espada oscurax1,crafting,espada oscura,1hr23m20s
+"onicex1,mineral embrujadox3,arco belialx1,obsidianax5",arco oscurox1,crafting,arco oscuro,1hr30m0s
+"anillo elemental vientox1,anillo gelidox1,anillo volcanicox1,nucleo potenciadorx1,anillo elemental aguax1",anillo omnielementalx1,crafting,anillo omnielemental,0hr3m0s
+"diamantex1,gema igneax3,obsidianax2",anillo volcanicox1,crafting,anillo volcanico,0hr3m0s
+"gema igneax5,polvorax3,arco largox1,obsidianax4",arco igneox1,crafting,arco igneo,0hr21m40s
+"diamantex2,arco alto elfox1,ebanox3,mithrilx1,obsidianax3",arcoescudox1,crafting,arcoescudo,1hr30m0s
+"platax2,maderax3",armonicax1,crafting,armonica,0hr8m0s
+"platax6,diamantex2,maderax5,ballesta doblex1,obsidianax2",ballesta cazadorax1,crafting,ballesta cazadora,0hr50m0s
+"onicex1,mineral embrujadox3,ballesta cazadorax1,obsidianax5",ballesta malditax1,crafting,ballesta maldita,0hr50m0s
+"diamantex1,botas hierrox1,obsidianax4",botas obsidianax1,crafting,botas obsidiana,0hr10m0s
+"pescadox2,salx1,maestria culinariax0,conchas y coralx1","huesosx2,caldo marinox1",crafting,caldo marino,0hr2m0s
+"carnex1,huevox2,lechex1,especiasx2,trufax1,maestria culinariax0,harinax4","huesosx1,canelones trufadosx1",crafting,canelones trufados,0hr5m0s
+"cuerox8,casco tortugax1,obsidianax2",capucha del asesinox1,crafting,capucha del asesino,0hr10m0s
+"diamantex2,guantes canalizadoresx1,amatistax4,conchas y coralx8",guanteletes coralx1,crafting,guanteletes coral,0hr10m0s
+"cuerox8,huesosx4,mineral embrujadox1,holyx1,ebanox4,nudillerax1,obsidianax2",guanteletes de combatex1,crafting,guanteletes de combate,0hr7m20s
+"carnex1,salx1,maestria culinariax0","huesosx1,carne cocinadax1",crafting,carne cocinada,0hr0m30s
+"hierrox3,diamantex1,maderax2,casco hierrox1,obsidianax3",casco enanox1,crafting,casco enano,0hr10m0s
+"huevox2,lechex2,calabazax1,azucarx2,maestria culinariax0,harinax6",castillo de calabazax1,crafting,castillo de calabaza,0hr15m0s
+"maderax2,huesosx2,cetrox1,obsidianax2",cetro calaverax1,crafting,cetro calavera,0hr7m0s
+"gema igneax5,mineral embrujadox3,cetro rayox1,lagrima del cosmosx1",cetro fenixx1,crafting,cero fenix,1hr35m0s
+"hierbas curativasx5,flor cristalizadax3,lagrima del cosmosx1,cetro del bosquex1",cetro florecientex1,crafting,cetro floreciente,1hr35m0s
+"diamantex2,amatistax6,cetro avanzadox1,conchas y coralx8",cetro marinox1,crafting,cetro marino,0hr25m0s
+"cuerox8,huesosx4,mineral embrujadox2,holyx3,rosa etereax4,cinturon negrox1",cinturon rojo danx1,crafting,cinturon rojo dan,0hr8m0s
+"gema igneax1,polvorax5,obsidianax4",colgante volcanicox1,crafting,colgante volcanico,0hr5m0s
+"maderax3,coraza de obsidianax1,onicex1,ebanox3,obsidianax2",coraza de ebanox1,crafting,coraza de ebano,1hr25m0s
+"hierrox3,maderax2,coraza de hierrox1,amatistax1,obsidianax7",coraza de obsidianax1,crafting,coraza de obsidiana,0hr28m0s
+"cuerox8,platax3,orox2,coraza de hierrox1,obsidianax1",coraza de picarox1,crafting,coraza de picaro,0hr23m20s
+"diamantex2,mineral embrujadox3,mithrilx1,coraza absorbentex1,obsidianax3",coraza mithrilx1,crafting,coraza mithril,1hr28m0s
+"hierrox6,orox4,gema vidax2,coraza de hierrox1,obsidianax4",coraza samuraix1,crafting,coraza samurai,0hr30m0s
+"onicex1,mineral embrujadox3,coraza de picarox1,obsidianax5",coraza sombriax1,crafting,coraza sombria,1hr28m0s
+"platax5,huesosx10",colgante guerrerox1,crafting,colgante guerrero,0hr5m0s
+"hierrox6,gema igneax2,mithrilx1,guanteletes incendiadosx1,obsidianax1",guanteletes de fundicionx1,crafting,guanteletes de fundicion,1hr6m20s
+"cuerox8,gema igneax7,huesosx5,amatistax2,nudillerax1,obsidianax2",guanteletes incendiadosx1,crafting,guaneletes incendiados,0hr8m20s
+"gema manax2,mineral embrujadox3,daga oscurax1,lagrima del cosmosx1,obsidianax3",daga del finx1,crafting,daga del fin,1hr25m0s
+"hierrox3,onicex1,mineral embrujadox3,daga ruinx1,obsidianax2",daga malditax1,crafting,daga maldita,1hr25m0s
+"gema vidax2,mineral embrujadox3,daga oscurax1,lagrima del cosmosx1,obsidianax3",daga necroticax1,crafting,daga necrotica,1hr25m0s
+"escudo obsidianax1,esencia demoniacax2,onicex1,mineral embrujadox1,obsidianax5",escudo demoniacox1,crafting,escudo demoniaco,1hr28m0s
+"hierrox2,platax2,orox1,diamantex1,escamas dragonx2",escudo escamas dragonx1,crafting,escudo escamas dragon,1hr10m0s
+"platax2,escudo hierrox1,mineral embrujadox1,obsidianax6",escudo obsidianax1,crafting,escudo obsidiana,0hr20m0s
+"platax6,orox2,diamantex2,escudo tortugax1,obsidianax2",escudo pesadox1,crafting,escudo pesado,0hr20m0s
+"hierrox2,platax2,orox1,diamantex1,escamas dragonx2",espada dragonx1,crafting,espada dragon,1hr10m0s
+"orox1,gema igneax5,espada larga platax1,polvorax4,obsidianax2",espada llameantex1,crafting,espada llameante,0hr30m0s
+"perlasx2,aquamarinax3,espada tiburonx1,mithrilx1,conchas y coralx3",espada megalodonx1,crafting,espada megalodon,1hr35m0s
+"gema vidax3,onicex1,mineral embrujadox3,espada sangrantex1,obsidianax2",espada nigromantex1,crafting,espada nigromante,1hr35m0s
+"orox3,espada largax1,gema truenox2,amatistax2,obsidianax4",espada sombriax1,crafting,espada sombria,0hr35m0s
+"gema gelidax1,pescadox3,espada larga platax1,aquamarinax2,obsidianax2,conchas y coralx4",espada tiburonx1,crafting,espada tiburon,0hr35m0s
+"hierrox3,guanteletes de hierrox1,polvorax4,obsidianax5",guanteletes obsidianax1,crafting,guanteletes obsidiana,0hr10m0s
+"platax2,mandoblex1,mineral embrujadox1,amatistax4,obsidianax4",espadon cristalx1,crafting,espadon cristal,0hr26m40s
+"orox2,hierbas curativasx3,flor cristalizadax3,lagrima del cosmosx1,cetro del bosquex1",cetro hoja doradax1,crafting,cetro hoja dorada,0hr50m0s
+"orox5,huesosx5,ebanox3,nudillerax1,obsidianax4",guanteletes bestialesx1,crafting,guanteletes bestiales,0hr10m0s
+"diamantex4,rosa etereax1,amatistax2,aquamarinax1,hacha de guerrax1,obsidianax1",hacha de cristalx1,crafting,hacha de cristal,0hr33m20s
+"hierrox4,gema igneax4,hacha leñadorx1",hacha de fundicionx1,crafting,hacha de fundicion,0hr12m0s
+"hierrox3,orox1,maderax3,hacha leñadorx1",hacha de manox1,crafting,hacha de mano,0hr10m0s
+"gema vidax2,esencia demoniacax3,onicex1,hacha malignax1,obsidianax3",hacha demoniacax1,crafting,hacha demoniaca,1hr35m0s
+"gema igneax3,ebanox3,mithrilx1,hacha fundidax1,obsidianax2",hacha de magmax1,crafting,hacha de magma,0hr50m0s
+"hierrox2,gema igneax4,polvorax5,hacha de fundicionx1,obsidianax4",hacha fundidax1,crafting,hacha fundida,0hr33m20s
+"gema vidax2,mineral embrujadox2,amatistax2,hacha de guerrax1,obsidianax3",hacha rubix1,crafting,hacha rubi,0hr25m0s
+"hierrox2,maderax3,tantox1,obsidianax1",katanax1,crafting,katana,0hr5m0s
+"diamantex1,gema igneax5,katanax1,polvorax3,obsidianax2",katana ardientex1,crafting,katana ardiente,0hr30m0s
+"gema igneax5,onicex1,mineral embrujadox2,katana ardientex1,obsidianax2",katana fuego del surx1,crafting,katana fuego del sur,1hr0m0s
+"gema igneax8,onicex1,rosa etereax2,katana ardientex1,obsidianax2",katana solarx1,crafting,katana solar,1hr0m0s
+"diamantex2,gema vidax4,amatistax2,lanza cortax1,conchas y coralx4",lanza sangrientax1,crafting,lanza sangrienta,0hr20m0s
+"perlasx2,traje cuero ligerox1,conchas y coralx5",traje conchasx1,crafting,traje conchas,0hr5m0s
+"cuerox3,hierrox5,traje conchasx1,mineral embrujadox3,amatistax1,obsidianax3",vestido acorazadox1,crafting,vestido acorazado,0hr10m0s
+"hierrox2,maderax2,martillox1,obsidianax2",martillo de combatex1,crafting,martillo de combate,0hr10m0s
+"orox1,huesosx5,obsidianax2",mascara protectorax1,crafting,mascara protectora,0hr5m30s
+"hierrox4,martillox1,obsidianax2",mazo berserkerx1,crafting,mazo berserker,0hr10m0s
+"gema igneax3,ebanox3,mithrilx1,mazo de fundicionx1,obsidianax2",mazo carbonizadox1,crafting,mazo carbonizado,1hr35m0s
+"gema vidax2,martillo de combatex1,esencia demoniacax1,mineral embrujadox2,amatistax3,obsidianax3",mazo de almasx1,crafting,mazo de almas,0hr20m0s
+"maderax2,ebanox3,mazo obsidianax1,mithrilx1,obsidianax3",mazo de ebanox1,crafting,mazo de ebano,1hr35m0s
+"hierrox2,gema igneax6,mazo berserkerx1,mineral embrujadox1,obsidianax3",mazo de fundicionx1,crafting,mazo de fundicion,0hr20m0s
+"gema vidax2,esencia demoniacax3,onicex1,mazo de almasx1,obsidianax3",mazo del reino de las sombrasx1,crafting,mazo del reino de las sombras,1hr35m0s
+"esencia demoniacax3,onicex1,mineral embrujadox2,mazo oscurox1,obsidianax3",mazo demoniacox1,crafting,mazo demoniaco,1hr35m40s
+"platax2,diamantex3,mazo berserkerx1,mineral embrujadox5,ebanox6,obsidianax3",mazo obsidianax1,crafting,mazo obsidiana,0hr20m0s
+"especiasx1,maestria culinariax0,harinax1",panx1,crafting,pan,0hr1m0s
+"gema igneax2,coraza de obsidianax1,onicex1,ebanox2,obsidianax3",piel de obsidianax1,crafting,piel de obsidiana,1hr28m0s
+"platax5,holyx3,hacha angelicalx1,graciax0,lagrima del cosmosx1",hacha del paraisox1,crafting,hacha del paraiso,1hr0m0s
+"gema manax5,holyx3,pistola aumentadax1,lagrima del cosmosx1",pistola aumentada++x1,crafting,pistola aumentada++,0hr0m0s
+"pescadox1,hierbas curativasx1,conchas y coralx2",pocion acuaticax1,crafting,pocion acuatica,0hr1m0s
+"hierbas curativasx1,obsidianax1",pocion antimagiax1,crafting,pocion antimagia,0hr1m0s
+"gema gelidax1,hierbas curativasx2,perlasx4,flor cristalizadax1,conchas y coralx2",pocion brumosax1,crafting,pocion bromosa,0hr1m0s
+"hierbas curativasx7,perlasx2,flor cristalizadax2,conchas y coralx3",pocion del druidax1,crafting,pocion del druida,0hr1m0s
+"huesosx5,polvorax6,mineral embrujadox4,revolver de gran calibrex1,obsidianax5",revolver malditox1,crafting,revolver maldito,0hr20m50s
+"hierrox2,onicex1,ebanox3,revolver malditox1,obsidianax3",revolver oscurox1,crafting,revolver oscuro,1hr35m0s
+"carnex1,manzanax2,maestria culinariax0","sangriax1,huesosx1",crafting,sangria,0hr1m0s
+"orox2,holyx3,ebanox3,arco trishotx1,graciax0,lagrima del cosmosx1",arco sagradox1,crafting,arco sagrado,1hr0m0s
+"platax4,orox3,escudo templariox1,holyx3,graciax0,lagrima del cosmosx1",escudo templario iluminadox1,crafting,escudo templario iluminado,0hr50m0s
+"hierrox3,orox2,ebanox3,casco hierrox1,obsidianax2",kabutox1,crafting,kabuto,0hr24m0s
+"gema gelidax1,hierbas curativasx1,perlasx1,conchas y coralx2",pocion brumosax1,crafting,pocion brumosa,0hr1m0s
+"platax3,hierbas curativasx2,especiasx2,azucarx2,harinax2",pocion kvas de luna plateadax1,crafting,pocion kvas de luna plateada,0hr1m0s
+"hierbas curativasx2,caparazon de tortugax2,flor cristalizadax1,antenas gigantesx2,conchas y coralx3",pocion invenciblex1,crafting,pocion invencible,0hr1m0s
+"diamantex3,onicex1,mineral embrujadox3,lanza oscurax1,obsidianax2",lanza oscura sobrecargadax1,crafting,lanza oscura sobrecargada,0hr50m0s
+"especiasx4,salx1,maestria culinariax0,pescado de calidadx1,conchas y coralx4","huesosx2,filete de pescado deluxex1",crafting,filete de pescado deluxe,0hr3m20s
+"cuerox2,platax3,guantes cuerox1,gema manax2",guantes curanderox1,crafting,guantes curandero,0hr5m0s
+katanax1,"hierrox1,maderax2,tantox1,obsidianax1",crafting,katana descomponer,0hr1m0s
+cetro calaverax1,"maderax1,huesosx1,cetrox1,obsidianax1",crafting,cetro calavera descomponer,0hr0m5s
+"cuerox3,gema igneax7,huesosx2,amatistax2,nudillerax1,obsidianax2",guanteletes incendiadosx1,crafting,guanteletes incendiados,0hr25m0s
+"orox2,diamantex3,huesosx3,espada piedrax1,lagrima del cosmosx1",mazo reloj de arenax1,crafting,mazo reloj de arena,1hr0m0s
+"gema igneax1,gema gelidax1,gema truenox1,gema manax1",pocion arrojadiza espaciox1,"gema igneax1,
+gema truenox1,
+gema gelidax1,
+gema manax1",pocion arrojadiza espacio,0hr4m0s
+"gema igneax1,gema gelidax1,amatistax2",pocion arrojadiza huracanx1,crafting,pocion arrojadiza huracan,0hr4m0s
+"hierrox4,platax1,maderax2,chakramx1",chakram pesadox1,crafting,chakram pesado,0hr5m0s
+"platax4,maderax1,chakramx1",chakram imbuidox1,crafting,chakram imbuido,0hr5m0s
+gema igneax6,pocion arrojadiza incineradorax3,crafting,pocion arrojadiza incineradora,0hr2m0s
+"gema vidax3,hierbas curativasx3,flor cristalizadax1,bola de carne podridax3,corazon cristalizadox2",pocion escamas dragonx1,crafting,pocion escamas dragon,0hr1m0s
+"diamantex4,coraza runicax1,amatistax2,aquamarinax4",coraza canalizadorax1,crafting,coraza canalizadora,0hr28m0s
+"platax2,mineral embrujadox1,amatistax4,chakram imbuidox1,obsidianax4",chakram esmeraldax1,crafting,chakram esmeralda,0hr20m0s
+"platax2,gema manax2,holyx2,aquamarinax4,chakram dentadox1",chakram lunarx1,crafting,chakram lunar,0hr20m0s
+"orox3,gema manax4,amatistax1,aquamarinax3,chakram imbuidox1",chakram aumentadox1,crafting,chakram aumentado,0hr20m0s
+"gema gelidax2,pescadox4,conchas y coralx2",pocion arrojadiza bestia marinax4,crafting,pocion arrojadiza bestia marina,0hr2m0s
+"venenox1,bola de carne podridax4",pocion arrojadiza flema de arañax4,crafting,pocion arrojadiza flema de araña,0hr2m0s
+"carnex4,orox2,holyx1",pocion arrojadiza colmenax4,crafting,pocion arrojadiza colmena,0hr2m0s
+"gema igneax3,gema truenox3,slimex1",pocion arrojadiza bomba slimex3,crafting,pocion arrojadiza bomba slime,0hr2m0s
+bola de carne podridax2,pocion arrojadiza acidox1,crafting,pocion arrojadiza acido,0hr2m0s
+"gema vidax2,rosa etereax1",pocion arrojadiza caos carmesix2,crafting,pocion arrojadiza caos carmesi,0hr2m0s
+"platax1,orox1,holyx2",pocion arrojadiza divinax2,crafting,pocion arrojadiza divina,0hr4m0s
+"mineral embrujadox2,obsidianax2",pocion arrojadiza sombrasx2,crafting,pocion arrojadiza sombras,0hr4m0s
+gema gelidax4,pocion arrojadiza escarchax2,crafting,pocion arrojadiza escarcha,0hr2m0s
+"gema igneax1,gema truenox3",pocion arrojadiza chispazox2,crafting,pocion arrojadiza chispazo,0hr2m0s
+"gema manax2,obsidianax2",pocion arrojadiza explosion arcanax2,crafting,pocion arrojadiza explosion arcana,0hr4m0s
+"hierbas curativasx3,gema manax2",pocion arrojadiza raiz magicax2,crafting,pocion arrojadiza raiz magica,0hr2m0s
+"amatistax1,obsidianax3",pocion arrojadiza malditax2,crafting,pocion arrojadiza maldita,0hr4m0s
+"hierrox1,gema manax1",pocion arrojadiza muro instantaneox1,crafting,pocion arrojadiza muro instantaneo,0hr2m0s
+"bola de carne podridax2,obsidianax2",pocion arrojadiza noche instantaneax1,crafting,pocion arrojadiza noche instantanea,0hr15m0s
+"diamantex1,gema manax2",pocion arrojadiza tiempox1,crafting,pocion arrojadiza tiempo,0hr4m0s
+"carnex1,ajox1,hierbas curativasx1,tomatex1,obsidianax1",antidotox1,crafting,antidoto,0hr0m10s
+"manzanax1,maestria culinariax0,slimex2",manzana al slime con mielx1,crafting,manzana al slime con miel,0hr3m0s
+"lechex1,especiasx1,salx1,tomatex2,maestria culinariax0",sopa vampirica vegetarianax1,crafting,sopa vampirica vegetariana,0hr3m0s
+"carnex1,lechex1,champiñonx1,maestria culinariax0",especial de champiñonx1,crafting,especial de champiñon,0hr3m0s
+chisa katanax1,"hierrox2,orox1,maderax1,tantox1",crafting,chisa katana descomponer,0hr0m0s
+"carnex1,ajox1,salx1,papax1,maestria culinariax0",patata rellenax1,crafting,patata rellena,0hr3m0s
+"gema truenox1,polvorax4,esencia demoniacax1,mineral embrujadox2",black boxx1,crafting,black box,0hr1m0s
+cetro malignox1,"maderax2,cetro calaverax1,huesosx2,mineral embrujadox2,amatistax3",crafting,cetro maligno descomponer,0hr0m0s
+colgante carmesix1,"gema vidax1,mineral embrujadox3,amatistax3",crafting,colgante carmesi descomponer,0hr0m0s
+"onicex1,arco alto elfox1,amanita muscariax3,ebanox3,flor cristalizadax2",arco naturax1,crafting,arco natura,1hr0m0s
+"hierrox2,maderax1",espada cortax1,crafting,espada corta,0hr0m5s
+"platax2,maderax1",espada corta platax1,crafting,espada corta plata,0hr0m5s
+"hierrox5,gema vidax4,mithrilx1,coraza samuraix1,obsidianax4",coraza samurai legendariox1,crafting,coraza samurai legendario,1hr0m0s
+anillo grandeza lunarx1,"platax1,diamantex1,perlasx1,aquamarinax1",crafting,anillo grandeza lunar descomponer,0hr0m0s
+capucha del asesinox1,"cuerox7,casco tortugax1,obsidianax1",crafting,capucha del asesino descomponer,0hr1m0s
+"gema igneax999,gema gelidax999,gema truenox999,gema manax999",amatistax1,crafting,amatista,0hr0m0s
+obsidianax999,mineral embrujadox1,crafting,mineral embrujado,0hr0m30s
+"diamantex999,obsidianax999",holyx1,crafting,holy,0hr0m0s
+"gema manax4,amatistax3,aquamarinax5,cetro avanzadox1",cetro expertox1,crafting,cetro experto,0hr25m0s

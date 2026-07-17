@@ -6,6 +6,13 @@ import { applyTagReview } from './tagReview'
 
 let db: Database.Database | null = null
 
+function csvPath(filename: string): string {
+  if (app.isPackaged) {
+    return path.join(process.resourcesPath, 'csv', filename)
+  }
+  return path.join(app.getPath('home'), 'Downloads', filename)
+}
+
 export function getDatabase(): Database.Database {
   if (!db) {
     throw new Error('Database not initialized. Call initDatabase() first.')
@@ -280,13 +287,12 @@ function seedItemsAndRecipes(db: Database.Database): void {
 
   const fs = require('fs')
   const Papa = require('papaparse')
-  const downloads = path.join(app.getPath('home'), 'Downloads')
 
-  const itemsPath = path.join(downloads, 'items.csv')
-  const recipesPath = path.join(downloads, 'recipes.csv')
+  const itemsPath = csvPath('items.csv')
+  const recipesPath = csvPath('recipes.csv')
 
   if (!fs.existsSync(itemsPath) || !fs.existsSync(recipesPath)) {
-    console.log('CSV files not found in Downloads, skipping seed')
+    console.log('CSV files not found, skipping seed')
     return
   }
 
@@ -331,13 +337,12 @@ function recipeIngredientFix(db: Database.Database): void {
 
   const fs = require('fs')
   const Papa = require('papaparse')
-  const downloads = path.join(app.getPath('home'), 'Downloads')
 
-  const itemsPath = path.join(downloads, 'items.csv')
-  const recipesPath = path.join(downloads, 'recipes.csv')
+  const itemsPath = csvPath('items.csv')
+  const recipesPath = csvPath('recipes.csv')
 
   if (!fs.existsSync(itemsPath) || !fs.existsSync(recipesPath)) {
-    console.log('CSV files not found in Downloads, cannot fix recipes')
+    console.log('CSV files not found, cannot fix recipes')
     return
   }
 

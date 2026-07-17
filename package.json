@@ -21,6 +21,12 @@
     "directories": {
       "output": "release/installer"
     },
+    "extraResources": [
+      {
+        "from": "resources/csv",
+        "to": "csv"
+      }
+    ],
     "files": [
       "dist/**/*",
       "dist-electron/**/*",
