@@ -1,0 +1,1982 @@
+[
+  {
+    "id": 1,
+    "name": "daga oscura",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 8,
+    "name": "escudo cuero",
+    "attributes": "defensa+1d3"
+  },
+  {
+    "id": 9,
+    "name": "escudo tortuga",
+    "attributes": "defensa+1d6"
+  },
+  {
+    "id": 10,
+    "name": "espada larga",
+    "attributes": "ataque+1d6"
+  },
+  {
+    "id": 11,
+    "name": "espada larga plata",
+    "attributes": "ataque+1d6"
+  },
+  {
+    "id": 12,
+    "name": "guantes cuero",
+    "attributes": "armadura+3, nulimagia+2"
+  },
+  {
+    "id": 15,
+    "name": "daga",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 16,
+    "name": "daga de plata",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 18,
+    "name": "escudo madera",
+    "attributes": "defensa+2d2"
+  },
+  {
+    "id": 22,
+    "name": "martillo",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 23,
+    "name": "hacha",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 24,
+    "name": "hacha de mano",
+    "attributes": "ataque+1d6"
+  },
+  {
+    "id": 36,
+    "name": "hacha vikinga",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 39,
+    "name": "pistola",
+    "attributes": "ataque+1d4"
+  },
+  {
+    "id": 40,
+    "name": "cetro",
+    "attributes": "ataque_magico+1d4"
+  },
+  {
+    "id": 45,
+    "name": "escudo de piel",
+    "attributes": "defensa+1d4"
+  },
+  {
+    "id": 73,
+    "name": "botas rastrero",
+    "attributes": "armadura+3"
+  },
+  {
+    "id": 74,
+    "name": "colgante volcanico",
+    "attributes": "estamina+1"
+  },
+  {
+    "id": 76,
+    "name": "casco del guerrero",
+    "attributes": "armadura+6, nulimagia+6, estamina+3"
+  },
+  {
+    "id": 77,
+    "name": "coraza de hojas",
+    "attributes": "armadura+7+5, nulimagia+5"
+  },
+  {
+    "id": 78,
+    "name": "coraza del guerrero",
+    "attributes": "armadura+16, nulimagia+10, estamina+5, mana+-3"
+  },
+  {
+    "id": 81,
+    "name": "coraza sacrosanta",
+    "attributes": "armadura+23, nulimagia+16, mana+2, defensa+2"
+  },
+  {
+    "id": 82,
+    "name": "botas megacanalizadoras",
+    "attributes": "armadura+7, nulimagia+5, mana+2, estamina+1"
+  },
+  {
+    "id": 84,
+    "name": "lanza corta",
+    "attributes": "ataque+1d5"
+  },
+  {
+    "id": 85,
+    "name": "guantes canalizadores",
+    "attributes": "armadura+4, nulimagia+3, mana+2"
+  },
+  {
+    "id": 86,
+    "name": "casco hierro",
+    "attributes": "armadura+7, nulimagia+5, mana+-3"
+  },
+  {
+    "id": 87,
+    "name": "casco tortuga",
+    "attributes": "armadura+6, nulimagia+4"
+  },
+  {
+    "id": 88,
+    "name": "martillo de combate",
+    "attributes": "ataque+1d7"
+  },
+  {
+    "id": 89,
+    "name": "lanza oscura",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 92,
+    "name": "sombrero hechicero",
+    "attributes": "armadura+5, nulimagia+5, mana+4"
+  },
+  {
+    "id": 99,
+    "name": "coraza canalizadora",
+    "attributes": "armadura+18, nulimagia+18, mana+2"
+  },
+  {
+    "id": 101,
+    "name": "tunica archimagica",
+    "attributes": "armadura+19, nulimagia+19, mana+5, estamina+-7"
+  },
+  {
+    "id": 102,
+    "name": "tunica corrupta",
+    "attributes": "armadura+18, nulimagia+18, mana+3, estamina+-7, ataque_magico+4"
+  },
+  {
+    "id": 103,
+    "name": "guantes curandero",
+    "attributes": "armadura+3, nulimagia+2"
+  },
+  {
+    "id": 104,
+    "name": "guanteletes de hierro",
+    "attributes": "armadura+7, nulimagia+5, mana+-2"
+  },
+  {
+    "id": 105,
+    "name": "casco de caballero",
+    "attributes": "armadura+10, nulimagia+10, mana+-4"
+  },
+  {
+    "id": 106,
+    "name": "casco enano",
+    "attributes": "armadura+12, nulimagia+12, mana+-4, estamina+-1"
+  },
+  {
+    "id": 107,
+    "name": "casco absorbente",
+    "attributes": "armadura+7, nulimagia+6, mana+-2"
+  },
+  {
+    "id": 113,
+    "name": "espada angel",
+    "attributes": "ataque+1d9"
+  },
+  {
+    "id": 114,
+    "name": "pistola aumentada",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 115,
+    "name": "espada energizada",
+    "attributes": "ataque+1d6"
+  },
+  {
+    "id": 116,
+    "name": "espada llameante",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 117,
+    "name": "ballesta cazadora",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 118,
+    "name": "ballesta potenciada",
+    "attributes": "ataque+2d8"
+  },
+  {
+    "id": 119,
+    "name": "hacha rubi",
+    "attributes": "ataque+2d7+2"
+  },
+  {
+    "id": 120,
+    "name": "tanto",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 124,
+    "name": "espadon del caballero dragon",
+    "attributes": "ataque+2d10+2"
+  },
+  {
+    "id": 127,
+    "name": "botas canalizadoras",
+    "attributes": "armadura+5, nulimagia+3, mana+1"
+  },
+  {
+    "id": 129,
+    "name": "cetro avanzado",
+    "attributes": "ataque_magico+1d6, mana+1"
+  },
+  {
+    "id": 130,
+    "name": "cetro colibri cristalizado",
+    "attributes": "ataque_magico+1d10"
+  },
+  {
+    "id": 132,
+    "name": "dagas punzantes",
+    "attributes": "ataque+4d3"
+  },
+  {
+    "id": 133,
+    "name": "dagas de la naturaleza",
+    "attributes": "ataque+2d3"
+  },
+  {
+    "id": 134,
+    "name": "espada gelida",
+    "attributes": "ataque+1d7"
+  },
+  {
+    "id": 135,
+    "name": "espada invernal",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 140,
+    "name": "arco explosivo",
+    "attributes": "ataque+1d16+2"
+  },
+  {
+    "id": 149,
+    "name": "revolver de hueso",
+    "attributes": "ataque+1d13"
+  },
+  {
+    "id": 152,
+    "name": "bajo del dragon",
+    "attributes": "estamina+2"
+  },
+  {
+    "id": 155,
+    "name": "katana",
+    "attributes": "ataque+3d4"
+  },
+  {
+    "id": 157,
+    "name": "guanteletes bestiales",
+    "attributes": "ataque+2d8"
+  },
+  {
+    "id": 158,
+    "name": "botas hechicero",
+    "attributes": "armadura+6, nulimagia+6, mana+4, estamina+-3"
+  },
+  {
+    "id": 160,
+    "name": "katana armonica",
+    "attributes": "ataque+2d5+1d4"
+  },
+  {
+    "id": 161,
+    "name": "hacha del paraiso",
+    "attributes": "ataque+1d7+1d8+2"
+  },
+  {
+    "id": 162,
+    "name": "katana marea infinita",
+    "attributes": "ataque+1d9, estamina+-1"
+  },
+  {
+    "id": 163,
+    "name": "sombrero maligno",
+    "attributes": "armadura+4, nulimagia+4, mana+2, ataque_magico+1"
+  },
+  {
+    "id": 164,
+    "name": "hacha de magma",
+    "attributes": "ataque+1d12+1d13+2"
+  },
+  {
+    "id": 167,
+    "name": "la demoledora",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 173,
+    "name": "capucha del druida",
+    "attributes": "armadura+4, nulimagia+4"
+  },
+  {
+    "id": 174,
+    "name": "escudo espinas",
+    "attributes": "defensa+2d3"
+  },
+  {
+    "id": 175,
+    "name": "traje conchas",
+    "attributes": "armadura+12, nulimagia+4"
+  },
+  {
+    "id": 176,
+    "name": "ballesta fenix",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 179,
+    "name": "espadon dragon",
+    "attributes": "ataque+2d11"
+  },
+  {
+    "id": 180,
+    "name": "traje cuero ligero",
+    "attributes": "armadura+5"
+  },
+  {
+    "id": 181,
+    "name": "tunica",
+    "attributes": "armadura+4, nulimagia+2"
+  },
+  {
+    "id": 182,
+    "name": "tunica sacerdote",
+    "attributes": "armadura+11, nulimagia+11, mana+2"
+  },
+  {
+    "id": 183,
+    "name": "tunica del arzobispo",
+    "attributes": "armadura+18, mana+4"
+  },
+  {
+    "id": 184,
+    "name": "escudo pesado",
+    "attributes": "defensa+2d8"
+  },
+  {
+    "id": 185,
+    "name": "arco pesado gelido",
+    "attributes": "ataque+3d5+3"
+  },
+  {
+    "id": 186,
+    "name": "lanza de combate",
+    "attributes": "ataque+2d6+2"
+  },
+  {
+    "id": 187,
+    "name": "hacha de fundicion",
+    "attributes": "ataque+1d6+1d7+2"
+  },
+  {
+    "id": 188,
+    "name": "espadon gelido",
+    "attributes": "ataque+1d8+1d7+2"
+  },
+  {
+    "id": 189,
+    "name": "mazo demoniaco",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 190,
+    "name": "espada doble invierno",
+    "attributes": "ataque+2d6+2, defensa+1d7"
+  },
+  {
+    "id": 192,
+    "name": "espadon cristal",
+    "attributes": "ataque+2d8+2"
+  },
+  {
+    "id": 193,
+    "name": "hacha de cristal",
+    "attributes": "ataque+1d7+1d8+2"
+  },
+  {
+    "id": 194,
+    "name": "arco oscuro",
+    "attributes": "ataque+2d8+3"
+  },
+  {
+    "id": 195,
+    "name": "arco elfico",
+    "attributes": "ataque+2d5+2"
+  },
+  {
+    "id": 196,
+    "name": "cetro rayo",
+    "attributes": "ataque_magico+1d8, mana+2"
+  },
+  {
+    "id": 197,
+    "name": "arco igneo",
+    "attributes": "ataque+2d6+2"
+  },
+  {
+    "id": 198,
+    "name": "hacha de guerra",
+    "attributes": "ataque+1d6+1d7+2"
+  },
+  {
+    "id": 199,
+    "name": "hacha del cosmos",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 201,
+    "name": "anillo hueso",
+    "attributes": "vida+2, estamina+2"
+  },
+  {
+    "id": 202,
+    "name": "anillo oro",
+    "attributes": "vida+3"
+  },
+  {
+    "id": 203,
+    "name": "anillo runico",
+    "attributes": "mana+2"
+  },
+  {
+    "id": 225,
+    "name": "chakram imbuido",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 226,
+    "name": "chakram lunar",
+    "attributes": "ataque+1d9"
+  },
+  {
+    "id": 227,
+    "name": "chakram pesado",
+    "attributes": "ataque+1d11+2"
+  },
+  {
+    "id": 228,
+    "name": "chakram esmeralda",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 229,
+    "name": "chakram oscuro",
+    "attributes": "ataque+1d7"
+  },
+  {
+    "id": 230,
+    "name": "chakram aumentado",
+    "attributes": "ataque+1d9"
+  },
+  {
+    "id": 231,
+    "name": "chakram hielo",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 232,
+    "name": "chakram arcano",
+    "attributes": "ataque+2d5"
+  },
+  {
+    "id": 236,
+    "name": "cetro floreciente",
+    "attributes": "ataque_magico+1d4, mana+12"
+  },
+  {
+    "id": 237,
+    "name": "cetro hoja dorada",
+    "attributes": "ataque_magico+1d4, mana+5"
+  },
+  {
+    "id": 240,
+    "name": "estaca",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 241,
+    "name": "cetro dragon",
+    "attributes": "ataque_magico+1d12"
+  },
+  {
+    "id": 243,
+    "name": "cetro experto",
+    "attributes": "ataque_magico+1d8, mana+3"
+  },
+  {
+    "id": 246,
+    "name": "cetro natural",
+    "attributes": "ataque_magico+1d2, mana+4"
+  },
+  {
+    "id": 247,
+    "name": "cetro fenix",
+    "attributes": "ataque_magico+1d10"
+  },
+  {
+    "id": 248,
+    "name": "cetro maestro",
+    "attributes": "ataque_magico+1d10, mana+4"
+  },
+  {
+    "id": 249,
+    "name": "cetro maligno",
+    "attributes": "ataque_magico+1d8"
+  },
+  {
+    "id": 250,
+    "name": "chakram",
+    "attributes": "ataque+1d5"
+  },
+  {
+    "id": 251,
+    "name": "espadon archidemoniaco",
+    "attributes": "ataque+1d7+1d6+2"
+  },
+  {
+    "id": 252,
+    "name": "chakram dentado",
+    "attributes": "ataque+1d5"
+  },
+  {
+    "id": 253,
+    "name": "chakram crescendum",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 254,
+    "name": "cetro marino",
+    "attributes": "ataque_magico+1d8"
+  },
+  {
+    "id": 258,
+    "name": "espada oscura",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 260,
+    "name": "cetro oscuro",
+    "attributes": "ataque_magico+1d13"
+  },
+  {
+    "id": 262,
+    "name": "mandoble",
+    "attributes": "ataque+2d6+2"
+  },
+  {
+    "id": 264,
+    "name": "espada sangrante",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 265,
+    "name": "espada sombria",
+    "attributes": "ataque+1d9"
+  },
+  {
+    "id": 266,
+    "name": "espada tiburon",
+    "attributes": "ataque+1d9"
+  },
+  {
+    "id": 268,
+    "name": "manto matriarca del bosque",
+    "attributes": "vida+4+0, mana+2"
+  },
+  {
+    "id": 273,
+    "name": "cinturon blanco",
+    "attributes": "ataque+2d3+2"
+  },
+  {
+    "id": 274,
+    "name": "espadon demoniaco",
+    "attributes": "ataque+2d6+2"
+  },
+  {
+    "id": 275,
+    "name": "espadon cristal demoniaco",
+    "attributes": "ataque+1d10+1d9+2"
+  },
+  {
+    "id": 276,
+    "name": "espadon del cielo",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 279,
+    "name": "mazo berserker",
+    "attributes": "ataque+2d7"
+  },
+  {
+    "id": 280,
+    "name": "espadon sagrado",
+    "attributes": "ataque+2d8+2"
+  },
+  {
+    "id": 281,
+    "name": "mazo carbonizado",
+    "attributes": "ataque+1d10+1d9+2"
+  },
+  {
+    "id": 283,
+    "name": "espadon eclipse",
+    "attributes": "ataque+2d8+3"
+  },
+  {
+    "id": 284,
+    "name": "mazo de almas",
+    "attributes": "ataque+1d7"
+  },
+  {
+    "id": 285,
+    "name": "mazo de la vida",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 286,
+    "name": "mazo sagrado",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 287,
+    "name": "chakram destello",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 289,
+    "name": "estoque celestial",
+    "attributes": "ataque+6d1"
+  },
+  {
+    "id": 290,
+    "name": "mazo de ebano",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 291,
+    "name": "mazo de fundicion",
+    "attributes": "ataque+1d7+1d8+2"
+  },
+  {
+    "id": 292,
+    "name": "mazo oscuro",
+    "attributes": "ataque+1d7+1d8+2"
+  },
+  {
+    "id": 293,
+    "name": "mazo del bosque",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 294,
+    "name": "estrella del invierno",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 296,
+    "name": "mazo del reino de las sombras",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 297,
+    "name": "chisa katana",
+    "attributes": "ataque+1d6"
+  },
+  {
+    "id": 303,
+    "name": "mazo obsidiana",
+    "attributes": "ataque+2d8+2"
+  },
+  {
+    "id": 306,
+    "name": "claymore",
+    "attributes": "ataque+2d6+2"
+  },
+  {
+    "id": 309,
+    "name": "nudillera",
+    "attributes": "ataque+2d6"
+  },
+  {
+    "id": 312,
+    "name": "mosquete",
+    "attributes": "ataque+2d8"
+  },
+  {
+    "id": 315,
+    "name": "colgante carmesi",
+    "attributes": "mana+2"
+  },
+  {
+    "id": 319,
+    "name": "colgante de fe",
+    "attributes": "mana+1"
+  },
+  {
+    "id": 320,
+    "name": "colgante de huesos",
+    "attributes": "vida+2, estamina+3"
+  },
+  {
+    "id": 326,
+    "name": "colgante gelido",
+    "attributes": "defensa+1"
+  },
+  {
+    "id": 328,
+    "name": "colgante luz sagrada",
+    "attributes": "mana+2"
+  },
+  {
+    "id": 330,
+    "name": "colgante natura",
+    "attributes": "mana+2"
+  },
+  {
+    "id": 332,
+    "name": "colgante santo",
+    "attributes": "mana+3"
+  },
+  {
+    "id": 334,
+    "name": "colgante hechicero",
+    "attributes": "mana+4, ataque_magico+1"
+  },
+  {
+    "id": 335,
+    "name": "coraza absorbente",
+    "attributes": "armadura+17, nulimagia+12, mana+-4"
+  },
+  {
+    "id": 336,
+    "name": "piel de obsidiana",
+    "attributes": "armadura+22, nulimagia+16, mana+-6, estamina+-1"
+  },
+  {
+    "id": 337,
+    "name": "coraza de hierro",
+    "attributes": "armadura+14, nulimagia+2, mana+-3"
+  },
+  {
+    "id": 339,
+    "name": "coraza celestial",
+    "attributes": "armadura+22, nulimagia+18"
+  },
+  {
+    "id": 340,
+    "name": "coraza de diamante",
+    "attributes": "armadura+32, nulimagia+26, mana+-7"
+  },
+  {
+    "id": 341,
+    "name": "coraza de ebano",
+    "attributes": "armadura+16, nulimagia+22, mana+-10, estamina+-1"
+  },
+  {
+    "id": 343,
+    "name": "pistola aumentada++",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 350,
+    "name": "coraza tortuga",
+    "attributes": "armadura+40, nulimagia+30, estamina+-12, mana+-20"
+  },
+  {
+    "id": 352,
+    "name": "coraza de obsidiana",
+    "attributes": "armadura+12, nulimagia+16, mana+-6, defensa+2"
+  },
+  {
+    "id": 353,
+    "name": "coraza del bosque",
+    "attributes": "armadura+12+5, nulimagia+6+10"
+  },
+  {
+    "id": 355,
+    "name": "coraza sagrada",
+    "attributes": "armadura+15, nulimagia+13, mana+1, defensa+1"
+  },
+  {
+    "id": 356,
+    "name": "coraza de picaro",
+    "attributes": "armadura+13, nulimagia+10"
+  },
+  {
+    "id": 357,
+    "name": "coraza de huesos",
+    "attributes": "armadura+21, nulimagia+16, estamina+8, mana+-7"
+  },
+  {
+    "id": 358,
+    "name": "coraza mithril",
+    "attributes": "armadura+25, nulimagia+18, mana+-8"
+  },
+  {
+    "id": 359,
+    "name": "coraza dorada",
+    "attributes": "armadura+22, nulimagia+16, mana+-6"
+  },
+  {
+    "id": 360,
+    "name": "coraza floreciente",
+    "attributes": "armadura+15+6, nulimagia+10+10"
+  },
+  {
+    "id": 361,
+    "name": "coraza runica",
+    "attributes": "armadura+13, nulimagia+10"
+  },
+  {
+    "id": 362,
+    "name": "coraza sombria",
+    "attributes": "armadura+20, nulimagia+14"
+  },
+  {
+    "id": 365,
+    "name": "botas hierro",
+    "attributes": "armadura+7, nulimagia+5, mana+-2"
+  },
+  {
+    "id": 366,
+    "name": "corona de hermos",
+    "attributes": "armadura+10, estamina+2"
+  },
+  {
+    "id": 369,
+    "name": "daga argentea",
+    "attributes": "ataque+1d4"
+  },
+  {
+    "id": 370,
+    "name": "daga carmesi",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 371,
+    "name": "daga cristalizada",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 373,
+    "name": "daga maldita",
+    "attributes": "ataque+1d5"
+  },
+  {
+    "id": 374,
+    "name": "daga necrotica",
+    "attributes": "ataque+1d4"
+  },
+  {
+    "id": 375,
+    "name": "daga nocturna",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 376,
+    "name": "daga ruin",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 378,
+    "name": "daga sangrienta",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 379,
+    "name": "dagas letales",
+    "attributes": "ataque+4d4"
+  },
+  {
+    "id": 383,
+    "name": "escudo escamas dragon",
+    "attributes": "defensa+1d6+2d4"
+  },
+  {
+    "id": 385,
+    "name": "escudo magico",
+    "attributes": "defensa+1d6, mana+2"
+  },
+  {
+    "id": 386,
+    "name": "escudo hierro",
+    "attributes": "defensa+1d7"
+  },
+  {
+    "id": 388,
+    "name": "escudo antimagia",
+    "attributes": "defensa+1d10"
+  },
+  {
+    "id": 389,
+    "name": "escudo marino",
+    "attributes": "defensa+1d7"
+  },
+  {
+    "id": 390,
+    "name": "escudo templario",
+    "attributes": "defensa+2d4"
+  },
+  {
+    "id": 391,
+    "name": "escudo plata",
+    "attributes": "defensa+1d8"
+  },
+  {
+    "id": 393,
+    "name": "escudo aumentado",
+    "attributes": "defensa+1d7, mana+1"
+  },
+  {
+    "id": 394,
+    "name": "espada cadena de lava",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 395,
+    "name": "espada del yggdrasil",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 397,
+    "name": "espada luz",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 400,
+    "name": "traje cazador demonio",
+    "attributes": "armadura+36, mana+10, estamina+-2"
+  },
+  {
+    "id": 401,
+    "name": "espada megalodon",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 402,
+    "name": "traje del cazador nocturno",
+    "attributes": "armadura+32, mana+8"
+  },
+  {
+    "id": 405,
+    "name": "tunica aprendiz",
+    "attributes": "armadura+8, nulimagia+6, mana+2"
+  },
+  {
+    "id": 406,
+    "name": "escudo obsidiana",
+    "attributes": "defensa+1d8"
+  },
+  {
+    "id": 408,
+    "name": "tunica del devorador",
+    "attributes": "armadura+19, mana+2"
+  },
+  {
+    "id": 409,
+    "name": "tunica mago",
+    "attributes": "armadura+14, nulimagia+14, mana+5"
+  },
+  {
+    "id": 413,
+    "name": "espada endless",
+    "attributes": "ataque+1d7"
+  },
+  {
+    "id": 414,
+    "name": "vestido acorazado reforzado",
+    "attributes": "armadura+22, nulimagia+16, mana+-2, estamina+-1"
+  },
+  {
+    "id": 415,
+    "name": "traje del devorador",
+    "attributes": "armadura+26"
+  },
+  {
+    "id": 416,
+    "name": "ballesta arcana",
+    "attributes": "ataque_magico+1d10"
+  },
+  {
+    "id": 419,
+    "name": "vestido acorazado",
+    "attributes": "armadura+16, nulimagia+10, mana+-1"
+  },
+  {
+    "id": 423,
+    "name": "armadura lider dorada",
+    "attributes": "armadura+48, mana+7"
+  },
+  {
+    "id": 424,
+    "name": "ballesta de cristal",
+    "attributes": "ataque_magico+1d8"
+  },
+  {
+    "id": 425,
+    "name": "ballesta de mano",
+    "attributes": "ataque+1d4"
+  },
+  {
+    "id": 426,
+    "name": "ballesta doble",
+    "attributes": "ataque+2d4"
+  },
+  {
+    "id": 427,
+    "name": "ballesta dragon",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 428,
+    "name": "ballesta enana",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 429,
+    "name": "baston del bufon",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 431,
+    "name": "boca del dragon",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 432,
+    "name": "Azote de Mundos: Version Cetro",
+    "attributes": "ataque_magico+1d10"
+  },
+  {
+    "id": 433,
+    "name": "Cetro archimago oscuro",
+    "attributes": "ataque_magico+1d12, mana+1"
+  },
+  {
+    "id": 436,
+    "name": "Cetro archimago",
+    "attributes": "ataque_magico+1d10, mana+4"
+  },
+  {
+    "id": 437,
+    "name": "Dagas del Rey",
+    "attributes": "ataque+1"
+  },
+  {
+    "id": 443,
+    "name": "guanteletes de sanacion",
+    "attributes": "armadura+4, nulimagia+4"
+  },
+  {
+    "id": 444,
+    "name": "anillo de la valkiria",
+    "attributes": "estamina+1, mana+2"
+  },
+  {
+    "id": 448,
+    "name": "anillo mana",
+    "attributes": "mana+5"
+  },
+  {
+    "id": 449,
+    "name": "anillo ouroboros",
+    "attributes": "mana+1, estamina+1"
+  },
+  {
+    "id": 453,
+    "name": "anillo de la vida",
+    "attributes": "vida+10"
+  },
+  {
+    "id": 454,
+    "name": "arco largo",
+    "attributes": "ataque+2d5+3"
+  },
+  {
+    "id": 455,
+    "name": "arco corto",
+    "attributes": "ataque+1d5+2"
+  },
+  {
+    "id": 456,
+    "name": "arco vikingo",
+    "attributes": "ataque+2d8+2"
+  },
+  {
+    "id": 458,
+    "name": "arco trishot",
+    "attributes": "ataque+3d6"
+  },
+  {
+    "id": 459,
+    "name": "arco dark hole",
+    "attributes": "ataque+2d17+1"
+  },
+  {
+    "id": 460,
+    "name": "arco alto elfo",
+    "attributes": "ataque+1d8+1d7+2"
+  },
+  {
+    "id": 461,
+    "name": "arco belial",
+    "attributes": "ataque+2d8+2"
+  },
+  {
+    "id": 462,
+    "name": "hacha angelical",
+    "attributes": "ataque+1d6+1d7+2"
+  },
+  {
+    "id": 463,
+    "name": "lanza oscura sobrecargada",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 464,
+    "name": "hacha calabaza liberada",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 465,
+    "name": "hacha maligna",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 466,
+    "name": "hacha dios del trueno",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 468,
+    "name": "hacha holy",
+    "attributes": "ataque+1d6+1d7+2"
+  },
+  {
+    "id": 469,
+    "name": "hacha rubi perfecta",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 471,
+    "name": "katana relampago",
+    "attributes": "ataque+1d7+1d3"
+  },
+  {
+    "id": 473,
+    "name": "lanza holy",
+    "attributes": "ataque+2d7+2"
+  },
+  {
+    "id": 482,
+    "name": "lanza sangrienta despertada",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 484,
+    "name": "revolver",
+    "attributes": "ataque+1d6"
+  },
+  {
+    "id": 496,
+    "name": "revolver cazador",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 497,
+    "name": "revolver de gran calibre",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 498,
+    "name": "revolver maldito",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 501,
+    "name": "sombrero magico",
+    "attributes": "armadura+3, nulimagia+2, mana+2"
+  },
+  {
+    "id": 502,
+    "name": "sombrero sacerdote",
+    "attributes": "armadura+6, nulimagia+6"
+  },
+  {
+    "id": 504,
+    "name": "rifle de alta precision",
+    "attributes": "ataque+2d20"
+  },
+  {
+    "id": 505,
+    "name": "rifle",
+    "attributes": "ataque+2d11"
+  },
+  {
+    "id": 513,
+    "name": "guanteletes coral",
+    "attributes": "armadura+6, nulimagia+5"
+  },
+  {
+    "id": 517,
+    "name": "botas cuero",
+    "attributes": "armadura+3"
+  },
+  {
+    "id": 519,
+    "name": "guadaña del bufon",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 521,
+    "name": "guanteletes arcanos",
+    "attributes": "armadura+6, nulimagia+6, mana+2"
+  },
+  {
+    "id": 522,
+    "name": "guanteletes obsidiana",
+    "attributes": "armadura+8, nulimagia+8, mana+-4, defensa+1"
+  },
+  {
+    "id": 523,
+    "name": "guantes del guerrero",
+    "attributes": "armadura+6, nulimagia+4, estamina+2"
+  },
+  {
+    "id": 524,
+    "name": "guanteletes de fundicion",
+    "attributes": "ataque+4d4, armadura+3"
+  },
+  {
+    "id": 525,
+    "name": "guanteletes incendiados",
+    "attributes": "ataque+2d5+1d4"
+  },
+  {
+    "id": 528,
+    "name": "botas de entrenamiento",
+    "attributes": "armadura+4, nulimagia+2, mana+-2"
+  },
+  {
+    "id": 529,
+    "name": "botas elficas",
+    "attributes": "armadura+3+2, nulimagia+3"
+  },
+  {
+    "id": 530,
+    "name": "botas obsidiana",
+    "attributes": "armadura+10, nulimagia+7, mana+-4, defensa+1"
+  },
+  {
+    "id": 531,
+    "name": "botas protectoras",
+    "attributes": "armadura+8, nulimagia+6, mana-3, estamina-1, ataque+2"
+  },
+  {
+    "id": 532,
+    "name": "botas sagradas",
+    "attributes": "armadura+6, nulimagia+5"
+  },
+  {
+    "id": 535,
+    "name": "casco runico",
+    "attributes": "armadura+6, nulimagia+6, mana+1, estamina+1"
+  },
+  {
+    "id": 537,
+    "name": "capucha del asesino",
+    "attributes": "armadura+5, nulimagia+5"
+  },
+  {
+    "id": 539,
+    "name": "casco cuero",
+    "attributes": "armadura+3, nulimagia+1"
+  },
+  {
+    "id": 540,
+    "name": "casco dragon",
+    "attributes": "armadura+14, mana+2, estamina+1"
+  },
+  {
+    "id": 541,
+    "name": "casco valkiria",
+    "attributes": "armadura+8, nulimagia+8, defensa+1"
+  },
+  {
+    "id": 543,
+    "name": "cetro de agua fluyente",
+    "attributes": "ataque_magico+1d10"
+  },
+  {
+    "id": 545,
+    "name": "pistola rapida",
+    "attributes": "ataque+1d6"
+  },
+  {
+    "id": 546,
+    "name": "pistola ramus",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 547,
+    "name": "hacha leñador",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 549,
+    "name": "colgante de oro",
+    "attributes": "vida+6"
+  },
+  {
+    "id": 553,
+    "name": "cinturon negro",
+    "attributes": "ataque+3d4"
+  },
+  {
+    "id": 556,
+    "name": "hacha calabaza",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 559,
+    "name": "cetro del bosque",
+    "attributes": "ataque_magico+1d3, mana+7"
+  },
+  {
+    "id": 563,
+    "name": "katana filo acuatico",
+    "attributes": "ataque+1d7, estamina+-1"
+  },
+  {
+    "id": 564,
+    "name": "ballesta ejecutora",
+    "attributes": "ataque+1d9"
+  },
+  {
+    "id": 565,
+    "name": "espada dragon",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 566,
+    "name": "arco sagrado",
+    "attributes": "ataque+5d4"
+  },
+  {
+    "id": 567,
+    "name": "arco natura",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 568,
+    "name": "chakram pesado oscuro",
+    "attributes": "ataque+2d8"
+  },
+  {
+    "id": 577,
+    "name": "katana resplandor blanco",
+    "attributes": "ataque+1d7+1d5"
+  },
+  {
+    "id": 578,
+    "name": "armadura dragon",
+    "attributes": "armadura+55"
+  },
+  {
+    "id": 579,
+    "name": "Mjolnir",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 580,
+    "name": "armadura perfecta de hojas",
+    "attributes": "armadura+45, nulimagia+43, mana+5"
+  },
+  {
+    "id": 581,
+    "name": "armadura de la torre",
+    "attributes": "armadura+60, estamina+-5, mana+-10"
+  },
+  {
+    "id": 582,
+    "name": "corona de critias",
+    "attributes": "armadura+10, estamina+1, mana+2"
+  },
+  {
+    "id": 583,
+    "name": "chakram valkiria",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 584,
+    "name": "corona carmesi",
+    "attributes": "armadura+6, nulimagia+4"
+  },
+  {
+    "id": 586,
+    "name": "cetro solar",
+    "attributes": "mana+1"
+  },
+  {
+    "id": 587,
+    "name": "lanza sangrienta",
+    "attributes": "ataque+1d7"
+  },
+  {
+    "id": 594,
+    "name": "corona de timaeus",
+    "attributes": "armadura+10, mana+4"
+  },
+  {
+    "id": 595,
+    "name": "chakram electrico",
+    "attributes": "ataque+1d10"
+  },
+  {
+    "id": 596,
+    "name": "lanza del necromancer",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 597,
+    "name": "Corazon de Vlad",
+    "attributes": "vida+5"
+  },
+  {
+    "id": 598,
+    "name": "cetro lunar",
+    "attributes": "ataque_magico+1d9, mana+2"
+  },
+  {
+    "id": 599,
+    "name": "arcoescudo",
+    "attributes": "ataque+2d7+2, defensa+1d14"
+  },
+  {
+    "id": 600,
+    "name": "katana ardiente",
+    "attributes": "ataque+2d5+1d4"
+  },
+  {
+    "id": 603,
+    "name": "estoque lujurioso",
+    "attributes": "ataque+6d1"
+  },
+  {
+    "id": 606,
+    "name": "botas tiburon",
+    "attributes": "armadura+5"
+  },
+  {
+    "id": 608,
+    "name": "cetro de hermes",
+    "attributes": "ataque+1"
+  },
+  {
+    "id": 614,
+    "name": "escudo dark hole",
+    "attributes": "defensa+1d7"
+  },
+  {
+    "id": 616,
+    "name": "capucha elemental oscura",
+    "attributes": "armadura+7, mana+3"
+  },
+  {
+    "id": 620,
+    "name": "daga del fin",
+    "attributes": "ataque+1d4"
+  },
+  {
+    "id": 623,
+    "name": "hacha demoniaca",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 625,
+    "name": "revolver oscuro",
+    "attributes": "ataque+1d13"
+  },
+  {
+    "id": 632,
+    "name": "ballesta maldita",
+    "attributes": "ataque+1d13"
+  },
+  {
+    "id": 636,
+    "name": "lanza angelical",
+    "attributes": "ataque+2d8+2"
+  },
+  {
+    "id": 638,
+    "name": "cinturon torrencial",
+    "attributes": "ataque+3d6+2"
+  },
+  {
+    "id": 639,
+    "name": "Katana de sangre",
+    "attributes": "ataque+3d5+3"
+  },
+  {
+    "id": 640,
+    "name": "guanteletes de combate",
+    "attributes": "ataque+3d4+2"
+  },
+  {
+    "id": 641,
+    "name": "katana fuego del sur",
+    "attributes": "ataque+2d5+1d4+2"
+  },
+  {
+    "id": 644,
+    "name": "mascara del ciclo",
+    "attributes": "armadura+4, nulimagia+4, mana+2"
+  },
+  {
+    "id": 648,
+    "name": "escudo corazon de puas",
+    "attributes": "defensa+1d5+1d4"
+  },
+  {
+    "id": 652,
+    "name": "tunica runica",
+    "attributes": "armadura+18, nulimagia+20, mana+5, estamina+-6, ataque_magico+2"
+  },
+  {
+    "id": 653,
+    "name": "cetro sangriento",
+    "attributes": "ataque_magico+1d9"
+  },
+  {
+    "id": 654,
+    "name": "espada nigromante",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 664,
+    "name": "coraza insecto sangriento",
+    "attributes": "armadura+0, estamina+1"
+  },
+  {
+    "id": 666,
+    "name": "Guantes de Fenrir",
+    "attributes": "ataque+3d6"
+  },
+  {
+    "id": 670,
+    "name": "Guantes de excavacion",
+    "attributes": "ataque+2d7"
+  },
+  {
+    "id": 672,
+    "name": "cinturon dragon",
+    "attributes": "ataque+2d9+1"
+  },
+  {
+    "id": 674,
+    "name": "oscuridad alternante",
+    "attributes": "ataque+1d22, defensa+1d8+1d5"
+  },
+  {
+    "id": 680,
+    "name": "hacha fundida",
+    "attributes": "ataque+2d8+2"
+  },
+  {
+    "id": 681,
+    "name": "Azote de Mundos",
+    "attributes": "ataque+2d10"
+  },
+  {
+    "id": 682,
+    "name": "rifle arcano",
+    "attributes": "ataque_magico+2d10+2"
+  },
+  {
+    "id": 685,
+    "name": "coraza canalizadora desatada",
+    "attributes": "armadura+26, nulimagia+24, mana+2, estamina+-4"
+  },
+  {
+    "id": 686,
+    "name": "mazo reloj de arena",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 687,
+    "name": "espada piedra",
+    "attributes": "ataque+1d8"
+  },
+  {
+    "id": 690,
+    "name": "Justicia de los Cielos",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 698,
+    "name": "katana lunar",
+    "attributes": "ataque_magico+2d5+1d4+2"
+  },
+  {
+    "id": 700,
+    "name": "katana viento del norte",
+    "attributes": "ataque+3d5+2"
+  },
+  {
+    "id": 702,
+    "name": "escudo impenetrable",
+    "attributes": "defensa+3d6"
+  },
+  {
+    "id": 703,
+    "name": "escudo lobo corrupto",
+    "attributes": "defensa+2d6+1d4"
+  },
+  {
+    "id": 704,
+    "name": "guantes filo bestial",
+    "attributes": "armadura+4, nulimagia+2"
+  },
+  {
+    "id": 705,
+    "name": "katana solar",
+    "attributes": "ataque+2d5+1d4+2"
+  },
+  {
+    "id": 706,
+    "name": "escudo guardian de la torre",
+    "attributes": "defensa+2d6+1d4"
+  },
+  {
+    "id": 707,
+    "name": "espada cero absoluto",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 708,
+    "name": "espadon invierno eterno",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 709,
+    "name": "guanteletes toxicos",
+    "attributes": "ataque+2d6+1d4"
+  },
+  {
+    "id": 710,
+    "name": "guantes de huesos",
+    "attributes": "ataque+3d6"
+  },
+  {
+    "id": 711,
+    "name": "vendas de combate",
+    "attributes": "ataque+2d9"
+  },
+  {
+    "id": 712,
+    "name": "Corazon del Necromancer",
+    "attributes": "vida+-5, ataque+2"
+  },
+  {
+    "id": 715,
+    "name": "guantes ladronzuelo",
+    "attributes": "armadura+1, nulimagia+1"
+  },
+  {
+    "id": 716,
+    "name": "chakram divino",
+    "attributes": "ataque+2d9+2"
+  },
+  {
+    "id": 717,
+    "name": "escudo templario iluminado",
+    "attributes": "defensa+1d5+1d6"
+  },
+  {
+    "id": 733,
+    "name": "Corazon del Bosque",
+    "attributes": "vida+20"
+  },
+  {
+    "id": 734,
+    "name": "daga de mana",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 735,
+    "name": "daga del erudito",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 736,
+    "name": "daga imbuida",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 737,
+    "name": "chakram volcanico",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 738,
+    "name": "escudo dragon dorado",
+    "attributes": "defensa+1d11"
+  },
+  {
+    "id": 739,
+    "name": "escudo reflectante",
+    "attributes": "defensa+1d11"
+  },
+  {
+    "id": 740,
+    "name": "escudo espartano",
+    "attributes": "defensa+1d6"
+  },
+  {
+    "id": 741,
+    "name": "escudo conchas",
+    "attributes": "defensa+1d6"
+  },
+  {
+    "id": 742,
+    "name": "escudo templario profanado",
+    "attributes": "defensa+1d10, ataque+2"
+  },
+  {
+    "id": 743,
+    "name": "escudo diamante",
+    "attributes": "defensa+2d4+1d3"
+  },
+  {
+    "id": 744,
+    "name": "escudo archimagico",
+    "attributes": "defensa+1d11, mana+2"
+  },
+  {
+    "id": 745,
+    "name": "escudo demoniaco",
+    "attributes": "defensa+1d5+1d6"
+  },
+  {
+    "id": 746,
+    "name": "escudo maligno",
+    "attributes": "defensa+1d10"
+  },
+  {
+    "id": 747,
+    "name": "escudo del devorador",
+    "attributes": "defensa+1d6+1d5"
+  },
+  {
+    "id": 748,
+    "name": "escudo del valhalla",
+    "attributes": "defensa+1d6+1d5"
+  },
+  {
+    "id": 760,
+    "name": "mazo de la creacion",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 772,
+    "name": "hacha tormenta",
+    "attributes": "ataque+2d10"
+  },
+  {
+    "id": 796,
+    "name": "maza",
+    "attributes": "ataque+1d5+1d4"
+  },
+  {
+    "id": 798,
+    "name": "nunchuks",
+    "attributes": "ataque+2d9"
+  },
+  {
+    "id": 799,
+    "name": "sombrero de paja",
+    "attributes": "armadura+3"
+  },
+  {
+    "id": 800,
+    "name": "corona de hojas",
+    "attributes": "mana+2"
+  },
+  {
+    "id": 801,
+    "name": "botafumeiro",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 803,
+    "name": "caña de pesca",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 804,
+    "name": "cerbatana",
+    "attributes": "ataque+1"
+  },
+  {
+    "id": 805,
+    "name": "cimitarra",
+    "attributes": "ataque+1d4"
+  },
+  {
+    "id": 809,
+    "name": "pico",
+    "attributes": "ataque+1d2"
+  },
+  {
+    "id": 812,
+    "name": "cetro calavera",
+    "attributes": "ataque_magico+1d6"
+  },
+  {
+    "id": 824,
+    "name": "gran escudo de hierro",
+    "attributes": "defensa+1d15"
+  },
+  {
+    "id": 830,
+    "name": "encantamiento vida",
+    "attributes": "vida+4"
+  },
+  {
+    "id": 831,
+    "name": "flauta",
+    "attributes": "estamina+2"
+  },
+  {
+    "id": 834,
+    "name": "acordeon",
+    "attributes": "estamina+2"
+  },
+  {
+    "id": 835,
+    "name": "tambor de guerra",
+    "attributes": "estamina+2"
+  },
+  {
+    "id": 839,
+    "name": "laud",
+    "attributes": "estamina+2"
+  },
+  {
+    "id": 840,
+    "name": "z guante arcano",
+    "attributes": "armadura+3"
+  },
+  {
+    "id": 844,
+    "name": "daga esmeralda",
+    "attributes": "ataque+1d3"
+  },
+  {
+    "id": 852,
+    "name": "tunica culto",
+    "attributes": "armadura+12, nulimagia+12, mana+2, ataque_magico+2"
+  },
+  {
+    "id": 854,
+    "name": "casco de huesos",
+    "attributes": "armadura+12, defensa+1d2, estamina+1"
+  },
+  {
+    "id": 856,
+    "name": "alma corrupta",
+    "attributes": "estamina+1"
+  },
+  {
+    "id": 858,
+    "name": "coraza espinosa",
+    "attributes": "armadura+22, mana+-1, estamina+-1"
+  },
+  {
+    "id": 872,
+    "name": "escudo podrido",
+    "attributes": "defensa+1d4+1d3"
+  },
+  {
+    "id": 874,
+    "name": "guantes hechicero",
+    "attributes": "armadura+4, nulimagia+4, mana+1, ataque_magico+1"
+  },
+  {
+    "id": 876,
+    "name": "chakram antiguo",
+    "attributes": "ataque+2d9+3"
+  },
+  {
+    "id": 877,
+    "name": "ballesta volcanica",
+    "attributes": "ataque+1d11"
+  },
+  {
+    "id": 878,
+    "name": "ballesta de la humildad",
+    "attributes": "ataque+1d12"
+  },
+  {
+    "id": 879,
+    "name": "ballesta de la ira",
+    "attributes": "ataque+1d9"
+  },
+  {
+    "id": 880,
+    "name": "ballesta cosmica",
+    "attributes": "ataque_magico+1d12"
+  },
+  {
+    "id": 892,
+    "name": "armonica",
+    "attributes": "estamina+2"
+  },
+  {
+    "id": 897,
+    "name": "coraza samurai",
+    "attributes": "armadura+18, mana+-1"
+  },
+  {
+    "id": 898,
+    "name": "mascara protectora",
+    "attributes": "armadura+5"
+  },
+  {
+    "id": 899,
+    "name": "kabuto",
+    "attributes": "armadura+7, mana+3"
+  },
+  {
+    "id": 908,
+    "name": "coraza samurai legendario",
+    "attributes": "armadura+23, estamina+1, mana+-3"
+  }
+]

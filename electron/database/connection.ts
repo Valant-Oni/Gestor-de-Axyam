@@ -656,6 +656,40 @@ function seedBundledTags(db: Database.Database): void {
   tx()
 }
 
+function seedBundledAttributes(db: Database.Database): void {
+  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'seed_bundled_attributes_v1'").get()
+  if (hasMigration) return
+
+  const fs = require('fs')
+  const seedPath = app.isPackaged
+    ? path.join(process.resourcesPath, 'item_attributes_seed.json')
+    : path.join(__dirname, '..', '..', 'resources', 'item_attributes_seed.json')
+
+  if (!fs.existsSync(seedPath)) {
+    console.log('item_attributes_seed.json not found, skipping bundled attribute seed')
+    return
+  }
+
+  const seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8')) as { id: number; name: string; attributes: string | null }[]
+
+  const tx = db.transaction(() => {
+    db.exec("UPDATE items SET attributes = NULL")
+
+    const updateItem = db.prepare('UPDATE items SET attributes = ? WHERE id = ?')
+    let updated = 0
+    for (const entry of seedData) {
+      if (entry.attributes) {
+        const result = updateItem.run(entry.attributes, entry.id)
+        if (result.changes > 0) updated++
+      }
+    }
+
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('seed_bundled_attributes_v1', strftime('%s','now') * 1000)").run()
+    console.log(`Bundled attributes seeded: ${updated} items updated from snapshot`)
+  })
+  tx()
+}
+
 export function initDatabase(): void {
   const dbPath = path.join(app.getPath('userData'), 'axyam.db')
   db = new Database(dbPath)
@@ -669,6 +703,7 @@ export function initDatabase(): void {
   recipeIngredientFix(db)
   seedBundledTags(db)
   extractAttributesFromDescriptions(db)
+  seedBundledAttributes(db)
   forceUpdateKnownItems(db)
   applyLevelSystem(db)
   applyMaterialNodePath(db)
