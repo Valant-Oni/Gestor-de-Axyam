@@ -5,4 +5,5 @@ release/
 *.db
 *.db-shm
 *.db-wal
+*.pfx
 .DS_Store

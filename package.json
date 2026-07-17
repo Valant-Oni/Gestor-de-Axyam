@@ -34,9 +34,13 @@
     ],
     "win": {
       "target": [
-        "nsis",
         "portable"
-      ]
+      ],
+      "signAndEditExecutable": true,
+      "signtoolOptions": {
+        "certificateFile": "resources/cert.pfx",
+        "certificatePassword": "axyam2026"
+      }
     },
     "nsis": {
       "oneClick": false,
