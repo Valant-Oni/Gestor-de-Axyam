@@ -25,6 +25,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getAll: () => ipcRenderer.invoke('items:getAll'),
     getById: (id: number) => ipcRenderer.invoke('items:getById', id),
     seedFromCSV: (rows: any[]) => ipcRenderer.invoke('items:seedFromCSV', rows),
+    reExtractAttributes: () => ipcRenderer.invoke('items:reExtractAttributes'),
   },
   recipes: {
     getAll: () => ipcRenderer.invoke('recipes:getAll'),

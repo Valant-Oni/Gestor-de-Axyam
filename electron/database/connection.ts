@@ -434,9 +434,11 @@ function forceUpdateKnownItems(db: Database.Database): void {
   if (count > 0) console.log(`  force-updated ${count} known items`)
 }
 
-function extractAttributesFromDescriptions(db: Database.Database): void {
-  const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v4'").get()
-  if (hasFix) return
+export function extractAttributesFromDescriptions(db: Database.Database, force = false): void {
+  if (!force) {
+    const hasFix = db.prepare("SELECT name FROM data_migration WHERE name = 'attribute_fix_v4'").get()
+    if (hasFix) return
+  }
 
   const updateItem = db.prepare('UPDATE items SET attributes = ? WHERE id = ?')
   const clearItem = db.prepare("UPDATE items SET attributes = NULL WHERE id = ? AND (attributes = '{}' OR attributes IS NULL)")
@@ -477,63 +479,67 @@ function extractAttributesFromDescriptions(db: Database.Database): void {
     const items = db.prepare("SELECT id, name, description, attributes FROM items").all() as { id: number; name: string; description: string | null; attributes: string | null }[]
 
     for (const item of items) {
-      if (!item.description) {
-        if (item.attributes === '{}' || item.attributes === null) {
-          clearItem.run(item.id)
-          cleared++
-        }
-        continue
-      }
-
-      const found: string[] = []
-
-      const useMagicalAttack = /cetro/i.test(item.name) ||
-        /Utiliza la base de ataque m[aá]gico|Puedes usar tu base de da[nñ]o m[aá]gica/i.test(item.description)
-
-      const pattern = new RegExp(statPattern.source, 'gi')
-      let match: RegExpExecArray | null
-
-      while ((match = pattern.exec(item.description)) !== null) {
-        const key = match[1].toLowerCase()
-        const valueStr = match[2].trim()
-        let mappedKey = statKeyMap[key]
-        if (!mappedKey) continue
-
-        if (useMagicalAttack && (key === 'daño' || key === 'dano')) {
-          mappedKey = 'ataque_magico'
+      try {
+        if (!item.description) {
+          if (item.attributes === '{}' || item.attributes === null) {
+            clearItem.run(item.id)
+            cleared++
+          }
+          continue
         }
 
-        const fixed = valueStr.replace(/- /g, '-')
-        const tokens = fixed.split(/\s+/).filter(Boolean)
-        const validTokens: string[] = []
-        for (const token of tokens) {
-          const cleanToken = token.replace(/^\+/, '')
-          if (/^-?\d*d\d+$/.test(cleanToken) || /^-?\d+$/.test(cleanToken)) {
-            validTokens.push(cleanToken)
+        const found: string[] = []
+
+        const useMagicalAttack = /cetro/i.test(item.name) ||
+          /Utiliza la base de ataque m[aá]gico|Puedes usar tu base de da[nñ]o m[aá]gica/i.test(item.description)
+
+        const pattern = new RegExp(statPattern.source, 'gi')
+        let match: RegExpExecArray | null
+
+        while ((match = pattern.exec(item.description)) !== null) {
+          const key = match[1].toLowerCase()
+          const valueStr = match[2].trim()
+          let mappedKey = statKeyMap[key]
+          if (!mappedKey) continue
+
+          if (useMagicalAttack && (key === 'daño' || key === 'dano')) {
+            mappedKey = 'ataque_magico'
+          }
+
+          const fixed = valueStr.replace(/- /g, '-')
+          const tokens = fixed.split(/\s+/).filter(Boolean)
+          const validTokens: string[] = []
+          for (const token of tokens) {
+            const cleanToken = token.replace(/^\+/, '')
+            if (/^-?\d*d\d+$/.test(cleanToken) || /^-?\d+$/.test(cleanToken)) {
+              validTokens.push(cleanToken)
+            }
+          }
+
+          for (const token of validTokens) {
+            found.push(token.startsWith('-') ? `${mappedKey}${token}` : `${mappedKey}+${token}`)
           }
         }
 
-        for (const token of validTokens) {
-          found.push(token.startsWith('-') ? `${mappedKey}${token}` : `${mappedKey}+${token}`)
+        for (const [reg, stat] of efectoPatterns) {
+          const m = item.description.match(reg)
+          if (m && !found.some(f => f.startsWith(stat))) {
+            found.push(`${stat}+${m[1]}`)
+          }
         }
-      }
 
-      for (const [reg, stat] of efectoPatterns) {
-        const m = item.description.match(reg)
-        if (m && !found.some(f => f.startsWith(stat))) {
-          found.push(`${stat}+${m[1]}`)
+        const newAttrs = found.length > 0 ? found.join(', ') : null
+        if (newAttrs !== item.attributes) {
+          if (newAttrs) {
+            updateItem.run(newAttrs, item.id)
+            updated++
+          } else if (item.attributes === '{}' || item.attributes === null) {
+            clearItem.run(item.id)
+            cleared++
+          }
         }
-      }
-
-      const newAttrs = found.length > 0 ? found.join(', ') : null
-      if (newAttrs !== item.attributes) {
-        if (newAttrs) {
-          updateItem.run(newAttrs, item.id)
-          updated++
-        } else if (item.attributes === '{}' || item.attributes === null) {
-          clearItem.run(item.id)
-          cleared++
-        }
+      } catch (err: any) {
+        console.warn(`Attribute extraction failed for item #${item.id} ("${item.name}"): ${err.message}`)
       }
     }
 

@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron'
-import { getDatabase } from '../database/connection'
+import { getDatabase, extractAttributesFromDescriptions } from '../database/connection'
 
 export function registerItemHandlers() {
   ipcMain.handle('items:getAll', () => {
@@ -22,5 +22,11 @@ export function registerItemHandlers() {
     })
     tx(rows)
     return { count: rows.length }
+  })
+
+  ipcMain.handle('items:reExtractAttributes', () => {
+    const db = getDatabase()
+    extractAttributesFromDescriptions(db, true)
+    return db.prepare('SELECT id, name, attributes FROM items ORDER BY name').all()
   })
 }
