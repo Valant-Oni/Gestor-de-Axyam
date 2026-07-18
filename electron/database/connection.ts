@@ -688,6 +688,10 @@ function seedBundledAttributes(db: Database.Database): void {
     db.exec("UPDATE items SET attributes = NULL WHERE attributes = '{}'")
 
     db.exec("DELETE FROM data_migration WHERE name = 'seed_bundled_attributes_v1'")
+    db.exec("DELETE FROM data_migration WHERE name = 'item_review_v1'")
+
+    db.prepare("UPDATE items SET attributes = 'ataque+2d9+3' WHERE name = 'Excalibur' AND (attributes IS NULL OR attributes = '{}')").run()
+
     db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('seed_bundled_attributes_v2', strftime('%s','now') * 1000)").run()
     console.log(`Bundled attributes seeded: ${updated} items updated from snapshot`)
   })
