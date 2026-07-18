@@ -657,7 +657,7 @@ function seedBundledTags(db: Database.Database): void {
 }
 
 function seedBundledAttributes(db: Database.Database): void {
-  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'seed_bundled_attributes_v1'").get()
+  const hasMigration = db.prepare("SELECT name FROM data_migration WHERE name = 'seed_bundled_attributes_v2'").get()
   if (hasMigration) return
 
   const fs = require('fs')
@@ -687,7 +687,8 @@ function seedBundledAttributes(db: Database.Database): void {
 
     db.exec("UPDATE items SET attributes = NULL WHERE attributes = '{}'")
 
-    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('seed_bundled_attributes_v1', strftime('%s','now') * 1000)").run()
+    db.exec("DELETE FROM data_migration WHERE name = 'seed_bundled_attributes_v1'")
+    db.prepare("INSERT INTO data_migration (name, time_completed) VALUES ('seed_bundled_attributes_v2', strftime('%s','now') * 1000)").run()
     console.log(`Bundled attributes seeded: ${updated} items updated from snapshot`)
   })
   tx()

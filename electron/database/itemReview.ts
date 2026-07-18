@@ -185,7 +185,7 @@ const itemsToUpdate: ItemUpdate[] = [
   { name: 'armadura de cazador', attributes: 'armadura+10, nulimagia+8' },
   { name: 'arco de cazador', attributes: 'ataque+1d10' },
   { name: 'espada cazadora', attributes: 'ataque+1d9' },
-  { name: 'ballesta de cazador', attributes: 'ataque+1d10' },
+  { name: 'ballesta cazadora', attributes: 'ataque+1d10' },
   { name: 'daga de cazador', attributes: 'ataque+1d5' },
   { name: 'hacha de cazador', attributes: 'ataque+1d8' },
   { name: 'armadura de guardian', attributes: 'armadura+15, nulimagia+10' },
@@ -218,7 +218,7 @@ const itemsToUpdate: ItemUpdate[] = [
   { name: 'espada de dragon rojo', attributes: 'ataque+1d14' },
   { name: 'espada de dragon negro', attributes: 'ataque+1d16' },
   { name: 'arco de dragon', attributes: 'ataque+1d12' },
-  { name: 'ballesta de dragon', attributes: 'ataque+1d12' },
+  { name: 'ballesta dragon', attributes: 'ataque+1d12' },
   { name: 'hacha de dragon', attributes: 'ataque+1d13' },
   { name: 'lanza de dragon', attributes: 'ataque+1d12' },
   { name: 'daga de dragon', attributes: 'ataque+1d7' },
@@ -580,6 +580,7 @@ const itemsToUpdate: ItemUpdate[] = [
   { name: 'pecera', attributes: 'armadura+4, nulimagia+4' },
   { name: 'casco de buzo', attributes: 'armadura+6, nulimagia+6' },
   { name: 'mazo de la creacion', attributes: 'ataque+1d11' },
+  { name: 'Excalibur', attributes: 'ataque+2d9+3' },
 ]
 
 export function applyItemReview(db: Database.Database): void {
